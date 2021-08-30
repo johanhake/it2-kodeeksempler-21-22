@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Variabler</title>
+</head>
+
+<body>
+	<h1>Variabler</h1>
+	<script>
+		let tall1;
+		let tall2 = 4;
+		tall1 = 3;
+
+		console.log(tall2);
+
+		let truth = "You know nothing John Snow.";
+		console.log(truth[17]);
+
+		console.log(truth.indexOf("n"));
+		console.log(truth.indexOf("z"));
+
+		console.log(truth.substring(0, 9) + truth.substring(9, 16).toUpperCase() + truth.substring(16, 27));
+		console.log(truth.substring(17));
+		console.log(truth.substr(4, 4));
+
+		console.log(truth.toLowerCase());
+		console.log(truth.toUpperCase());
+
+		console.log(truth.replace("John Snow", "Johan Hake"));
+		console.log(truth.replace("nothing", "everything"));
+
+		console.log(truth.length);
+
+		let poeng = 0;
+		poeng += 5;
+		poeng -= 2;
+		poeng *= 2;
+		poeng /= 3;
+
+		console.log(poeng)
+
+		let navn = "Johan" + " Hake"
+		let by = "Oslo" * 2
+
+
+	</script>
+</body>
+
+</html>
