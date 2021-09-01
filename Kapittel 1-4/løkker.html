@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		let i = 0;
+		while(i < 10){
+			console.log("while:", i);
+			i += 1;
+		}
+
+		let tekst = prompt("Skriv inn noe som er lenger enn ti bokstaver: ");
+		while (tekst.length <= 10){
+			tekst = prompt("Skriv inn noe som er lenger enn ti bokstaver: ");
+		}
+		alert("Du skrev inn:" + tekst)
+
+
+		// Løkke mellom 0 og 10
+		for (let i=0; i < 10; i++){
+			console.log("for:", i)
+		}
+
+		// Løkke mellom 100 og 120 med bare partall
+		for (let i=100; i <= 120; i += 2){
+			console.log("for:", i)
+		}
+
+
+	</script>
+</body>
+</html>
