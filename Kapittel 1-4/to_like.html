@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>To like</title>
+</head>
+<body>
+	<script>
+
+		// Returnerer et tilfeldig tall mellom 1 og 6
+		function terning(){
+			return Math.trunc(Math.random()*6)+1;
+		}
+
+		// Triller to terninger
+		let terning1 = terning();
+		let terning2 = terning();
+
+		console.log("Du fikk ", terning1, " og ", terning2, "på to terninger.");
+		if (terning1 === terning2){
+			console.log("Du fikk to like!");
+		}
+
+	</script>
+</body>
+</html>
