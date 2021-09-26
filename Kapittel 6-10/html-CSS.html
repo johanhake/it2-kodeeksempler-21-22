@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>HTML/CSS</title>
+	<style>
+		* {
+			font-family: "Century Gothic", Arial, sans-serif;
+		}
+
+		header {
+			background-color: green;
+			color: white;
+			margin-bottom: 50px;
+			border: 3px solid black;
+		}
+
+		header h1 {
+			text-align: center;
+			padding: 50px;
+		}
+
+		header nav {
+			background-color: orange;
+			display: grid;
+			grid-template-columns: 200px 200px 1fr 1fr;
+		}
+
+		header nav a {
+			text-align: center;
+			padding: 10px 0;
+			text-decoration: none;
+			font-weight: bold;
+		}
+
+		header nav a:hover {
+			background-color: peru;
+		}
+
+		.liste{
+			margin-left: 30px;
+
+		}
+
+		table{
+			background-image: url(bilder/Bakgrunn.jpg);
+			background-size: cover;
+		}
+
+		#avsnitt1{
+			background-color: gray;
+			color: white;
+		}
+
+		#avsnitt1 p{
+			margin-top: 50px;
+		}
+
+		#bilder{
+			display: grid;
+			grid-template-columns: 1fr 1fr 1fr;
+			gap: 10px;
+		}
+
+		#bilder img{
+			width: 100%;
+		}
+
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>HTML og CSS vi trenger i IT2</h1>
+		<nav>
+			<a href="#avsnitt1">Lenke til avsnitt</a>
+			<a href="#avsnitt2">Lenke til et annet avsnitt</a>
+			<a href="http://vg.no">Lenke til ekstern side</a>
+			<div>Tomt element som bare tar plass</div>
+		</nav>
+	</header>
+	<main>
+		<article id="avsnitt1">
+			<h2>Overskrift 1</h2>
+			<p>
+				<i>For å fylde ut med tekst kan man skrive "lorem" i VS Code og så trykke "Enter" så kommer følgende tekst opp:</i> Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione sit
+				cumque, earum nostrum blanditiis neque dolor doloribus commodi deleniti atque nam quo exercitationem.
+				Dolorem repellat facere sed natus, vero qui. Lorem ipsum dolor sit amet consectetur adipisicing elit.
+				Praesentium, molestias necessitatibus? Cumque itaque saepe, nihil inventore quia dolorum non provident
+				minus
+				autem a consequatur quis sunt mollitia, sint eveniet magnam. Lorem ipsum dolor sit amet consectetur
+				adipisicing elit. Doloribus commodi error voluptate quos? Impedit veniam sit vero similique ex iste
+				beatae,
+				minima facere culpa! Nesciunt corrupti aspernatur nihil soluta rerum.
+			</p>
+			<p>
+				Enda et tekstavsnitt.
+
+				<b>Linjeskifte i HTML synes IKKE på nettsiden.</b>
+
+				<i><b>For at linjeskifte skal vises kan man bruke br-elementet</b></i><br>
+				Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laudantium consectetur rerum, ab asperiores
+				minus
+				voluptates quas placeat tempora! Consequuntur voluptas cum expedita deserunt omnis voluptate praesentium
+				dolores quos laborum aut?
+			</p>
+		</article>
+		<article>
+			<h2>Semantiske element kan brukes til å dele inn nettsiden</h2>
+			<p>
+				Det finnes flere ulike semantiske element. <b>header</b> er et av de. Hvilke andre element er semantiske?
+			</p>
+		</article>
+		<article>
+			<h2>Det finns i hovedsak to ulike lister i HTML</h2>
+			<h3>Uordnet liste (ul - unordered list)</h3>
+			<ul class="liste">
+				<li>li står for list-item</li>
+				<li>En ting til</li>
+				<li>Blir fort mange ting!</li>
+				<li>JADA</li>
+			</ul>
+			<h3>Ordnet liste (ol - ordered list)</h3>
+			<ul class="liste">
+				<li>li står for list-item og brukes i både ul og ol-lister</li>
+				<li>andre tingen</li>
+				<li>tredje tingen!</li>
+				<li>BADA</li>
+			</ul>
+		</article>
+		<article id="avsnitt2">
+			<h2>Tabeller lages av seks ulike typer elementer</h2>
+			<ul>
+				<li><b>table</b>: nå kommer en tabell</li>
+				<li><b>thead:</b> nå kommer det en overskrift til en tabell</li>
+				<li><b>tbody:</b> nå kommer det innhold i en tabell</li>
+				<li><b>tr:</b> nå kommer det en ny rad i en tabell</li>
+				<li><b>th:</b> overskrift til en kolonne i thead</li>
+				<li><b>td:</b> innhold i en kolonne i en rad i tbody</li>
+			</ul>
+			<table>
+				<thead>
+					<tr>
+						<th>Navn</th>
+						<th>Høyde</th>
+						<th>Først besteget</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Mount Everest</td>
+						<td>8848</td>
+						<td>1953</td>
+					</tr>
+					<tr>
+						<td>K2</td>
+						<td>8611</td>
+						<td>1954</td>
+					</tr>
+					<tr>
+						<td>Kanchenjunga</td>
+						<td>8586</td>
+						<td>1955</td>
+					</tr>
+				</tbody>
+			</table>
+		</article>
+		<article>
+			<h2>Bilder i et rutenett</h2>
+			<div id="bilder">
+				<img src="bilder/Dyr 1.jpg" alt="">
+				<img src="bilder/Dyr 2.jpg" alt="">
+				<img src="bilder/Dyr 3.jpg" alt="">
+				<img src="bilder/Dyr 4.jpg" alt="">
+				<img src="bilder/Dyr 5.jpg" alt="">
+				<img src="bilder/Dyr 6.jpg" alt="">
+			</div>
+		</article>
+	</main>
+
+</body>
+
+</html>
