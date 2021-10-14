@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Kode 8.2</title>
 	<style>
-		body{
+		body {
 			background-color: #323232;
 			color: #f2f2f2;
 			font-family: "Century Gothic", Arial, sans-serif;
 			font-size: 1.5em;
 		}
 
-		img{
+		img {
 			cursor: pointer;
 		}
 	</style>
 </head>
+
 <body>
 	<h1>Monty Hall</h1>
 	<p>Hvilken dør vil du velge?</p>
@@ -27,14 +29,19 @@
 	<script>
 
 		// Lytterfunksjon
-		function sjekkDor(event){
+		function sjekkDor(event) {
+
+			// Logger elementet som er knyttet til hendelsen
 			console.log(event.target);
+
+			// Logger type hendelse
 			console.log(event.type);
 
+			// Henter ut verdien til id til elementet.
 			let fargeDør = event.target.id;
-
 			console.log("Døren du trykket på har fargen:", fargeDør)
 		}
 	</script>
 </body>
+
 </html>
