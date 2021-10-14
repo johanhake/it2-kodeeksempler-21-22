@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Hendelser</title>
+	<style>
+		body {
+			font-family: "Century Gothic", Arial, sans-serif;
+			font-size: 1.5em;
+		}
+
+		img {
+			width: 300px;
+		}
+
+		.klikkbar {
+			cursor: pointer;
+		}
+	</style>
+</head>
+
+<body>
+	<h1 onclick="klikketPåOverskrift()" class="klikkbar">Overskrift</h1>
+	<p onclick="klikketPåAvsnitt()" class="klikkbar">
+		Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat perferendis quo officiis eveniet architecto a
+		voluptas neque distinctio iusto. A nulla quas rerum ut, laboriosam modi eos reprehenderit odit unde.
+	</p>
+	<ol>
+		<li>Liste 1</li>
+		<li>Liste 2</li>
+	</ol>
+	<img src="bilder/Dyr 2.jpg" alt="">
+	<p id="info"></p>
+	<script>
+
+		// DOM
+		let infoTxt = document.querySelector("#info");
+
+		// Lytterfunksjon for klikk på overskrift
+		function klikketPåOverskrift() {
+			infoTxt.innerHTML = "Du klikket på overskriften!";
+			setTimeout(slettInfo, 1000);
+		}
+
+		// Lytterfunksjon for klikk på avsnitt
+		function klikketPåAvsnitt() {
+			infoTxt.innerHTML = "Du klikket på avsnittet!";
+			setTimeout(slettInfo, 1000);
+		}
+
+		function slettInfo() {
+			infoTxt.innerHTML = "";
+			document.querySelector("h1").removeAttribute("onclick");
+		}
+	</script>
+</body>
+
+</html>

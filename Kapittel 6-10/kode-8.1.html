@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Kode 8.1</title>
+	<style>
+		body{
+			font-family: "Century Gothic", Arial, sans-serif;
+			font-size: 1.5em;
+		}
+
+		p{
+			background-color: #f05a3f;
+			padding: 20px;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<p id="avsnitt" onclick="nyTekst()">
+		Klikk på meg!!
+	</p>
+	<script>
+		// DOM
+		let avsnittTxt = document.querySelector("#avsnitt");
+
+		function nyTekst(){
+			avsnittTxt.innerHTML = "Du trykket på meg!";
+		}
+	</script>
+</body>
+</html>

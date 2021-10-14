@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Legge til DOM objekter i JS</title>
+	<style>
+		body {
+			font-family: "Century Gothic", Arial, sans-serif;
+			font-size: 1.5em;
+		}
+
+		.rosa {
+			background-color: pink;
+			padding: 10px;
+		}
+	</style>
+</head>
+
+<body>
+	<script>
+		// Variabler
+		let lenke = "http://aftenposten.no"
+
+		// Legger til DOM-objekter the hard way!
+		let avsnittTxt = document.createElement("p");
+		avsnittTxt.innerHTML = "Les noen nyheter ";
+		avsnittTxt.className = "rosa";
+		document.body.appendChild(avsnittTxt);
+
+		let lenkeEl = document.createElement("a");
+		lenkeEl.innerHTML = "her";
+		lenkeEl.href = lenke;
+
+		avsnittTxt.appendChild(lenkeEl);
+		avsnittTxt.innerHTML += ".";
+
+		// Legger til DOM-objekter the easy way!
+		document.body.innerHTML += `
+		<p class="rosa">
+			Les noen nyheter <a href="${lenke}">her</a>.
+		</p>
+		`;
+
+	</script>
+</body>
+
+</html>
