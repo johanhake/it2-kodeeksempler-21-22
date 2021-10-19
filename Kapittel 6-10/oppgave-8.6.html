@@ -28,6 +28,18 @@
 	<img id="blå" src="bilder/blaa.png" onclick="sjekkDor(event)" alt="">
 	<script>
 
+
+		// Bilen er bak denne døren
+		let bilBakDoer = "blå";
+
+		// Finner tilfeldig hvilken dør bilen er bak
+		let tilfeldig = Math.trunc(Math.random()*3);
+		if (tilfeldig === 0){
+			bilBakDoer = "rød";
+		}else if(tilfeldig === 1){
+			bilBakDoer = "grønn";
+		}
+
 		// Lytterfunksjon
 		function sjekkDor(event) {
 
@@ -41,7 +53,11 @@
 			let fargeDør = event.target.id;
 			console.log("Døren du trykket på har fargen:", fargeDør)
 
-			event.target.src = "bilder/geit.png";
+			if (fargeDør === bilBakDoer){
+				event.target.src = "bilder/bil.png";
+			}else{
+				event.target.src = "bilder/geit.png";
+			}
 		}
 	</script>
 </body>

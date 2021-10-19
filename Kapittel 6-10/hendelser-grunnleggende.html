@@ -22,8 +22,8 @@
 </head>
 
 <body>
-	<h1 onclick="klikketPåOverskrift()" class="klikkbar">Overskrift</h1>
-	<p onclick="klikketPåAvsnitt()" class="klikkbar">
+	<h1 onclick="klikketPå('Overskrift', event)" class="klikkbar">Overskrift</h1>
+	<p onclick="klikketPå('Avsnitt', event)" class="klikkbar">
 		Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat perferendis quo officiis eveniet architecto a
 		voluptas neque distinctio iusto. A nulla quas rerum ut, laboriosam modi eos reprehenderit odit unde.
 	</p>
@@ -31,29 +31,24 @@
 		<li>Liste 1</li>
 		<li>Liste 2</li>
 	</ol>
-	<img src="bilder/Dyr 2.jpg" alt="">
+	<img onclick="klikketPå('Bilde', event)" src="bilder/Dyr 2.jpg" alt="">
 	<p id="info"></p>
 	<script>
 
 		// DOM
 		let infoTxt = document.querySelector("#info");
 
-		// Lytterfunksjon for klikk på overskrift
-		function klikketPåOverskrift() {
-			infoTxt.innerHTML = "Du klikket på overskriften!";
+		function klikketPå(hva, event) {
+			infoTxt.innerHTML = `Du klikket på ${hva}!`;
+			event.target.style.backgroundColor = "red";
 			setTimeout(slettInfo, 1000);
-		}
-
-		// Lytterfunksjon for klikk på avsnitt
-		function klikketPåAvsnitt() {
-			infoTxt.innerHTML = "Du klikket på avsnittet!";
-			setTimeout(slettInfo, 1000);
+			event.target.removeAttribute("onclick");
 		}
 
 		function slettInfo() {
 			infoTxt.innerHTML = "";
-			document.querySelector("h1").removeAttribute("onclick");
 		}
+
 	</script>
 </body>
 

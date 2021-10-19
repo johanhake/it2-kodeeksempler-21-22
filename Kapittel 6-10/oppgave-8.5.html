@@ -26,7 +26,15 @@
 	<img id="rød" src="bilder/rod.png" onclick="sjekkDor(event)" alt="">
 	<img id="grønn" src="bilder/gronn.png" onclick="sjekkDor(event)" alt="">
 	<img id="blå" src="bilder/blaa.png" onclick="sjekkDor(event)" alt="">
+
+	<p id="info"></p>
 	<script>
+
+		// DOM
+		let infoTxt = document.querySelector("#info");
+
+		// Bilen er bak denne døren
+		let bilBakDoer = "blå";
 
 		// Lytterfunksjon
 		function sjekkDor(event) {
@@ -41,7 +49,11 @@
 			let fargeDør = event.target.id;
 			console.log("Døren du trykket på har fargen:", fargeDør)
 
-			event.target.src = "bilder/geit.png";
+			if (fargeDør === bilBakDoer){
+				event.target.src = "bilder/bil.png";
+			}else{
+				event.target.src = "bilder/geit.png";
+			}
 		}
 	</script>
 </body>

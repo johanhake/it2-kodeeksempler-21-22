@@ -23,9 +23,16 @@
 	<p>
 		På denne siden kan du lære mer om meg.
 	</p>
-	<p class="gul">
+	<p class="gul" id="jada">
 		Min favorittfarge er gul!
 	</p>
+	<p class="gul">
+		JADA JADA
+	</p>
+	<p class="gul" >
+		jada jada
+	</p>
+
 
 	<script>
 
@@ -33,6 +40,10 @@
 		let infoTxt = document.querySelector(".gul");
 
 		console.log(infoTxt)
+
+		infoTxt.innerHTML += " <a href='http://www.db.no'>Dagbladet</a> ";
+		infoTxt.innerHTML += ' <a href="http://www.vg.no">VG</a> ';
+
 	</script>
 </body>
 

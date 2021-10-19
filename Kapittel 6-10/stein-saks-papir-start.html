@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stein Saks og Papir</title>
+    <style>
+        body {
+            font-family: "Century Gothic", arial, sans-serif;
+            background-color: #ecf0f1;
+        }
+
+        #bilder {
+            display: grid;
+            grid-template-columns: repeat(3, 200px) 30px 200px;
+            align-items: end;
+            gap: 10px;
+        }
+
+        .bruker-valg {
+            transition: 0.125s;
+            cursor: pointer;
+        }
+
+        .bruker-valg:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Stein saks papir</h1>
+    <p id="spillerpoeng">Spiller: 0</p>
+    <p id="maskinpoeng">Maskin: 0</p>
+
+    <!-- Bilder til spillet-->
+    <div id="bilder">
+        <img class="bruker-valg" src="bilder/spiller_stein.png" data-valg="stein" alt="Spiller stein">
+        <img class="bruker-valg" src="bilder/spiller_saks.png" data-valg="saks" alt="Spiller saks">
+        <img class="bruker-valg" src="bilder/spiller_papir.png" data-valg="papir" alt="Spiller papir">
+        <div></div>
+        <img src="bilder/maskin_ukjent.png" id="maskin" alt="">
+    </div>
+
+    <p id="info"></p>
+
+    <script>
+
+        // DOM
+        let maskinImg = document.querySelector("#maskin");
+
+        // Lytterfunksjon for å klikke på et valg
+        function velg(event) {
+
+            // Elementet som blir klikket på
+            let bildeEl = event.target;
+
+            // Henter ut verdien til data-attributtet valg
+            let valg = bilde.dataset.valg;
+
+            console.log("Du valgte:", valg);
+        }
+    </script>
+</body>
+
+</html>

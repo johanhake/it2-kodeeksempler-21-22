@@ -15,6 +15,11 @@
 			background-color: #f05a3f;
 			padding: 20px;
 			cursor: pointer;
+			color: white;
+		}
+
+		.gul{
+			border: blue 10px solid;
 		}
 	</style>
 </head>
@@ -28,6 +33,11 @@
 
 		function nyTekst(){
 			avsnittTxt.innerHTML = "Du trykket på meg!";
+			if(avsnittTxt.className === "gul"){
+				avsnittTxt.className = "";
+			}else{
+				avsnittTxt.className = "gul";
+			}
 		}
 	</script>
 </body>
