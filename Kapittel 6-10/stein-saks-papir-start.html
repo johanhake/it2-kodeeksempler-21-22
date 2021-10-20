@@ -13,9 +13,12 @@
 
         #bilder {
             display: grid;
-            grid-template-columns: repeat(3, 200px) 30px 200px;
-            align-items: end;
+            grid-template-columns: repeat(3, 1fr) 30px 1fr;
             gap: 10px;
+        }
+
+        #bilder img{
+            width: 100%;
         }
 
         .bruker-valg {
