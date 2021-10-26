@@ -13,7 +13,7 @@
 
         #bilder {
             display: grid;
-            grid-template-columns: repeat(3, 1fr) 30px 1fr;
+            grid-template-columns: 1fr 1fr 1fr 30px 1fr;
             gap: 10px;
         }
 
@@ -39,9 +39,9 @@
 
     <!-- Bilder til spillet-->
     <div id="bilder">
-        <img class="bruker-valg" src="bilder/spiller_stein.png" data-valg="stein" alt="Spiller stein">
-        <img class="bruker-valg" src="bilder/spiller_saks.png" data-valg="saks" alt="Spiller saks">
-        <img class="bruker-valg" src="bilder/spiller_papir.png" data-valg="papir" alt="Spiller papir">
+        <img class="bruker-valg" src="bilder/spiller_stein.png" data-valg="stein" alt="Spiller stein" onclick="valg(event)">
+        <img class="bruker-valg" src="bilder/spiller_saks.png" data-valg="saks" alt="Spiller saks" onclick="valg(event)">
+        <img class="bruker-valg" src="bilder/spiller_papir.png" data-valg="papir" alt="Spiller papir" onclick="valg(event)">
         <div></div>
         <img src="bilder/maskin_ukjent.png" id="maskin" alt="">
     </div>
@@ -60,7 +60,7 @@
             let bildeEl = event.target;
 
             // Henter ut verdien til data-attributtet valg
-            let valg = bilde.dataset.valg;
+            let valg = bildeEl.dataset.valg;
 
             console.log("Du valgte:", valg);
         }
