@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skjema</title>
+    <link rel="stylesheet" href="brukerinput.css">
+    <style>
+        html {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <form onsubmit="sendInn(event)">
+        <label for="tittelInp">Tittel</label><input id="tittelInp" type="text" placeholder="Filmens tittel" required>
+
+        <label>Beskrivelse</label>
+        <textarea placeholder="Kort beskrivelse av filmen" cols="30" rows="10"></textarea>
+
+        <label>Årstall</label>
+        <input type="number" min="1850" id="årstallInp">
+
+        <label>Aldersgrense</label>
+        <select id="aldersgrenseSel">
+            <option value="0">Tillatt for alle</option>
+            <option value="7">7 år</option>
+            <option value="11">11 år</option>
+            <option value="15">15 år</option>
+            <option value="18">18 år</option>
+        </select>
+
+        <label for="">Format</label>
+        <div class="checkboxes">
+            <input type="checkbox" value="kino" id="kinoInp"> <label for="kinoInp">Kino</label>
+            <input type="checkbox" value="blueray" id="blueRayInp"><label for="blueRayInp">Blueray</label>
+            <input type="checkbox" value="strømmetjeneste" id="strømmetjenesteInp"><label
+                for="strømmetjenesteInp">strømmetjeneste</label>
+            <input type="checkbox" value="tv" id="tvInp"><label for="tvInp">Tv</label>
+        </div>
+
+        <label for="">Fått Oscar?</label>
+        <div class="checkboxes">
+            <input type="radio" value="Ja" name="fått-oscar" id="jaInp"><label for="jaInp">Ja</label>
+            <input type="radio" value="Nei" name="fått-oscar" id="neiInp" checked><label for="neiInp">Nei</label>
+        </div>
+        <button>Registrer</button>
+
+        <p id="info"></p>
+
+    </form>
+
+    <script>
+
+        function sendInn(event){
+
+        }
+
+    </script>
+</body>
+
+</html>
