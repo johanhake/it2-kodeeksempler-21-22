@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="brukerinput.css">
+    <title>Matkasser</title>
+    <style>
+        body{
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            width: 50%;
+            margin: 0 auto;
+        }
+
+    </style>
+</head>
+<body>
+    <form onsubmit="registrerMatkasse(event)">
+        <h1>Bestill matkasser</h1>
+
+        <label for="navn">Navn</label>
+        <input type="text" id="navn" required>
+
+        <label for="adresse">Adresse</label>
+        <input type="text" id="adresse" required>
+
+        <label for="middager">Antall middager</label>
+        <select id="middager"  required>
+            <option value="">Velg antall middager</option>
+            <option value="2">To middager</option>
+            <option value="3">Tre middager</option>
+        </select>
+
+        <label for="personer">Antall personer</label>
+        <input type="number" id="personer" value="1" min="1" max="15">
+
+        <button>Registrer</button>
+    </form>
+    <div id="bekreftelse">
+        <h1>Takk for din bestilling</h1>
+    </div>
+<script>
+
+    // Lytterfunksjon for det å registrere matkasser
+    function registrerMatkasse(event){
+        event.preventDefault();
+
+        // DOM
+        let skjema = event.target;
+        let bekreftelseDiv = document.querySelector("#bekreftelse");
+
+        // Henter ut verdier fra skjemaet
+        let antallMiddager = Number(skjema.middager.value);
+        let antallPersoner = Number(skjema.personer.value);
+        let pris = 70;
+
+        // Prisen beror på antallet personer
+        if (antallPersoner < 5){
+            pris = 80;
+        }
+
+        // Regner ut total pris
+        pris *= antallMiddager*antallPersoner;
+
+        // Skriver ut prisen
+        bekreftelseDiv.innerHTML += `
+        <label>Navn: ${skjema.navn.value}</label>
+        <label>Adresse: ${skjema.adresse.value}</label>
+        <label>Antall middager: ${antallMiddager}</label>
+        <label>Antall personer: ${antallPersoner}</label>
+        <label>Total pris: ${pris} kr</label>`
+
+        // Sletter bestilliningen
+        skjema.reset();
+
+    }
+</script>
+</body>
+
+</html>
