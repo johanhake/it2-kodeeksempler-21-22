@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>querySelectorALL</title>
+    <style>
+    body{
+        font-family: "Century Gothic", Arial, sans-serif;
+        font-size: 14px;
+    }
+
+    p{
+        padding: 20px;
+        cursor: pointer;
+    }
+
+    .gul{
+        background-color: yellow;
+    }
+
+    .rød{
+        background-color: red;
+    }
+    </style>
+</head>
+<body>
+    <p class="gul"> Trykk på meg! </p>
+    <p class="gul"> Trykk på meg! </p>
+    <p class="gul"> Trykk på meg! </p>
+    <p class="gul"> Trykk på meg! </p>
+    <p class="gul"> Trykk på meg! </p>
+    <p class="gul"> Trykk på meg! </p>
+    <p class="gul"> Trykk på meg! </p>
+    <script>
+    
+        let alleAvsnitt = document.querySelectorAll(".gul");
+
+        for (let pEl of alleAvsnitt){
+            pEl.onclick = byttFarge;
+        }
+
+    function byttFarge(event){
+        let pEl = event.target;
+        if(pEl.className == "gul"){
+            pEl.className = "rød";
+        }else{
+            pEl.className = "gul";
+        }
+    }
+
+    </script>
+</body>
+</html>
