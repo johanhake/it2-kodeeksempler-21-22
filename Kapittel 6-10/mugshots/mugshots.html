@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="brukerinput.css">
+
+    <title>Mugshots</title>
+    <style>
+        body {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            margin: 0 auto;
+            max-width: 700px;
+            padding: 10px;
+        }
+
+        #buttons {
+            display: flex;
+        }
+
+        #buttons button {
+            flex-grow: 1;
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-gap: 5px;
+            border: 5px #5588AA solid;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        main article:hover {
+            cursor: pointer;
+        }
+
+        main article img {
+            width: 100%;
+            border: black 1px solid;
+        }
+
+        article p {
+            text-align: center;
+        }
+
+        .checkboxes {
+            margin: 1em 0;
+        }
+
+        @media(max-width: 700px) {
+            article p {
+                font-size: 2vw;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>IT2 Mugshots</h1>
+    <div id="enkelt-elev">
+
+    </div>
+    <main></main>
+    <script>
+        // DOM
+        let main = document.querySelector("main");
+        let synkendeChk = document.querySelector("#synkende");
+        let enkeltElevDiv = document.querySelector("#enkelt-elev");
+
+        let elevNavn = [
+            ["Mia", "Austreim", "3STD"],
+            ["Philip", "Bennet", "3STF"],
+            ["Mats", "Ekeberg", "2STA"],
+            ["Roland", "Fiksdal", "3STC"],
+            ["Jonathan", "Gjefsen", "2STF"],
+            ["Kamilla", "Haukås", "2STD"],
+            ["Mathias", "Hestnes", "2STA"],
+            ["Erik", "Huse", "2STA"],
+            ["Erika", "Iden", "2STD"],
+            ["Hallvard", "Langen", "2STD"],
+            ["Isak", "Madland", "3STA"],
+            ["Haris", "Malik", "3STA"],
+            ["Nikolai", "Omvik", "2STD"],
+            ["Sindre", "Ravik", "3STB"],
+            ["Henrik", "Rædegård", "3STB"],
+            ["Mathias-s", "Schiøtz", "2STB"],
+            ["Nicolay", "Schiøtz", "2STB"],
+            ["Yaksh", "Shukla", "2STC"],
+            ["Andreas", "Ravik", "2STB"],
+            ["Jonas", "Sørli", "2STE"],
+            ["Thea", "Utgård", "3STC"],
+            ["Lukas", "Veidal", "2STB"],
+            ["Elias", "Westad", "2STF"],
+            ["Casper", "Yttervik", "2STE"],
+        ];
+
+
+        // Lytterfunksjon som viser en elev
+        function visElev(event) {
+
+            // Henter ut verdiene til dataattributtene for hve elev
+            let dataset = event.target.dataset;
+
+            // Lager koden for enkeltelev diven.
+            enkeltElevDiv.innerHTML = `
+            <img src="${dataset.fornavn}.jpg">
+            <p>${dataset.fornavn} ${dataset.etternavn} ${dataset.klasse}</p>`;
+        }
+
+    </script>
+</body>
+
+</html>
