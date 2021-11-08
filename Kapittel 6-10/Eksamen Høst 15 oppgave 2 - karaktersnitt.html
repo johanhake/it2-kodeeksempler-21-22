@@ -56,7 +56,7 @@
             let poengsum = snittkarakter*10 + ekstrapoeng;
 
             // Henter ut hvilket lektorstudie man sjekker og inntakskravet for studiet
-            let inntakskrav = skjema.lektorstudie.value;
+            let inntakskrav = Number(skjema.lektorstudie.value);
 
             // Sjekker om eleven kommer inn
             if (poengsum >= inntakskrav){
