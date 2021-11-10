@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Arrays</title>
+</head>
+
+<body>
+	<script>
+		let alternativer = ["stein", "saks", "papir"];
+		let resultat = [5, 6, 3, 8, -12, 7];
+		let avstand = ["Bergen", 450, "Trondheim", 520];
+
+		console.log("Første elementet:", alternativer[0]);
+		let byIndeks = 0;
+		console.log("Avstand:", avstand[byIndeks], avstand[byIndeks + 1], "km");
+		byIndeks += 2;
+		console.log("Avstand:", avstand[byIndeks], avstand[byIndeks + 1], "km");
+
+		// Doble lister (flerdimensonale arrays)
+		let avstander = [
+			["Bergen", "Trondheim", "Malmö"],
+			[450, 520, 620]
+		];
+		console.log("Byer", avstander[0]); // Første listen
+		console.log("Avstander", avstander[1]); // Andre listen
+
+		// Endre på arrays legge til på sluttet: push, ta bort fra slutten: pop
+		resultat.push(12);
+		resultat.push(3);
+		console.log(resultat);
+		alternativer.pop();
+		console.log(alternativer);
+
+		// Finne indeks til et element og fjerne element inne i arrayen
+		console.log("Indeksen til resultat 3 er:", resultat.indexOf(3));
+
+		resultat.splice(2, 1);
+		console.log("Fjernet det tredje elementet", resultat);
+
+		resultat.splice(2, 0, 78, 90);
+		console.log("Lagt til to gode resultat!", resultat);
+
+		// Løper igjennom arrays med forløkker alternativ 1 (boken)
+		console.log("\nSkriver ut en array: 1")
+		for (let indeks = 0; indeks < alternativer.length; indeks++) {
+			let alternativ = alternativer[indeks];
+			console.log(alternativ);
+		}
+
+		alternativer.push("papir");
+
+		// Løper igjennom arrays med forløkker alternativ 2 (enklere)
+		console.log("\nSkriver ut en array: 2")
+		for (let alternativ of alternativer) {
+			console.log(alternativ);
+		}
+
+		function storstMinst(tallArray) {
+			let min = 1000000;
+			let maks = -min;
+			// Går igjennom arrayen og finner min og maks
+			for (let verdi of tallArray) {
+				if (verdi < min) {
+					min = verdi;
+				}
+				if (verdi > maks) {
+					maks = verdi;
+				}
+			}
+			// Returnerer min og maks som en array!
+			return [min, maks];
+		}
+
+	console.log(storstMinst(resultat));
+	</script>
+</body>
+
+</html>

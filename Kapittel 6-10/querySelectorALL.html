@@ -18,10 +18,12 @@
 
     .gul{
         background-color: yellow;
+        color: black;
     }
 
     .rød{
         background-color: red;
+        color: white;
     }
     </style>
 </head>
@@ -34,21 +36,21 @@
     <p class="gul"> Trykk på meg! </p>
     <p class="gul"> Trykk på meg! </p>
     <script>
-    
+
         let alleAvsnitt = document.querySelectorAll(".gul");
 
         for (let pEl of alleAvsnitt){
             pEl.onclick = byttFarge;
         }
 
-    function byttFarge(event){
-        let pEl = event.target;
-        if(pEl.className == "gul"){
-            pEl.className = "rød";
-        }else{
-            pEl.className = "gul";
+        function byttFarge(event){
+            if(event.target.className === "gul"){
+                event.target.className = "rød"
+            }else{
+                event.target.className = "gul"
+            }
+
         }
-    }
 
     </script>
 </body>

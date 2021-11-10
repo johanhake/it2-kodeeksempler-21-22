@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,13 +8,13 @@
     <link rel="stylesheet" href="brukerinput.css">
     <title>querySelectorALL</title>
     <style>
-    body{
-        font-family: "Century Gothic", Arial, sans-serif;
-        font-size: 14px;
-    }
-
+        body {
+            font-family: "Century Gothic", Arial, sans-serif;
+            font-size: 14px;
+        }
     </style>
 </head>
+
 <body>
     <h3>Handleliste</h3>
     <div class="checkboxes"></div>
@@ -26,10 +27,29 @@
         let ulEl = document.querySelector("ul");
 
         // Handleliste!
-        let handleliste = ["melk", "smør", "monster", "cola", "sukker", "frukt"];
+        let handleliste = ["melk", "smør", "monster", "cola", "sukker", "frukt", "mel", "banan"];
 
+        for (let element of handleliste) {
+            console.log(element);
+            checkboxesDiv.innerHTML += `
+        <input type="checkbox"
+            onchange="endreVerdi()"
+            id="${element}">
+        <label for="${element}">${element}</label>`;
+        }
 
+        function endreVerdi() {
+            // Sletter alle verdier i listen
+            ulEl.innerHTML = "";
+            // Henter alle inputelement
+            let alleChecked = document.querySelectorAll("input[type=checkbox]:checked");
+            // Går igjennom alle input-elementene og sjekker om de er checked
+            for (let element of alleChecked) {
+                ulEl.innerHTML += `<li>${element.id}</li>`;
+            }
+        }
 
     </script>
 </body>
+
 </html>
