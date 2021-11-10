@@ -27,26 +27,43 @@
         let ulEl = document.querySelector("ul");
 
         // Handleliste!
-        let handleliste = ["melk", "smør", "monster", "cola", "sukker", "frukt", "mel", "banan"];
+        let handleliste = [["melk", 14],
+                   ["smør", 25],
+                   ["monster", 50],
+                   ["cola", 15],
+                   ["sukker", 20],
+                   ["frukt", 23]];
 
         for (let element of handleliste) {
             console.log(element);
+            let vare = element[0];
+            let pris = element[1];
+
             checkboxesDiv.innerHTML += `
-        <input type="checkbox"
-            onchange="endreVerdi()"
-            id="${element}">
-        <label for="${element}">${element}</label>`;
+            <input type="checkbox"
+                onchange="endreVerdi()"
+                id="${vare}"
+                data-vare="${vare}"
+                data-pris="${pris}">
+            <label for="${vare}">${vare} - ${pris} kr</label>`;
         }
 
         function endreVerdi() {
             // Sletter alle verdier i listen
             ulEl.innerHTML = "";
+
             // Henter alle inputelement
             let alleChecked = document.querySelectorAll("input[type=checkbox]:checked");
+
             // Går igjennom alle input-elementene og sjekker om de er checked
+            let sum = 0;
             for (let element of alleChecked) {
-                ulEl.innerHTML += `<li>${element.id}</li>`;
+                let vare = element.dataset.vare;
+                let pris = Number(element.dataset.pris);
+                sum += pris;
+                ulEl.innerHTML += `<li>${vare}</li>`;
             }
+            ulEl.innerHTML += `<li>Total pris: ${sum} kr</li>`;
         }
 
     </script>
