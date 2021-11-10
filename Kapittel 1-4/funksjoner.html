@@ -31,8 +31,12 @@ function nada(){
     return Math.random()*6+1;
 }
 
-function bada(haba, jaba){
-    return haba*jaba;
+// Test av lokale variabler
+let JABA = 5;
+
+function bada(haba){
+	let habaJaba = haba*JABA
+    return habaJaba;
 }
 
 // Eksempel på bruk:
@@ -40,7 +44,31 @@ jada();
 let tilfeldig = nada();
 let produkt = bada(4, 5);
 
+produkt = bada(4);
+//console.log("Prøver å vise verdien til en lokal variabel", habaJaba)
+console.log("Lokale variabler:", produkt)
 
+
+function snada(jada){
+    if (jada === "J"){
+        return "JADA";
+    }else{
+    	return "BADA";
+	}
+	return "NEVER!";
+}
+console.log("SNADA:", snada("J"), snada("j"))
+
+setTimeout(function(){
+	console.log("BADA! BADA!");
+}, 3000);
+
+function verdiTabell(funk, a, b){
+	for (let x=a; x<=b; x++){
+		console.log(a, " | ", funk(x))
+	}
+}
+verdiTabell(function(x){return -x*x+4})
 
 	</script>
 </body>

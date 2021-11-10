@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Kode 8.2</title>
+	<style>
+		body {
+			background-color: #323232;
+			color: #f2f2f2;
+			font-family: "Century Gothic", Arial, sans-serif;
+			font-size: 1.5em;
+		}
+
+		img {
+			cursor: pointer;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Monty Hall</h1>
+	<p>Hvilken dør vil du velge?</p>
+	<img id="rød" src="bilder/rod.png" onclick="sjekkDør(event)" alt="">
+	<img id="grønn" src="bilder/gronn.png" onclick="sjekkDør(event)" alt="">
+	<img id="blå" src="bilder/blaa.png" onclick="sjekkDør(event)" alt="">
+
+	<p id="info"></p>
+	<script>
+
+		// DOM
+		let infoTxt = document.querySelector("#info");
+		let rødImg = document.querySelector("#rød");
+		let grønnImg = document.querySelector("#grønn");
+		let blåImg = document.querySelector("#blå");
+
+        // Liste med dører
+        let dørListe = [rødImg, grønnImg, blåImg];
+
+		// Finner tilfeldig hvilken dør bilen er bak
+		let bilIndeks = Math.trunc(Math.random() * 3);
+
+		// Bilen er bak denne døren
+		let bilBakDør = dørListe[bilIndeks];
+
+		// Første lytterfunksjonen
+		function sjekkDør(event) {
+
+            // Går igjennom dørene og fjerne lytterfunksjonen
+            for (dør of dørListe){
+                dør.removeAttribute("onclick")
+            }
+
+            // Gir beskjed til brukeren
+            infoTxt.innerHTML = "Vil du beholde døren du valgte først eller vil du velge den andre døren?";
+
+            // Logger elementet som er knyttet til hendelsen
+			console.log(event.target);
+
+			// Henter ut verdien til id til elementet.
+			let fargeDør = event.target.id;
+			console.log("Døren du trykket på har fargen:", fargeDør)
+
+            // Finner indeksen til valgt dør
+            let valgtIndeks = dørListe.indexOf(event.target);
+
+            // Fjerner døren som ble valgt fra listen
+            dørListe.splice(valgtIndeks, 1);
+
+            // Registrerer andre lytterfunksjon til valgt dør
+            event.target.onclick = sjekkDørAndre;
+
+            // Variabel for å holde på indeks til dør som skal åpnes
+            let åpneIndeks;
+
+            // Bilen er bak døren du klikket på
+            if (event.target === bilBakDør){
+
+                // Trekker et tilfeldig dør av de to som er igjen
+                åpneIndeks = Math.trunc(Math.random()*2);
+
+            // Er bilen bak den første av de to dørene
+			}else if(dørListe[0] === bilBakDør){
+                åpneIndeks = 1;
+            }else{
+                åpneIndeks = 0;
+            }
+
+            // Åpner døren
+            dørListe[åpneIndeks].src = "bilder/geit.png";
+
+            // Registrere neste dør
+            dørListe[1-åpneIndeks].onclick = sjekkDørAndre;
+
+		}
+
+		// Andre lytterfunksjonen
+		function sjekkDørAndre(event) {
+
+            // Henter ut verdien til id til elementet.
+            event.target.removeAttribute("onclick")
+
+			if (event.target === bilBakDør){
+				event.target.src = "bilder/bil.png";
+				infoTxt.innerHTML = "JAAA! Du fant bilen!!";
+			}else{
+				event.target.src = "bilder/geit.png";
+				infoTxt.innerHTML = "Nei!! Du fant geiten...";
+			}
+        }
+
+	</script>
+</body>
+
+</html>
