@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="brukerinput.css">
+    <title>Karaktersnitt</title>
+    <style>
+        body{
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        form button {
+            display: none;
+        }
+
+        #beholder{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 10px;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        #toppDiv {
+            width: 50%;
+            margin: 0 auto;
+        }
+
+        #karakterListe{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Karaktersnittkalkulator</h1>
+    <div id="toppDiv">
+        <ul>
+            <li>Fyll inn minimum 6 programfag</li>
+            <li>Fyll inn minimum 5 eksamner</li>
+            <li>Fyll inn karakterene i alle fagene</li>
+            <li>Fyll inn eventuelle tilleggspoeng</li>
+            <li>Bergen inntakspoeng</li>
+        </ul>
+        <label for="programfagInp">Legg til programfag</label>
+        <input
+            onchange="leggTilProgramfag(event)"
+            type="text"
+            placeholder="Skriv inn et programfag"
+            id="programfagInp">
+        <label for="eksamensfagInp">Legg til eksamensfag</label>
+        <input
+            onchange="leggTilEksamensfag(event)"
+            type="text"
+            placeholder="Skriv inn et eksamensfag"
+            id="eksamensfagInp">
+    </div>
+    <div id="beholder">
+        <form>
+            <h2>Fag</h2>
+            <div id="karakterDiv"></div>
+            <div id="programfagDiv"></div>
+            <div id="eksamensfagDiv"></div>
+            <label for="ekstrapoengInp">Skriv inn ekstrapoeng</label>
+            <input id="ekstrapoengInp" type="number" value="0" min="0" step="0.5">
+            <button>Beregn snitt</button>
+        </form>
+        <div id="resultatDiv">
+            <h2>Karakterliste</h2>
+        </div>
+    </div>
+    <script>
+        // DOM
+        let karakterDiv = document.querySelector("#karakterDiv");
+
+        // Liste med fag som skal ha karakterer
+        let fagListe = ["Engelsk", "Geografi", "Historie Vg3", "Kroppsøving Vg3","Naturfag", "Matematikk Vg1", "Norsk hovedmål, skriftlig Vg3", "Norsk sidemål, skriftlig Vg3", "Norsk, muntlig Vg3", "Religion og etikk", "Samfunnsfag"];
+
+        // Mindre liste til testing!
+        fagListe = ["Engelsk", "Geografi", "Historie Vg3"];
+
+        // Minst antall av program og eksamensfag
+        let antallProgramfag = 0;
+        let antallEksamensfag = 0;
+        let minstAntallProgramfag = 1; // 6
+        let minstAntallEksamensfag = 1;  // 5
+
+        // Går igjennom fagene og legger til et karakterfelt
+        for (let fag of fagListe) {
+            leggTilKarakterfelt(fag, karakterDiv);
+        }
+
+        // Lytterfunksjon for å legge til et eksamensfag
+        function leggTilEksamensfag(event){
+            let fag = "Eksamensfag " + event.target.value;
+            event.target.value = "";
+            let eksamensfagDiv = document.querySelector("#eksamensfagDiv");
+            leggTilKarakterfelt(fag, eksamensfagDiv);
+            antallEksamensfag++;
+            sjekkNokkFag();
+        }
+
+        // Lytterfunksjon for å legge til et programfag
+        function leggTilProgramfag(event){
+            let fag = "Programfag " + event.target.value;
+            event.target.value = "";
+            let programfagDiv = document.querySelector("#programfagDiv");
+            leggTilKarakterfelt(fag, programfagDiv);
+            antallProgramfag++;
+            sjekkNokkFag();
+        }
+
+        // Legger til et inputfelt i diven "div" for en karakater i faget "fag"
+        function leggTilKarakterfelt(fag, div){
+            div.innerHTML += `
+            <label for="${fag}Inp">${fag}</label>
+            <select id="${fag}Inp" data-fag="${fag}" class="karakterSel" required>
+                <option value="">Velg karakter</option>
+                <option value="6">6</option>
+                <option value="5">5</option>
+                <option value="4">4</option>
+                <option value="3">3</option>
+                <option value="2">2</option>
+                <option value="1">1</option>
+            </select>
+            `;
+        }
+
+        // Sjekker om vi har lagt til nok eksamens og programfag
+        function sjekkNokkFag(){
+            if (antallProgramfag >= minstAntallProgramfag &&
+                antallEksamensfag >= minstAntallEksamensfag){
+                    let karakterSkjema = document.querySelector("form");
+                    let knapp = document.querySelector("form button");
+                    karakterSkjema.onsubmit = beregnKarakterSnitt;
+                    knapp.style.display = "block";
+                }
+        }
+
+        // Beregner karaktersnitt
+        function beregnKarakterSnitt(event){
+            event.preventDefault();
+
+            // DOM
+            let resultatDiv = document.querySelector("#resultatDiv");
+            let karakterSelListe = document.querySelectorAll(".karakterSel");
+            let ekstrapoengInp = document.querySelector("#ekstrapoengInp");
+
+            // Summen av alle karakterene
+            let sumKarakterer = 0;
+
+            // Liste for alle fagene (for sortering...)
+            // Denne listen trenges IKKE hvis man ikke skal sortere karakterene...
+            let fagMedKarakter = [];
+
+            // Går igjennom alle karakterene fra select feltene og summerer
+            for (let fagSel of karakterSelListe) {
+                let fag = fagSel.dataset.fag;
+                let karakter = Number(fagSel.value);
+                sumKarakterer += karakter;
+                fagMedKarakter.push([fag, karakter]);
+            }
+
+            // Sorterer fagene (IKKE pensum til heldagsprøven)
+            fagMedKarakter.sort(function(a, b){return b[1]-a[1]});
+
+            // Beregner gjennomsnittet
+            let karakterGjennomsnitt = sumKarakterer / karakterSelListe.length;
+            let inntaksPoeng = karakterGjennomsnitt*10 + Number(ekstrapoengInp.value);
+
+            // Bygger opp karakterlisten
+            let karakterliste = "<div id='karakterListe'>";
+            for (let fagKarakter of fagMedKarakter) {
+                let fag = fagKarakter[0];
+                let karakter = fagKarakter[1];
+                karakterliste += `<div>${fag}</div><div>${karakter}</div>`
+            }
+
+            // Legger til karaktersnittet under den sorterte listen.
+            karakterliste += `<div><b>Snitt</b></div>
+            <div><b>${Math.round(karakterGjennomsnitt*10)/10}</b></div>`
+            karakterliste += "</div>";
+
+            // Fjerner ev tidligere registrerte karakterer
+            resultatDiv.innerHTML = "<h2>Karakterliste</h2>" + karakterliste;
+            resultatDiv.innerHTML += "<h2>Inntakspoeng</h2>" + Math.round(inntaksPoeng*10)/10;
+        }
+
+</script>
+</body>
+</html>
