@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="brukerinput.css">
+	<title>Hyttebooking</title>
+	<style>
+		body {
+			font-family: Verdana, Geneva, Tahoma, sans-serif;
+			width: 75%;
+			margin: 0 auto;
+		}
+
+		table {
+			border-collapse: collapse;
+		}
+
+		td,
+		th {
+			width: 200px;
+			border: 1px solid black;
+		}
+
+		thead tr {
+			background-color: #2B547E;
+			color: white;
+		}
+
+		tbody tr:nth-child(odd) {
+			background-color: lightblue;
+		}
+
+		tbody tr td:nth-child(6) {
+			text-align: center;
+		}
+	</style>
+
+</head>
+
+<body>
+	<h1>Hyttebooking</h1>
+	<h2>Velg sessong</h2>
+	<select id="sessong" onchange="visLedigeHytter()">
+		<option value="">Velg sessong</option>
+		<option value="0">Jul</option>
+		<option value="1">Vinterferie</option>
+		<option value="2">Påske</option>
+	</select>
+
+	<h2 id="hytteTxt">Velg hytte</h2>
+	<table>
+		<thead>
+			<tr>
+				<th>Hytte</th>
+				<th>Sengeplasser</th>
+				<th>Standard</th>
+				<th>Badstue</th>
+				<th>Ukepris</th>
+				<th>Book</th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+
+
+
+	<script>
+
+		// DOM
+		let sessongSel = document.querySelector("#sessong");
+		let hytteTabell = document.querySelector("table tbody")
+		let hytteTxt = document.querySelector("#hytteTxt")
+
+		// Data
+		let sessonger = ["Julen", "Vinterferieen", "Påsken"];
+
+		let hytteEgenskaper = [
+			["Granstua", 4, "Høy", "Ja", 12000],
+			["Granbo", 6, "Middels", "Nei", 15000],
+			["Grantoppen", 8, "Lav", "Nei", 16000],
+			["Granhaug", 10, "Høy", "Ja", 30000],
+		];
+
+		let tilgjengelige = [
+			[false, false, true],
+			[true, true, false],
+			[false, true, false],
+			[false, true, false],
+		];
+
+		// Lytterfunksjon for booking av hytte
+		function bookHytte(hytteNr) {
+			tilgjengelige[hytteNr][sessongSel.value] = false;
+			visLedigeHytter();
+		}
+
+		// Skriver ut de ledige hyttene i tabellen
+		function visLedigeHytter() {
+
+			// Sletter tabell
+			hytteTabell.innerHTML = "";
+
+			// Sjekker at brukeren har valgt en sessong
+			if (sessongSel.value === "") {
+				hytteTxt.innerHTML = "Velg sessong"
+				return;
+			}
+			hytteTxt.innerHTML = "Ledige hytter i " + sessonger[sessongSel.value];
+			for (let hytteNr = 0; hytteNr < hytteEgenskaper.length; hytteNr++) {
+
+				let hytte = hytteEgenskaper[hytteNr];
+				let tilgjengeligStr = "Ikke tilgjengelig";
+
+				// Sjekker tilgjengelighet
+				if (tilgjengelige[hytteNr][sessongSel.value]) {
+					tilgjengeligStr = `<button onclick="bookHytte(${hytteNr})">Book ${hytte[0]}</button>`;
+				}
+				hytteTabell.innerHTML += `<tr>
+						<td>${hytte[0]}</td>
+						<td>${hytte[1]}</td>
+						<td>${hytte[2]}</td>
+						<td>${hytte[3]}</td>
+						<td>${hytte[4]}</td>
+						<td>${tilgjengeligStr}</td>
+					</tr>`;
+
+			}
+		}
+	</script>
+</body>
+
+</html>

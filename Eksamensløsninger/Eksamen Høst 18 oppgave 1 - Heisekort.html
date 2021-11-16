@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="brukerinput.css">
+	<title>Heiskort</title>
+	<style>
+		body {
+			font-family: Verdana, Geneva, Tahoma, sans-serif;
+			width: 50%;
+			margin: 0 auto;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Heiskort</h1>
+	<form onsubmit="bestill(event)">
+		<label for="dager">Antall dager</label>
+		<select id="dager" required>
+			<option value="">Velg antall dager</option>
+			<option value="1">1 dag</option>
+			<option value="2">2 dager</option>
+			<option value="3">3 dager</option>
+			<option value="4">4 dager</option>
+			<option value="5">5 dager</option>
+			<option value="6">6 dager</option>
+			<option value="7">7 dager</option>
+		</select>
+		<label for="alder">Alder</label>
+		<select id="alder" required>
+			<option value="">Velg alder</option>
+			<option value="barn">Barn -> 12år (100 kr/dag)</option>
+			<option value="voksen">Voksen 12 år -> (200 kr/dag)</option>
+		</select>
+		<button>Bestill</button>
+	</form>
+	<p id="info"></p>
+	<script>
+
+		// DOM
+		let infoTxt = document.querySelector("#info");
+
+		// Lytterfunksjon for bestilling av heisekort
+		function bestill(event){
+			event.preventDefault();
+			let skjema = event.target;
+			let makspris, pris;
+			let avslagsBeskjed = "";
+			if (skjema.alder.value === "barn"){
+				makspris = 500;
+				pris = 100*Number(skjema.dager.value);
+			}else{
+				makspris = 1000;
+				pris = 200*Number(skjema.dager.value);
+			}
+
+			// Sjekke makspris
+			if(makspris < pris){
+				avslagsBeskjed = ` Du fikk avslag på ${pris-makspris} kr.`
+				pris = makspris;
+			}
+
+			// Skriver ut en beskjed
+			infoTxt.innerHTML = `Heisekortet koster: ${pris}. ${avslagsBeskjed}`
+		}
+	</script>
+</body>
+
+</html>
