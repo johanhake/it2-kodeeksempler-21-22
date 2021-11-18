@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 3</title>
+    <link rel="stylesheet" href="brukerinput.css">
+    <style>
+        * {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        #txtTreningsøkt {
+            display: none;
+        }
+
+        table {
+            border-collapse: collapse;
+            border: 1px solid black;
+            margin: 1em 0
+        }
+
+        td,
+        th {
+            border: 1px solid black;
+            width: 10em;
+            text-align: center;
+        }
+
+        th {
+            background-color: lightslategray;
+            color: white;
+        }
+
+        tr:nth-child(odd) {
+            background-color: lightgrey;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>Valg av muskelgruppe og øvelse</h3>
+    <form onsubmit="velgAktivitet(event)">
+        <select id="muskelgruppe" onchange=velgMuskelgrupp(event) required>
+            <option value="">Velg muskelgruppe</option>
+        </select>
+        <select id="aktivitet" required>
+            <option value="">Velg muskelgruppe først</option>
+        </select>
+        <button>Velg aktivitet</button>
+    </form>
+    <div id="txtTreningsøkt">
+        <h3>Valgt muskelgruppe og aktivitet</h3>
+        <div id="txtVisAktivitet"></div>
+        <form onsubmit="registrerSett(event)">
+            <label for="inpRepetisjoner">Antall repetisjoner</label>
+            <input type="number" min=1 max=15 id="inpRepetisjoner" placeholder="repetisjoner">
+            <label for="inpMotstand">Motstand (kg)</label>
+            <input type="number" min=5 max=150 step="5" id="inpMotstand" placeholder="motstand">
+            <button>Registrer sett</button>
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>Sett</th>
+                    <th>Repetisjoner</th>
+                    <th>Motstand</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <div>Treningsvolum: <span id="txtTreningsvolum"></span> kg</div>
+    </div>
+</body>
+<script>
+    // DOM
+    let selMuskelgruppe = document.querySelector("#muskelgruppe");
+    let txtVisAktivitet = document.querySelector("#txtVisAktivitet");
+    let txtTreningsøkt = document.querySelector("#txtTreningsøkt");
+    let tblTreningsøkt = document.querySelector("tbody");
+    let txtTreningsvolum = document.querySelector("#txtTreningsvolum");
+
+    // Variabler
+    let muskelgrupper = ["Armer", "Skuldre", "Ben", "Rygg", "Bryst"];
+    let aktiviteter = [
+        ["Bicepscurl med stang", "Fransk press"],
+        ["Stående militærpress", "Sidehev"],
+        ["Knebøy", "Leg extension", "Leg curl"],
+        ["Nedtrekk", "Roing"],
+        ["Benkpress", "Flies", "Push up"]
+    ];
+
+    let treningsvolum = 0;
+    let antallSett = 0
+
+    // Legger til muskelgrupper i select-menyen
+    for (let i=0; i < muskelgrupper.length; i++) {
+        let grupp = muskelgrupper[i];
+        selMuskelgruppe.innerHTML += `<option value="${i}">${grupp}</option>`;
+    }
+
+    // Lytterfunksjon for det å ha valgt en muskelgrupp
+    function velgMuskelgrupp(event) {
+
+        let selAktivitet = document.querySelector("#aktivitet");
+
+        // Tallet på valgt muskelgrupp
+        let valgtMuskelgruppe = Number(event.target.value);
+        selAktivitet.innerHTML = "<option value=''>Velg aktivitet</option>";
+
+        // Legger til muskelgrupper i select-menyen
+        for (let aktivitet of aktiviteter[valgtMuskelgruppe]) {
+            selAktivitet.innerHTML += `<option value="${aktivitet}">${aktivitet}</option>`;
+        }
+    }
+
+    // Lytterfunksjon for det å ha valgt en aktivitet
+    function velgAktivitet(event) {
+
+        // Hindrer siden å lastes på nytt
+        event.preventDefault();
+        let skjema = event.target;
+
+        // Skriver til info feltet
+        let muskelgrupp = muskelgrupper[Number(skjema.muskelgruppe.value)];
+        txtVisAktivitet.innerHTML = `${muskelgrupp}: ${skjema.aktivitet.value}`;
+
+        // Sletter aktivitetsmenyen og nullstiller valg
+        skjema.aktivitet.innerHTML = "<option value=''>Velg muskelgruppe først</option>";
+        skjema.reset();
+
+        // Sletter eksisterende tabell og nullstiller variabler
+        tblTreningsøkt.innerHTML = "";
+        treningsvolum = 0;
+        txtTreningsvolum.innerHTML = 0;
+        antallSett = 0;
+        txtTreningsøkt.style.display = "block";
+
+    }
+
+    // Lytterfunksjon for å registrere et sett
+    function registrerSett(event) {
+        event.preventDefault();
+        let skjema = event.target;
+
+        antallSett++;
+        treningsvolum += Number(skjema.inpMotstand.value) * Number(skjema.inpRepetisjoner.value);
+        txtTreningsvolum.innerHTML = treningsvolum;
+        tblTreningsøkt.innerHTML += `
+<tr>
+    <td>Sett ${antallSett}</td>
+    <td>${inpRepetisjoner.value}</td>
+    <td>${inpMotstand.value}</td>
+</tr>`;
+
+        skjema.reset();
+    }
+</script>
+
+</html>
