@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="brukerinput.css">
+    <title>Oppgave 3</title>
+    <style>
+        html {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            width: 300px;
+            margin: 0 auto;
+        }
+
+        body > main > img {
+            width: 100%;
+            border-width: 8px;
+            border-color: black;
+            border-style: solid;
+        }
+
+        body > main > div > img {
+            width: 25px;
+            margin-right: 5px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        button{
+            display: block;
+            width: 150px;
+            margin: 30px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Fuglequiz</h2>
+    <main>
+        <h3>Gjett fuglen!</h3>
+        <img src="" alt="">
+        <div class="checkboxes"></div>
+        <button onclick="gjettFugl()">Gjett</button>
+        <button class="avbryt" onclick="avsluttQuiz()">Avslutte Quiz</button>
+    </main>
+
+    <script>
+
+        // DOM
+        let checkboxes = document.querySelector(".checkboxes");
+        let fugleImg = document.querySelector("img");
+        let main = document.querySelector("main");
+
+        // Liste med alle fuglenavnene til bildene
+        let bilder = ["graspurv", "gulspurv", "blameis", "pilfink", "kjottmeis", "flaggspett", "dompap", "svartmeis"];
+
+        // Liste med alle fuglenavnene til overskrifter
+        let fugler = ["Gråspurv", "Gulspurv", "Blåmeis", "Pilfink", "Kjøttmeis", "Flaggspett", "Dompap", "Svartmeis"];
+
+        // Poeng variabler
+        let antallFeil = 0;
+        let antallRiktige = 0;
+
+        // Tilgjengelige indekser for nye fugler (global variabel (fy fy fy!!!))
+        let tilgjengeligeIndekser = nyeIndekser();
+
+        // Lager en ny fugl
+        nyFugl();
+
+        // Lager radioknapper for besvarelsen
+        for (let fugl of fugler) {
+            checkboxes.innerHTML += `<input type="radio" id="${fugl}" name="fugler">
+                           <label for="${fugl}">${fugl}</label>`;
+        }
+
+        // Checker av første valg i radio knappene.
+        document.querySelectorAll("input[type=radio]")[0].checked = true;
+
+        // Lytterfunksjon for å gjette på en fugl
+        function gjettFugl() {
+
+            let gjetting = document.querySelector("input[type=radio]:checked");
+            if (gjetting.id === fugleImg.dataset.fugl) {
+                antallRiktige += 1;
+                fugleImg.style.borderColor = "#66BB00";
+            } else {
+                antallFeil += 1;
+                fugleImg.style.borderColor = "#CC0000";
+            }
+
+            // Lager en ny fugl
+            setTimeout(nyFugl, 2000);
+        }
+
+        // Funksjon som lager en ny fugl
+        function nyFugl() {
+            fugleImg.style.borderColor = "black";
+
+            // Lager en ny fugl
+            let fugleIndeks = nyFugleIndeks();
+            fugleImg.src = `bilder/${bilder[fugleIndeks]}.jpg`;
+            fugleImg.dataset.fugl = fugler[fugleIndeks];
+
+        }
+
+        // Returnerer en liste med nye indekser
+        function nyeIndekser() {
+            let indekser = [];
+            for (let i = 0; i < fugler.length; i++) {
+                indekser.push(i);
+            }
+
+            return indekser;
+        }
+
+        // Ny fuglindeks
+        function nyFugleIndeks() {
+
+            if (tilgjengeligeIndekser.length < 1) {
+
+            }
+
+            // Nytt tilfeldig indeks inn i tilgjengelige indekser
+            let i = Math.trunc(Math.random() * tilgjengeligeIndekser.length);
+
+            // Henter ut fugle indeks fra tilgjengelige indekser
+            let fugleIndeks = tilgjengeligeIndekser[i];
+
+            // Fjerner indeksen fra tilgjengelige indekser
+            tilgjengeligeIndekser.splice(i, 1);
+
+            return fugleIndeks;
+        }
+
+        // Avslutte applikasjonen
+        function avsluttQuiz(){
+
+            let riktigImgSrc = "";
+            for (let i=0; i<antallRiktige; i++){
+                riktigImgSrc += `<img src="bilder/hvit_fjar.jpg">`;
+            }
+
+            let feilImgSrc = "";
+            for (let i=0; i < antallFeil; i++){
+                feilImgSrc += `<img src="bilder/sort_fjar.jpg">`;
+            }
+
+            main.innerHTML = `
+            <div>
+                <h3>Antall riktige: ${antallRiktige}</h3>
+                ${riktigImgSrc}
+                <h3>Antall gale svar: ${antallFeil}</h3>
+                ${feilImgSrc}
+            `;
+        }
+
+    </script>
+</body>
+
+</html>

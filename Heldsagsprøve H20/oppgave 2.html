@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="brukerinput.css">
+    <title>Oppgave 2</title>
+    <style>
+        html{
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body{
+            width: 900px;
+            margin: 0 auto;
+        }
+
+        body img {
+            width: 100%;
+        }
+
+        h2{
+            text-align: center;
+        }
+
+        main{
+            display: grid;
+            grid-template-columns: repeat(4, 200px);
+            gap: 10px
+        }
+
+        main img{
+            width: 100%;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Lær deg om trekkfugler</h2>
+    <main></main>
+    <h3></h3>
+    <p></p>
+    <button onclick="avslutt()">Avslutt</button>
+    <script>
+
+        // DOM
+        let main = document.querySelector("main");
+        let overskrift = document.querySelector("h3");
+        let tekst = document.querySelector("p");
+
+        // Liste med alle fuglenavnene til bildene
+        let bilder = ["graspurv", "gulspurv", "blameis", "pilfink", "kjottmeis", "flaggspett", "dompap", "svartmeis"];
+
+        // Liste med alle fuglenavnene til overskrifter
+        let fugler = ["Gråspurv", "Gulspurv", "Blåmeis", "Pilfink", "Kjøttmeis", "Flaggspett", "Dompap", "Svartmeis"];
+
+        // Liste med beskrivelser
+        let beskrivelser = [
+            "Gråspurv eller spurv er en fugleart i spurvefamilien. Den er hjemmehørende i Europa, Asia og Nord-Afrika, men arten har også blitt innført til eller utilsiktet spredt til andre deler av Afrika, Amerika og Australia.",
+            "Den er 17-18 cm lang og har et vingespenn på 23-30 cm. Vekten kan komme opp i 30 gram. Gulspurven finnes i åpent terreng med busker el. nær dyrket mark over det meste av landet.",
+            "Blåmeisen er en fugl i meisefamilien. Den er lyseblå på issen, vingene og stjerten. Brystet og buken er gul. Hunnens farger er mye blekere enn hannen.",
+            "Pilfink tilhører spurvefamilien. Lever i Europa, Sibir og andre deler av Asia, har blitt satt ut i Australia. Pilfinken er 139-155 mm lang, med ett vingespenn på 20-22 cm og veier 20 gram.",
+            "Kjøttmeis er en fugl i meisefamilien. I Norge finnes den i hele landet. Kalles også kjøtterik, tertitt, musvitt og talgokse. Lengden er cirka 15 cm, og vekten er fra 14 til 20 g. Fuglen er den største i meisefamilien.",
+            "Flaggspetten er en mellomstor spette og den mest tallrike av spettene i Europa. Ryggen er svart med et stort hvitt felt på hver vinge. Undersiden er hvit med kraftig rød undergump. ",
+            "Dompap er en fugl i finkefamilien. Lengden er ca. 16 cm, og vekten er rundt 21 gram, altså på størrelse med de mindre trostefuglene. Dompapen er lett å kjenne igjen når man først får øye på den. ",
+            "Svartmeis er en fugl i meisefamilien. Lengden er ca. 11 cm, og vekten er ca. 9 gram. Den er med dette den minste i meisefamilien. Svartmeisen har en kort stjert. Hodet er svart med hvite kinnflekker og fuglen har en hvit flekk i nakken. "
+        ];
+
+        // Lager alle fuglebildene 
+        for (let i=0; i < bilder.length; i++) {
+            main.innerHTML += `<img onclick="velgFugl(${i})" src="bilder/${bilder[i]}.jpg">`;
+        }
+
+        // Lytterfunksjon for det å klikke på et bilde
+        function velgFugl(indeks){
+            overskrift.innerHTML = fugler[indeks];
+            tekst.innerHTML = beskrivelser[indeks];
+            setTimeout(fjernInfo, 3000);
+        }
+
+        function fjernInfo(){
+            overskrift.innerHTML = "";
+            tekst.innerHTML = "";
+        }
+
+        // Avslutter hele applikasjonen
+        function avslutt(){
+            document.body.innerHTML = "<h2>God Jul</h2><img src='bilder/god_jul.jpg'>"
+        }
+
+    </script>
+</body>
+
+</html>

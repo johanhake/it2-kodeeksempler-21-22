@@ -1,0 +1,24 @@
+VARIABLER:
+    inpNavn: Input element for navn 
+    navn: Navnet til brukeren
+    selSted: Select element for det å velge sted hvor man er ifra
+    klubbnavn: Navnet til klubben brukeren registrerer seg i
+    inpObservasjoner: Input element for antall inpObservasjoner
+    observasjoner: Antall observasjoner brukeren har gjort
+    tittel: Holder verdien til hvilken tittel brukeren får
+    meldingTxt: P-element for melding til brukeren
+
+HENDELSE SendInn: 
+    navn = inpNavn.value
+    klubbNavn = selSted.value
+    observasjoner = Number(inpObservasjoner.value)
+
+    IF observasjoner <= 10:
+        tittel = "Lavkikker"
+    ELSE IF observasjoner <= 25:
+        tittel = "Middelskikker"
+    ELSE
+        tittel = "Superkikker"
+    
+    meldingTxt.innerHTML = Skriver ut melding til brukeren basert på verdiene til variablene
+

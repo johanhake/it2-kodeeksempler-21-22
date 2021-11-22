@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 1</title>
+    <link rel="stylesheet" href="brukerinput.css">
+    <style>
+        html{
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        img{
+            width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Innmelding i fuglekikkeklubb</h1>
+    <img src="bilder/flaggspett.jpg" alt="">
+    <form onsubmit="sendInn(event)">
+        <label for="inpNavn">Navn</label>
+        <input type="text" id="inpNavn" placeholder="Skriv navnet..." required>
+        
+        <label for="selSted">Velg sted</label>
+        <select id="selSted" required>
+            <option value="">Velg sted</option>
+            <option value="Østlandsspettene">Østlandet</option>
+            <option value="Vestlandsfinkene">Vestlandet</option>
+            <option value="De bløde spurvene">Sørlandet</option>
+            <option value="De stolte Lundefuglene">Nord-Norge</option>
+        </select>
+        
+        <label for="inpObservasjoner">Antall observasjoner</label>
+        <input id="inpObservasjoner" type="number" min="0" max="100" placeholder="Antall observasjoner..." required>
+
+        <button>Meld inn</button>
+        <p id="melding"></p>
+    </form>
+    <script>
+        // Lytterfunksjon for å sende inn ett skjema
+        function sendInn(event){
+            event.preventDefault();
+            let skjema = event.target;
+
+            // Henter ut verdier fra skjemaet
+            let navn = skjema.inpNavn.value;
+            let klubbnavn = skjema.selSted.value;
+            let observasjoner = Number(skjema.inpObservasjoner.value);
+
+            // Finner tittelen avhenging av alderen
+            let tittel;
+            if (observasjoner<=10){
+                tittel = "Lavkikker";
+            }else if(observasjoner<=25){
+                tittel = "Middelskikker";
+            }else{
+                tittel = "Superkikker";
+            }
+
+            // Skriver ut informasjonen til brukeren
+            document.querySelector("#melding").innerHTML = `${navn}!<br>
+Velkommen til "${klubbnavn}".<br>
+Med ${observasjoner} fugleobservasjoner har du ambisjoner om å bli en "${tittel}"!<br>
+Lykke til!`;
+
+        }
+    </script>
+</body>
+</html>
