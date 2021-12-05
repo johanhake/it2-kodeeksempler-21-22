@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lydavspilling</title>
+    <style>
+        main {
+            width: 50%;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            align-items: end;
+        }
+
+        main img {
+            width: 100%;
+        }
+
+        main img:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <img src="bilder/bass_blek.png" onclick="spillLyd(event)" data-instrument="bass" alt="">
+        <img src="bilder/gitar_blek.png" onclick="spillLyd(event)" data-instrument="gitar" alt="">
+        <img src="bilder/orgel_blek.png" onclick="spillLyd(event)" data-instrument="orgel" alt="">
+        <img src="bilder/trommer_blek.png" onclick="spillLyd(event)" data-instrument="trommer" alt="">
+        <img src="bilder/piano_blek.png" onclick="spillLyd(event)" data-instrument="piano" alt="">
+    </main>
+
+
+    <audio src="lyd/bass.mp3" id="bass"></audio>
+    <audio src="lyd/gitar.mp3" id="gitar"></audio>
+    <audio src="lyd/orgel.mp3" id="orgel"></audio>
+    <audio src="lyd/trommer.mp3" id="trommer"></audio>
+    <audio src="lyd/piano.mp3" id="piano"></audio>
+
+    <script>
+
+        // Sette på/av instrumenter
+        function spillLyd(event) {
+
+            // Henter ut informasjon om bilden som er klikket.
+            let bilde = event.target;
+            let instrument = bilde.dataset.instrument;
+            let audioKlikk = document.getElementById(instrument);
+
+        }
+
+    </script>
+</body>
+
+</html>
