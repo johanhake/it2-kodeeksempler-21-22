@@ -32,12 +32,11 @@
         <img src="bilder/piano_blek.png" onclick="spillLyd(event)" data-instrument="piano" alt="">
     </main>
 
-
-    <audio src="lyd/bass.mp3" id="bass"></audio>
-    <audio src="lyd/gitar.mp3" id="gitar"></audio>
-    <audio src="lyd/orgel.mp3" id="orgel"></audio>
-    <audio src="lyd/trommer.mp3" id="trommer"></audio>
-    <audio src="lyd/piano.mp3" id="piano"></audio>
+    <audio src="lyd/bass.mp3" id="bass" loop></audio>
+    <audio src="lyd/gitar.mp3" id="gitar" loop></audio>
+    <audio src="lyd/orgel.mp3" id="orgel" loop></audio>
+    <audio src="lyd/trommer.mp3" id="trommer" loop></audio>
+    <audio src="lyd/piano.mp3" id="piano" loop></audio>
 
     <script>
 
@@ -48,6 +47,14 @@
             let bilde = event.target;
             let instrument = bilde.dataset.instrument;
             let audioKlikk = document.getElementById(instrument);
+
+            if (audioKlikk.paused){
+                audioKlikk.play();
+                bilde.src = `bilder/${instrument}_sort.png`;
+            }else{
+                audioKlikk.pause();
+                bilde.src = `bilder/${instrument}_blek.png`;
+            }
 
         }
 
