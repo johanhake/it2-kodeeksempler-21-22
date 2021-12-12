@@ -1,0 +1,36 @@
+PSEUDOKODE FOR OPPGAVE 2
+
+VARIABLER: 
+   valgIgjen:   Antall valg brukeren har igjen
+   gevinstTall: Tilfeldig tall som viser hvor vinsten er
+   imgEl:       Bilde-elementet som brukeren har klikket på
+   valgtBilde:  Nummeret til bildet som blir klikket på
+   gevinst:     Hvilken gevinst vant brukeren
+   beskjedTxt:  Element for å gi brukeren beskjed
+
+
+HENDELSE: Spiller klikker på et bilde
+    imgEl = får bildet fra event
+    valgtBilde = Nummeret til det valgte bildet
+    IF valgtBilde === gevinstTall
+        IF valgIgjen === 3
+            gevinst = "Elbil"
+            imgEl.src = "elbil.jpg"
+        ELSE IF valgIgjen === 2
+            gevinst = "Elsykkel"
+            imgEl.src = "elsykkel.jpg"
+        ELSE 
+            gevinst = "Trehjuling"
+            imgEl.src = "trehjuling.jpg"
+        beskjedTxt.innerHTML = "Du vant" + gevinst
+    ELSE
+        valgIgjen -= 1;
+        imgEl.src = "sadface.jpg"
+
+        IF valgIgjen === 0
+            beskjedTxt.innerHTML = "Du vant ikke noe..."
+        
+KOMMENTAR: 
+    Jeg har ikke lagt inn avregistrering av lytterfunksjoner. Det kan man ha 
+    men poenget her er å vise i store drag hvordan logikken til "spillet" virker
+            

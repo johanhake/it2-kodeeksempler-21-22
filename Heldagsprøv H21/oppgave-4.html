@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tesla til alle lærere!</title>
+    <style>
+    body{
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+
+    #valg{
+        display: none;
+    }
+    </style>
+</head>
+<body>
+    <h1>Tesla til en lærer!</h1>
+
+    <label for="stillingSel">Hva er stillingen til læreren?</label>
+    <select id="stillingSel" onchange="endreStilling(event)">
+        <option value="">Velg stilling</option>
+        <option value="0">Lektor med tileggsutdanning</option>
+        <option value="1">Lektor</option>
+        <option value="2">Adjunkt</option>
+    </select>
+
+    <div id="valg">
+        <h2></h2>
+        <label for="modelSel">Model</label>
+        <select id="modelSel" onchange="endreValg()"></select>
+        <label for="fargeSel">Velg farge</label>
+        <select id="fargeSel" onchange="endreValg()"></select>
+        <label for="interiørSel">Velg interiør</label>
+        <select id="interiørSel" onchange="endreValg()"></select>
+        <label for="">Totalpris</label>
+        <p></p>
+    </div>
+
+    <script>
+
+        // Variabler
+        let stillingsTyper = ["Lektor med tileggsutdanning", "Lektor", "Adjunkt"];
+        let teslaModellListe = ["Model X", "Model S", "Model 3"];
+
+        // Model valg og priser
+        let modelLister = [
+            ["Plaid", "Long range"],
+            ["Plais", "Long range"],
+            ["Performance", "Long range"]
+        ];
+        let modelPrisLister = [
+            [1200000, 1100000],
+            [1300000, 980000],
+            [500000, 450000]
+        ];
+
+
+        // Fargevalg og priser
+        let fargeValgLister = [
+            ["Hvit", "Sort", "Sølv", "Blå", "Rød"],
+            ["Hvit", "Sort", "Sølv", "Blå", "Rød"],
+            ["Hvit", "Sort", "Sølv", "Blå", "Rød"]
+        ];
+        let fargePrisLister = [
+            [0, 12500, 12500, 12500, 21000],
+            [0, 12500, 12500, 12500, 21000],
+            [0, 10000, 10000, 10000, 18500]
+        ];
+
+        // Interiør valg og priser
+        let interiørValgLister = [
+            ["Helsort", "Sort og Hvitt", "Krem"],
+            ["Helsort", "Sort og Hvitt", "Krem"],
+            ["Helsort", "Sort og Hvitt"]
+        ];
+        let interiørPrisLister = [
+            [0, 17500, 17500],
+            [0, 12500, 12500],
+            [0, 10000]
+        ];
+
+        // DOM
+        let valgDiv = document.querySelector("#valg");
+        let stillingSel = document.querySelector("#stillingSel");
+        let modelSel = document.querySelector("#modelSel");
+        let fargeSel = document.querySelector("#fargeSel");
+        let interiørSel = document.querySelector("#interiørSel");
+        let overskrift = document.querySelector("#valg h2");
+
+        // Endrer stillingen
+        function endreStilling(event){
+
+            // Finner hva som er valgt
+            let modelValg = event.target.value;
+
+            // Hvis det ikke er valgt noe
+            if(valg === ""){
+                valgDiv.style.display = "none";
+            }else{
+                valgDiv.style.display = "block";
+                modelSel.innerHTML = "";
+                fargeSel.innerHTML = "";
+                interiørSel.innerHTML = "";
+                overskrift.innerHTML = teslaModellListe[modelValg];
+
+                // Går igjennom alle model valgene og legger til korrekt valg
+                for (let i = 0; i < modelLister[modelValg].length; i++) {
+                    let model = modelLister[modelValg][i];
+                    let modelPris = modelPrisLister[modelValg][i];
+                    modelSel.innerHTML += `<option value=${i}>${model} - ${modelPris} kr</option>`;
+                }
+
+                // Går igjennom alle fargene og interiørvalgene og legger til de i select menyene
+                for (let i = 0; i < fargeValgLister[modelValg].length; i++) {
+                    let fargeValg = fargeValgLister[modelValg][i];
+                    let fargePris = fargePrisLister[modelValg][i];
+                    fargeSel.innerHTML += `<option value="${i}">${fargeValg} - ${fargePris} kr</option>`
+                }
+
+                for (let i = 0; i < interiørValgLister[modelValg].length; i++) {
+                    let interiørValg = interiørValgLister[modelValg][i];
+                    let interiørPris = interiørPrisLister[modelValg][i];
+                    interiørSel.innerHTML += `<option value="${i}">${interiørValg} - ${interiørPris} kr</option>`;
+                }
+                endreValg()
+            }
+        }
+
+        // Finner valgene og beregner totalprisen
+        function endreValg(){
+            let modelValg = stillingSel.value
+            let stilling = stillingsTyper[modelValg];
+            let teslaModel = teslaModellListe[modelValg];
+
+            let model = modelLister[modelValg][modelSel.value];
+            let modelPris = modelPrisLister[modelValg][modelSel.value];
+
+            let farge = fargeValgLister[modelValg][fargeSel.value];
+            let fargePris = fargePrisLister[modelValg][fargeSel.value];
+
+            let interiør = interiørValgLister[modelValg][interiørSel.value];
+            let interiørPris = interiørPrisLister[modelValg][interiørSel.value];
+
+            document.querySelector("div p").innerHTML = `
+            Du er en ${stilling} og får derfor en ${teslaModel}<br>
+            Du har valgt: En ${farge} ${model} modell med ${interiør} interiør<br>
+            Herligheten vil koste fylket: ${modelPris + fargePris + interiørPris} kr
+            `;
+        }
+    </script>
+</body>
+</html>

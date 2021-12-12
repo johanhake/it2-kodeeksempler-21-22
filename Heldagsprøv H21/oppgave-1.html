@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="brukerinput.css">
+    <title>Klimakalkulator</title>
+    <style>
+    body{
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+    </style>
+</head>
+<body>
+    <h1>Klimakalkulator</h1>
+    <h2>Oppgi hvilken type middager du spiser i uken og hvor mange utlandsflyreiser du gjør.</h2>
+    <form onsubmit="beregnKlimaavtrykk(event)">
+        <label for="kjøttInp">Kjøtt</label>
+        <input type="number" id="kjøttInp" min="0" placeholder="Antall middager">
+        <label for="fiskInp">Fisk</label>
+        <input type="number" id="fiskInp" min="0" placeholder="Antall middager">
+        <label for="vegInp">Vegetar</label>
+        <input type="number" id="vegInp" min="0" placeholder="Antall middager">
+        <label for="">Antall utlandsflyreiser</label>
+        <input type="number" id="flyreiserInp" min="0" placeholder="Antall utlandsflyreiser">
+        <button>Sjekk!</button>
+    </form>
+    <p></p>
+    <script>
+
+    // Beregner klimaavtrykket
+    function beregnKlimaavtrykk(event){
+        event.preventDefault();
+
+        let antallKjøttMiddager = Number(document.querySelector("#kjøttInp").value);
+        let antallFiskMiddager = Number(document.querySelector("#fiskInp").value);
+        let antallVegMiddager = Number(document.querySelector("#vegInp").value);
+        let antallUtlandsFlyreiser = Number(document.querySelector("#flyreiserInp").value);
+
+        // Nullstiller skjemaet
+        event.target.reset();
+
+        let klimaavtrykk = 1.0 + antallKjøttMiddager*0.17 + antallFiskMiddager*0.09 + antallVegMiddager*0.08 + antallUtlandsFlyreiser*1.1;
+        klimaavtrykk = Math.round(klimaavtrykk*100)/100;
+
+        // Gir beskjed til brukeren
+        let beskjedEl = document.querySelector("p");
+
+        beskjedEl.innerHTML = `Ditt totale klimaavtrykk er ${klimaavtrykk} CO<sub>2</sub> tonn per år og du er `;
+        if (klimaavtrykk < 6){
+            beskjedEl.innerHTML += "en klimaengel!!";
+        } else if (klimaavtrykk <= 8){
+            beskjedEl.innerHTML += "en normal nordmann";
+        }else{
+            beskjedEl.innerHTML += "et klimasvin!!";
+        }
+    }
+    </script>
+</body>
+</html>
