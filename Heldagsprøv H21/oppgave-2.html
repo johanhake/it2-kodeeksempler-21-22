@@ -53,6 +53,8 @@
         let gevinstTall = Math.floor(Math.random()*12);
         let valgIgjen = 3;
 
+        "XXX - Bruk en for-løkke til å lage koden i <main>, se i HTML over."
+
         // Velger et bilde
         function velgBilde(event, valgtBilde){
             let imgEl = event.target;
@@ -62,22 +64,17 @@
                 let gevinst;
 
                 // Hva er gevinsten?
-                if (valgIgjen === 3){
+                if (valgIgjen>0){
                     imgEl.src = "bilder/elbil.jpg";
-                    gevinst = "en elbil!"
-                }else if (valgIgjen === 2){
-                    imgEl.src = "bilder/elsykkel.jpg";
-                    gevinst = "en elsykkel!"
-                }else{
-                    imgEl.src = "bilder/trehjulssykkel.jpg";
-                    gevinst = "en trehjulssykkel!"
+                    gevinst = "XXX"
                 }
                 beskjedTxt.innerHTML = `Grattis du vant ${gevinst}!`;
                 imgEl.title = "Gevinsten var her ja!";
 
                 // Avregistrerer lytterfunksjonene
                 for (let bilde of alleBildene){
-                    bilde.removeAttribute("onclick");
+                    // Slett lytteren fra bilde
+                    "XXX"
                 }
             }else{
                 // Minker antall valg du brukeren har igjen
