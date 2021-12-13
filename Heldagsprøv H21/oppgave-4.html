@@ -107,21 +107,21 @@
 
                 // Går igjennom alle model valgene og legger til korrekt valg
                 for (let i = 0; i < modelLister[modelValg].length; i++) {
-                    let model = modelLister[modelValg][i];
-                    let modelPris = modelPrisLister[modelValg][i];
+                    let model = "XXX";
+                    let modelPris = "XXX";
                     modelSel.innerHTML += `<option value=${i}>${model} - ${modelPris} kr</option>`;
                 }
 
                 // Går igjennom alle fargene og interiørvalgene og legger til de i select menyene
                 for (let i = 0; i < fargeValgLister[modelValg].length; i++) {
-                    let fargeValg = fargeValgLister[modelValg][i];
-                    let fargePris = fargePrisLister[modelValg][i];
+                    let fargeValg = "XXX";
+                    let fargePris = "XXX";
                     fargeSel.innerHTML += `<option value="${i}">${fargeValg} - ${fargePris} kr</option>`
                 }
 
                 for (let i = 0; i < interiørValgLister[modelValg].length; i++) {
-                    let interiørValg = interiørValgLister[modelValg][i];
-                    let interiørPris = interiørPrisLister[modelValg][i];
+                    let interiørValg = "XXX";
+                    let interiørPris = "XXX";
                     interiørSel.innerHTML += `<option value="${i}">${interiørValg} - ${interiørPris} kr</option>`;
                 }
                 endreValg()
@@ -131,17 +131,17 @@
         // Finner valgene og beregner totalprisen
         function endreValg(){
             let modelValg = stillingSel.value
-            let stilling = stillingsTyper[modelValg];
-            let teslaModel = teslaModellListe[modelValg];
+            let stilling = "XXX";
+            let teslaModel = "XXX";
 
-            let model = modelLister[modelValg][modelSel.value];
-            let modelPris = modelPrisLister[modelValg][modelSel.value];
+            let model = "XXX";
+            let modelPris = "XXX";
 
-            let farge = fargeValgLister[modelValg][fargeSel.value];
-            let fargePris = fargePrisLister[modelValg][fargeSel.value];
+            let farge = "XXX";
+            let fargePris = "XXX";
 
-            let interiør = interiørValgLister[modelValg][interiørSel.value];
-            let interiørPris = interiørPrisLister[modelValg][interiørSel.value];
+            let interiør = "XXX";
+            let interiørPris = "XXX";
 
             document.querySelector("div p").innerHTML = `
             Du er en ${stilling} og får derfor en ${teslaModel}<br>
