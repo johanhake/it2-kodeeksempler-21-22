@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <video src="video/Video.mp4" loop onclick="startStop(event)"></video>
+</body>
+
+<script>
+
+    function startStop(event){
+        let video = event.target;
+        if(video.paused){
+            video.play();
+        }else{
+            video.pause();
+        }
+    }
+
+</script>
+</html>
