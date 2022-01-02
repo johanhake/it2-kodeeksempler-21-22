@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Promo Halden/Fredriksat Østfold</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+		integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="brukerinput.css">
+	<style type="text/css">
+		body {
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+		}
+
+		#container {
+			width: 480px;
+			margin: 0 auto;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="container">
+		<h2>Byer i Østfold</h2>
+		<h3 id="byHeader">Halden</h3>
+
+		<p id="byInfo">Halden er en trivelig by!</p>
+		<video data-spiller="halden" src="video/halden.mp4" width="480" height="360" preload></video>
+
+		<h4>Bytt by</h4>
+		<select onchange="byttFilm(event)">
+			<option value="0">Halden</option>
+			<option value="1">Fredrikstad</option>
+		</select>
+
+		<!-- Bruker fontawesome for å lage de ulike medie-knappene https://fontawesome.com -->
+		<button onclick="stopp()"><i class="fas fa-stop"></i></button>
+		<button id="play-pause" onclick="playPause(event)"><i class="fas fa-play"></i></button>
+
+	</div>
+</body>
+<script>
+
+	// DOM
+	let videoEl = document.querySelector("video");
+	let byHeaderEl = document.querySelector("h3");
+	let byInfoEl = document.querySelector("p");
+	let playPauseEl = document.querySelector("#play-pause i");
+
+	let byer = ["halden", "fredrikstad"];
+
+	// Kobler hendelser til filmvelger
+	function byttFilm(event) {
+
+		// Hvilken ny film skall spilles av og hvilken film spilles nå?
+		let nyFilm = byer[event.target.value];
+		let filmSomSpiller = videoEl.dataset.spiller;
+
+
+		// Oppdaterer tekst på siden
+		byHeaderEl.innerHTML = "Korrekt tittel!";
+		byInfoEl.innerHTML = "Korrekt info!";
+
+		// Setter ny source på film som spilles av
+		videoEl.src = "Korrekt film!";
+		videoEl.dataset.spiller = nyFilm;
+
+		videoEl.pause();
+
+		// Setter play-pause knappen til play
+		playPauseEl.classList.replace("fa-pause", "fa-play");
+
+	};
+
+	// Stop funksjonen nullstiller alle data
+	// * Sette filmen på pause
+	// * Setter current time til 0
+	// * Bytter utseende på play/pause - knappen til play
+	function stopp() {
+
+
+	};
+
+	// Funksjon som starter eller pauser videon
+	function playPause(event) {
+
+		// Henter valgt film
+		let filmSomSpiller = videoEl.dataset.spiller;
+
+		// Hvis videon er paused
+		if (videoEl.paused){
+
+		}else{
+
+		}
+	};
+
+</script>
+
+</html>
