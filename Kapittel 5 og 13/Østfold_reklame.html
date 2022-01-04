@@ -25,10 +25,13 @@
 		<h3 id="byHeader">Halden</h3>
 
 		<p id="byInfo">Halden er en trivelig by!</p>
-		<video data-spiller="halden" src="video/halden.mp4" width="480" height="360" preload></video>
+		<video data-spiller="halden"
+			   src="video/halden.mp4"
+			   width="480"
+			   height="360"></video>
 
 		<h4>Bytt by</h4>
-		<select onchange="byttFilm(event)">
+		<select onchange="byttFilm(event)" id="selectMeny">
 			<option value="0">Halden</option>
 			<option value="1">Fredrikstad</option>
 		</select>
@@ -58,20 +61,35 @@
 	// Kobler hendelser til filmvelger
 	function byttFilm(event) {
 
+		let valgtIndeks = Number(event.target.value);
+
 		// Hvilken ny film skall spilles av og hvilken film spilles nå?
-		let nyFilm = byer[event.target.value];
+		let nyFilm = byer[valgtIndeks][1];
 		let filmSomSpiller = videoEl.dataset.spiller;
 
+		// Gjør IKKE noe hvis det er samme film som spilles
+		if (nyFilm === filmSomSpiller){
+			return;
+		}
+
+		// Lagrer currentTime for film som spilles av
+		byer[avspillingIndeks][0] = videoEl.currentTime;
 
 		// Oppdaterer tekst på siden
-		byHeaderEl.innerHTML = "Korrekt tittel!";
-		byInfoEl.innerHTML = "Korrekt info!";
-
-		// Setter ny source på film som spilles av
-		videoEl.src = "Korrekt film!";
-		videoEl.dataset.spiller = nyFilm;
+		byHeaderEl.innerHTML = byer[valgtIndeks][1];
+		byInfoEl.innerHTML = byer[valgtIndeks][2];
 
 		videoEl.pause();
+
+		// Setter ny source på film som spilles av
+		videoEl.src = `video/${nyFilm}.mp4`;
+		videoEl.dataset.spiller = nyFilm;
+
+		// Sette ny currentTime basert på det som er lagret fra før
+		videoEl.currentTime = byer[valgtIndeks][0];
+
+		// Oppdaterer avspillingsindeksen med ny valgt film.
+		avspillingIndeks = event.target.value;
 
 		// Setter play-pause knappen til play
 		playPauseEl.classList.replace("fa-pause", "fa-play");
@@ -84,6 +102,9 @@
 	// * Bytter utseende på play/pause - knappen til play
 	function stopp() {
 
+		videoEl.pause();
+		videoEl.currentTime = 0.0;
+		playPauseEl.classList.replace("fa-pause", "fa-play");
 
 	};
 
@@ -95,9 +116,11 @@
 
 		// Hvis videon er paused
 		if (videoEl.paused){
-
+			videoEl.play();
+			playPauseEl.classList.replace("fa-play", "fa-pause");
 		}else{
-
+			videoEl.pause();
+			playPauseEl.classList.replace("fa-pause", "fa-play");
 		}
 	};
 
