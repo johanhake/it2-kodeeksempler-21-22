@@ -26,9 +26,45 @@
 			fornavn: "Ingvild",
 			etternavn: "Sandven",
 			klasse: "3STB",
-			favorittmat: ["pizza", "lungemos", "cola"]
+			favorittmat: ["pizza", "lungemos", "cola", "melk"],
+			venner: ["Helena", "Johan"]
 		};
 
+		console.log(elev.fornavn)
+		console.log(elev["fornavn"])
+
+
+		let hva = "fornavn";
+
+		// Bruker samme kode for å skrive ut egenskapsverdien!
+		console.log(hva, elev[hva]);
+
+		hva = "etternavn";
+		// Bruker samme kode for å skrive ut egenskapsverdien!
+		console.log(hva, elev[hva]);
+
+		elev.fornavn = "Helena";
+
+		for (let hva in elev) {
+			console.log(hva, elev[hva]);
+			//console.log(hva, elev.hva); // Returnerer undefined!!!
+		}
+
+		let listeEl = document.querySelector("ul");
+		for (let hva in elev) {
+			let verdi = elev[hva];
+			console.log(typeof verdi)
+			if (typeof verdi === "object") {
+				let liste = `<li><b>${hva}</b> : <ul>`;
+				for (element of verdi) {
+					liste += `<li>${element}</li>`
+				}
+				liste += "</ul></li>";
+				listeEl.innerHTML += liste;
+			} else {
+				listeEl.innerHTML += `<li><b>${hva}</b> : ${elev[hva]}</li>`
+			}
+		}
 	</script>
 </body>
 
