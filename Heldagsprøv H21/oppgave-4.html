@@ -46,12 +46,12 @@
 
         // Model valg og priser
         let modelLister = [
+            ["Plaid", "Long range", "Hei Hei"],
             ["Plaid", "Long range"],
-            ["Plais", "Long range"],
             ["Performance", "Long range"]
         ];
         let modelPrisLister = [
-            [1200000, 1100000],
+            [1200000, 1100000, 1],
             [1300000, 980000],
             [500000, 450000]
         ];
@@ -63,6 +63,7 @@
             ["Hvit", "Sort", "Sølv", "Blå", "Rød"],
             ["Hvit", "Sort", "Sølv", "Blå", "Rød"]
         ];
+
         let fargePrisLister = [
             [0, 12500, 12500, 12500, 21000],
             [0, 12500, 12500, 12500, 21000],
@@ -96,7 +97,7 @@
             let modelValg = event.target.value;
 
             // Hvis det ikke er valgt noe
-            if(valg === ""){
+            if(modelValg === ""){
                 valgDiv.style.display = "none";
             }else{
                 valgDiv.style.display = "block";
@@ -107,8 +108,8 @@
 
                 // Går igjennom alle model valgene og legger til korrekt valg
                 for (let i = 0; i < modelLister[modelValg].length; i++) {
-                    let model = "XXX";
-                    let modelPris = "XXX";
+                    let model = modelLister[modelValg][i];
+                    let modelPris = modelPrisLister[modelValg][i];
                     modelSel.innerHTML += `<option value=${i}>${model} - ${modelPris} kr</option>`;
                 }
 

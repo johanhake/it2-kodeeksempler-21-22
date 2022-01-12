@@ -30,6 +30,27 @@
 			venner: ["Helena", "Johan"]
 		};
 
+		let teslaTilLærere = {
+			adjunkt: {
+				stilling: "Adjunkt",
+				modell: "Model 3",
+				interiør: ["sort", "hvit"],
+				farge: ["rød", "sort", "blå"]
+			},
+			lektor: {
+				stilling: "Lektor",
+				modell: "Model S",
+				interiør: ["sort", "hvit", "krem"],
+				farge: ["rød", "sort", "blå", "grønn"]
+			},
+			lektorMedOpprykk: {
+				stilling: "Lektor med opprykk",
+				modell: "Model X",
+				interiør: ["sort", "hvit", "krem"],
+				farge: ["rød", "sort", "blå", "rosa"]
+			}
+		};
+
 		console.log(elev.fornavn)
 		console.log(elev["fornavn"])
 
@@ -51,20 +72,43 @@
 		}
 
 		let listeEl = document.querySelector("ul");
+		// Eksempel med punkt og underliste som element
 		for (let hva in elev) {
 			let verdi = elev[hva];
 			console.log(typeof verdi)
 			if (typeof verdi === "object") {
-				let liste = `<li><b>${hva}</b> : <ul>`;
+				let punkt = document.createElement("li");
+				punkt.innerHTML = `<b>${hva}</b>`;
+				let underListe = document.createElement("ul")
 				for (element of verdi) {
-					liste += `<li>${element}</li>`
+					underListe.innerHTML += `<li>${element}</li>`
 				}
-				liste += "</ul></li>";
-				listeEl.innerHTML += liste;
+				punkt.appendChild(underListe);
+				listeEl.appendChild(punkt);
 			} else {
 				listeEl.innerHTML += `<li><b>${hva}</b> : ${elev[hva]}</li>`
 			}
 		}
+
+		function endreValg(event) {
+			let valg = event.target.value;
+
+			let stilling = teslaTilLærere[valg].stilling;
+			let modell = teslaTilLærere[valg].modell;
+			let interiør = teslaTilLærere[valg].interiør;
+			let farge = teslaTilLærere[valg].farge;
+
+			document.querySelector("#teslaInfo").innerHTML = `
+			<h1>${stilling} får Tesla ${modell}</h1>
+            <p>
+            Interiørvalg: ${interiør}<br>
+            Fargevalg: ${farge}
+			</p>
+			`;
+
+		}
+
+
 	</script>
 </body>
 
