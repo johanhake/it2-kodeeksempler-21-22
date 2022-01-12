@@ -82,35 +82,34 @@
     let txtTreningsvolum = document.querySelector("#txtTreningsvolum");
 
     // Variabler
-    let muskelgrupper = ["Armer", "Skuldre", "Ben", "Rygg", "Bryst"];
-    let aktiviteter = [
-        ["Bicepscurl med stang", "Fransk press"],
-        ["Stående militærpress", "Sidehev"],
-        ["Knebøy", "Leg extension", "Leg curl"],
-        ["Nedtrekk", "Roing"],
-        ["Benkpress", "Flies", "Push up"]
-    ];
+    let aktiviteter = {
+        Armer: ["Bicepscurl med stang", "Fransk press"],
+        Skuldre: ["Stående militærpress", "Sidehev"],
+        Ben: ["Knebøy", "Leg extension", "Leg curl"],
+        Rygg: ["Nedtrekk", "Roing"],
+        Bryst: ["Benkpress", "Flies", "Push up"]
+    };
 
     let treningsvolum = 0;
     let antallSett = 0
 
     // Legger til muskelgrupper i select-menyen
-    for (let i=0; i < muskelgrupper.length; i++) {
-        let grupp = muskelgrupper[i];
-        selMuskelgruppe.innerHTML += `<option value="${i}">${grupp}</option>`;
+    for (let grupp in aktiviteter) {
+        selMuskelgruppe.innerHTML += `<option value="${grupp}">${grupp}</option>`;
     }
 
     // Lytterfunksjon for det å ha valgt en muskelgrupp
     function velgMuskelgrupp(event) {
 
-        let selAktivitet = document.querySelector("#aktivitet");
+        // Henter ut valgt muskelgrupp
+        let grupp = event.target.value;
 
-        // Tallet på valgt muskelgrupp
-        let valgtMuskelgruppe = Number(event.target.value);
+        // Henter den Andre select-menyen
+        let selAktivitet = document.querySelector("#aktivitet");
         selAktivitet.innerHTML = "<option value=''>Velg aktivitet</option>";
 
         // Legger til muskelgrupper i select-menyen
-        for (let aktivitet of aktiviteter[valgtMuskelgruppe]) {
+        for (let aktivitet of aktiviteter[grupp]) {
             selAktivitet.innerHTML += `<option value="${aktivitet}">${aktivitet}</option>`;
         }
     }
