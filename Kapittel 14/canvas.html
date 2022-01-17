@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		canvas {
+			border: 2px black solid;
+		}
+	</style>
+</head>
+
+<body>
+	<canvas width="1000" height="600"></canvas>
+
+	<script>
+
+		let canvas = document.querySelector("canvas");
+		let ctx = canvas.getContext("2d");
+
+
+/* 		ctx.beginPath()
+		ctx.moveTo(200, 200);
+		ctx.lineTo(400, 200);
+		ctx.lineTo(400, 400);
+		ctx.closePath()
+		ctx.lineWidth = 10
+		ctx.fillStyle = "lightgreen";
+		ctx.fill()
+		ctx.stroke()
+
+		ctx.beginPath()
+		ctx.arc(600, 400, 50, Math.PI / 2, Math.PI * 2);
+		ctx.lineTo(600, 400)
+		ctx.closePath()
+		ctx.fill()
+		ctx.stroke()
+
+		ctx.fillRect(400, 300, 100, 150)
+		ctx.strokeRect(400, 300, 100, 150)
+ */
+
+		 ctx.fillStyle = "lightgreen";
+
+		 function tegnFyldSirkel(x, y, r) {
+			ctx.beginPath()
+			ctx.arc(x, y, r, 0, Math.PI * 2)
+			ctx.fill()
+		}
+
+		for (let i = 0; i < 10; i++) {
+			let xs = Math.random()*canvas.width;
+			let ys = Math.random()*canvas.height;
+			tegnFyldSirkel(xs, ys, 100)
+		}
+	</script>
+</body>
+
+</html>
