@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blokker</title>
+</head>
+
+<body>
+    <h1>Blokker</h1>
+    <canvas height="600" width="1000"></canvas>
+    <script>
+        // DOM
+        let canvas = document.querySelector("canvas");
+        let ctx = canvas.getContext("2d");
+
+        // Tegner en blokk
+        function tegnBlokk(ctx, xStart, yStart, antallVinduer, antallEtasjer) {
+
+            let vinduAvstand = 20;
+            let vinduHøyde = 60;
+            let vinduBredde = 40;
+
+            //let blokkHøyde = 400;
+            //let blokkBredde = 200;
+
+            let blokkHøyde = vinduHøyde * antallEtasjer + vinduAvstand * (antallEtasjer + 1);
+            let blokkBredde = vinduBredde * antallVinduer + vinduAvstand * (antallVinduer + 1);
+
+            // Tegne selve blokken
+            ctx.fillStyle = "black";
+            ctx.fillRect(xStart, yStart, blokkBredde, -blokkHøyde);
+
+            ctx.fillStyle = "yellow";
+
+            // Yttre for-løkke går igjennom etasjene
+            for (let etasje = 0; etasje < antallEtasjer; etasje++) {
+                // Indre for-løkke går igjennom vinduene per etasje
+                let x = 0;
+                for (let vindu = 0; vindu < antallVinduer; vindu++) {
+                    let xVindu = xStart + vinduAvstand + (vinduBredde + vinduAvstand) * vindu;
+                    let yVindu = yStart - vinduAvstand - vinduHøyde -(vinduAvstand + vinduHøyde) * etasje;
+                    ctx.fillRect(xVindu, yVindu, vinduBredde, vinduHøyde);
+                }
+            }
+
+        }
+
+        tegnBlokk(ctx, 100, 500, 3, 4);
+        tegnBlokk(ctx, 500, 500, 2, 5);
+        tegnBlokk(ctx, 700, 500, 4, 7);
+
+    </script>
+</body>
+
+</html>
