@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stjerne</title>
+</head>
+
+<body>
+    <h1>Stjerner</h1>
+    <canvas height="600" width="1000"></canvas>
+    <script>
+        // DOM
+        let canvas = document.querySelector("canvas");
+        let ctx = canvas.getContext("2d");
+
+        // Tegner en stjerne
+        function tegnFemStjerne(ctx, xStart, yStart, radius) {
+
+            // Hvor stor vinkel skal vi legge til for hver ny takke
+            let dPhi = 4*Math.PI/5
+            console.log(dPhi);
+
+            // Starter stien
+            ctx.beginPath();
+
+            // Starter på toppen
+            ctx.moveTo(xStart, yStart - radius);
+
+            // Vinkel for toppen
+            let phi = Math.PI / 2;
+            for (let i = 0; i < 5; i++) {
+                phi += dPhi;
+                console.log(phi / Math.PI * 180)
+
+                // Trekker linjen!
+                ctx.lineTo(xStart + radius * Math.cos(phi),
+                    yStart - radius * Math.sin(phi));
+            }
+            ctx.closePath();
+            ctx.stroke();
+
+        }
+
+        // Tegner en stjerne
+        function tegnStjerne(ctx, xStart, yStart, radius, takker) {
+
+            // Hvor stor vinkel skal vi hoppe over for hver ny takke
+            let dPhi = (1 - 1 / takker) * Math.PI
+            console.log(dPhi);
+
+            // Starter stien
+            ctx.beginPath();
+
+            // Starter på toppen
+            ctx.moveTo(xStart, yStart - radius);
+
+            // Vinkel for toppen
+            let phi = Math.PI / 2;
+            for (let i = 0; i < takker; i++) {
+                phi += dPhi;
+                console.log(phi / Math.PI * 180)
+
+                // Trekker linjen!
+                ctx.lineTo(xStart + radius * Math.cos(phi),
+                    yStart - radius * Math.sin(phi));
+            }
+            ctx.closePath();
+            ctx.stroke();
+
+        }
+
+        tegnFemStjerne(ctx, 100, 500, 100);
+        //tegnStjerne(ctx, 300, 500, 100, 7);
+        //tegnStjerne(ctx, 500, 500, 100, 9);
+        //tegnStjerne(ctx, 700, 500, 100, 11);
+
+    </script>
+</body>
+
+</html>
