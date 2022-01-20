@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.highcharts.com/highcharts.src.js"></script>
+    <title>HighCharts</title>
+</head>
+
+<body>
+
+    <div id="diagram"></div>
+
+    <script>
+        let data = [
+            {
+                name: "Mandag",
+                data: [5]
+            }, {
+                name: "Tirsdag",
+                data: [3]
+            }, {
+                name: "Onsdag",
+                data: [1]
+            }, {
+                name: "Torsdag",
+                data: [2]
+            }, {
+                name: "Fredag",
+                data: [6]
+            }, {
+                name: "Lørdag",
+                data: [4]
+            }, {
+                name: "Søndag",
+                data: [5]
+            },
+        ];
+
+        let aksjekurs = [
+            {
+                name: 'Januari',
+                data: [100],
+            }, {
+                name: 'Februari',
+                data: [20],
+            }, {
+                name: 'Mars',
+                data: [70],
+            }, {
+                name: 'April',
+                data: [150],
+            }, {
+                name: 'Mai',
+                data: [140],
+            }, {
+                name: 'Juni',
+                data: [20],
+            }, {
+                name: 'Juli',
+                data: [40],
+            }, {
+                name: 'August',
+                data: [180],
+            }];
+
+        Highcharts.chart('diagram', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Aktivitet i uken'
+            },
+            xAxis: {
+                categories: ['Treningstimer'],
+                title: {
+                    text: ''
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Timer',
+                }
+            },
+            series: data,
+        });
+
+    </script>
+</body>
+
+</html>

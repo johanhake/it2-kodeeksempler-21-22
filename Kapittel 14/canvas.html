@@ -74,7 +74,15 @@
 		ctx.font = "50px Arial"
 		ctx.fillText("JADA", 0, 0);
 
-		blomst(200, 200)
+		blomst(200, 200);
+
+		// Lager et nytt bilde
+		let bilde = new Image();
+		bilde.src = "bilder/galge.png";
+		bilde.onload = function(){
+			ctx.drawImage(bilde, 200, 200, 200, 200)
+		}
+
 	</script>
 </body>
 
