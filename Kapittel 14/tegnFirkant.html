@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>tegnFirkant</title>
+	<link rel="stylesheet" href="brukerinput.css">
+	<style>
+		* {
+			font-family: Arial, Helvetica, sans-serif;
+		}
+
+		body {
+			width: 80%;
+			margin: 0 auto;
+		}
+
+		canvas {
+			border: 2px solid dodgerblue;
+		}
+	</style>
+</head>
+
+<body>
+	<form onsubmit="sendInn(event)">
+		<label>Bunnlinje</label><input id="bunnlinje" type="number" min="0" max="20">
+		<label>Topplinje</label><input id="topplinje" type="number" min="0" max="20">
+		<label>Høyde</label><input id="høyde" type="number" min="0" max="20">
+		<label>Forkyvning</label><input id="forkyvning" type="number" min="0" max="20">
+		<button>Tegn firkant</button>
+	</form>
+	<canvas width="1200" height="700"></canvas>
+	<p id="info"></p>
+</body>
+<script>
+	let canvas = document.querySelector("canvas");
+	let ctx = canvas.getContext("2d");
+	let infoTxt = document.querySelector("#info");
+
+	function sendInn(event){
+		event.preventDefault()
+		let skjema = event.target;
+
+		let bunnlinje = Number(skjema.bunnlinje.value);
+		let topplinje = Number(skjema.topplinje.value);
+		let høyde = Number(skjema.høyde.value);
+		let forkyvning = Number(skjema.forkyvning.value);
+
+		console.log(bunnlinje, topplinje, høyde, forkyvning)
+
+		tegnFirkant(bunnlinje, topplinje, høyde, forkyvning)
+		infoTxt.innerHTML = `Firkanten er: ${typeFirekant(bunnlinje, topplinje, høyde, forkyvning)}`;
+	}
+
+	function tegnFirkant(bunnlinje, topplinje, høyde, forkyvning) {
+		// Sletter canvas
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+		let pikselPerCm = 50;
+
+		let x0 = pikselPerCm;
+		let y0 = pikselPerCm;
+
+		ctx.beginPath();
+		ctx.moveTo(x0 + forkyvning * pikselPerCm, y0);
+		ctx.lineTo(x0 + (forkyvning + topplinje) * pikselPerCm, y0);
+		ctx.lineTo(x0 + bunnlinje * pikselPerCm, y0 + høyde * pikselPerCm);
+		ctx.lineTo(x0, y0 + høyde * pikselPerCm);
+		ctx.closePath()
+		ctx.lineWidth = 2;
+		ctx.strokeStyle = "dodgerblue";
+		ctx.fillStyle = "skyblue";
+		ctx.fill();
+		ctx.stroke();
+
+		// Tegner punkter i hjørnene
+		ctx.fillStyle = "dodgerblue";
+
+		ctx.beginPath();
+		ctx.arc(x0 + forkyvning * pikselPerCm, y0, 5, 0, 2 * Math.PI)
+		ctx.fill()
+
+		ctx.beginPath();
+		ctx.arc(x0 + (forkyvning + topplinje) * pikselPerCm, y0, 5, 0, 2 * Math.PI);
+		ctx.fill()
+
+		ctx.beginPath();
+		ctx.arc(x0 + bunnlinje * pikselPerCm, y0 + høyde * pikselPerCm, 5, 0, 2 * Math.PI);
+		ctx.fill()
+
+		ctx.beginPath();
+		ctx.arc(x0, y0 + høyde * pikselPerCm, 5, 0, 2 * Math.PI);
+		ctx.fill()
+
+	}
+
+	function typeFirekant(bunnlinje, topplinje, høyde, forkyvning) {
+		if (bunnlinje !== topplinje) {
+			return "Trapes";
+		} else if (forkyvning > 0) {
+			return "Parallellogram";
+		} else if (høyde !== bunnlinje) {
+			return "Rektangel";
+		} else {
+			return "Kvadrat";
+		}
+	}
+
+
+
+
+</script>
+
+</html>
