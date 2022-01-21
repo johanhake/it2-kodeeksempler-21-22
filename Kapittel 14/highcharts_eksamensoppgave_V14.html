@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.highcharts.com/highcharts.src.js"></script>
+    <title>HighCharts</title>
+</head>
+
+<body>
+
+    <div id="diagram"></div>
+    <select onchange="endreData(event.target.value)">
+        <option value="Promillekjøring">Promillekjøring</option>
+        <option value="Ulovlig hastighet">Ulovlig hastighet</option>
+    </select>
+
+    <script>
+
+        let data = {
+            "Promillekjøring": [
+                {
+                    name: "2002",
+                    data: [9631]
+                }, {
+                    name: "2003",
+                    data: [8593]
+                }, {
+                    name: "2004",
+                    data: [8363]
+                }, {
+                    name: "2005",
+                    data: [8128]
+                }, {
+                    name: "2006",
+                    data: [8514]
+                }, {
+                    name: "2007",
+                    data: [8534]
+                }
+            ],
+            "Ulovlig hastighet": [
+                {
+                    name: "2002",
+                    data: [9863]
+                }, {
+                    name: "2003",
+                    data: [12217]
+                }, {
+                    name: "2004",
+                    data: [14920]
+                }, {
+                    name: "2005",
+                    data: [14929]
+                }, {
+                    name: "2006",
+                    data: [15425]
+                }, {
+                    name: "2007",
+                    data: [18010]
+                }
+            ]
+        };
+
+        function endreData(dataType) {
+
+            Highcharts.chart('diagram', {
+                chart: {
+                    type: 'bar'
+                },
+                title: {
+                    text: dataType
+                },
+                xAxis: {
+                    categories: [''],
+                    title: {
+                        text: ''
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: 'Lovbrud',
+                    }
+                },
+                series: data[dataType],
+            });
+        }
+
+        endreData("Promillekjøring");
+
+    </script>
+</body>
+
+</html>
