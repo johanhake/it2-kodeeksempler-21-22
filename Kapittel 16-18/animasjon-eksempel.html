@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		* {
+			box-sizing: border-box;
+			margin: 0;
+		}
+
+		body {
+			height: 100vh;
+			background-color: #323232;
+			display: grid;
+			align-items: center;
+			justify-content: center;
+		}
+
+		main {
+			position: relative;
+			background-color: #e2e2e2;
+			border: greenyellow 5px solid;
+			width: 90vw;
+			height: 90vh;
+		}
+
+		main div {
+			position: absolute;
+			background-color: orangered;
+			border: #323232 2px solid;
+			width: 50px;
+			height: 50px;
+			left: 50px;
+		}
+
+		#animasjon {
+			animation-name: frem-og-tilbake;
+			animation-duration: 3s;
+			animation-iteration-count: 4;
+			animation-direction: alternate;
+			animation-timing-function: ease-in-out;
+		}
+
+		#taste-styr {
+			background-color: orchid;
+			transition: 0.5s;
+			left: 100px;
+			top: 100px;
+		}
+
+		@keyframes frem-og-tilbake {
+			0% {
+				left: 50px;
+				top: 0px;
+			}
+
+			100% {
+				left: calc(90vw - 100px);
+				top: 50px;
+			}
+		}
+	</style>
+</head>
+
+<body onkeydown="flyttBoks(event)">
+	<main>
+		<div id="animasjon"></div>
+		<div id="taste-styr"></div>
+	</main>
+
+	<script>
+
+		// DOM
+		let tasteEl = document.querySelector("#taste-styr");
+
+		let venstre = 100;
+		let topp = 100;
+
+		let fart = 50;
+
+		// Flytter boksen når en av piltastene trykkes ned.
+		function flyttBoks(event) {
+
+			// style.left har ikke noen verdi før den blir aktivt satt i JS
+			console.log(tasteEl.style.left);
+			console.log(event.key, event.keyCode); // event.keyCode SKALL ikke brukes den er på vei ut!
+			if (event.key === "ArrowLeft") {
+				venstre -= fart;
+			} else if (event.key === "ArrowRight") {
+				venstre += fart;
+			} else if (event.key === "ArrowUp") {
+				topp -= fart;
+			} else if (event.key === "ArrowDown") {
+				topp += fart;
+			}
+
+			tasteEl.style.left = venstre + "px";
+			tasteEl.style.top = topp + "px";
+
+		}
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styre en firkant</title>
+    <style>
+        body{
+            background-color: #323232;
+            cursor: none; /* Skjuler musepekeren*/
+            overflow: hidden; /* hindrer scrollbar */
+        }
+
+        div{
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            left: 100px;
+            top: 100px;
+            background-color:khaki;
+        }
+    </style>
+</head>
+<body onkeydown="flyttBoks(event)">
+    <div></div>
+
+    <script>
+
+        // DOM
+        let firkantEl = document.querySelector("div");
+
+        let venstre = 100;
+        let topp = 100;
+        let fart = 50;
+
+        // Flytter boksen når en av piltastene trykkes ned.
+        function flyttBoks(event){
+
+            // style.left har ikke noen verdi før den blir aktivt satt i JS
+            console.log(firkantEl.style.left);
+            console.log(event.key, event.keyCode); // event.keyCode SKALL ikke brukes den er på vei ut!
+
+            /* Lag kode her for å flytte diven
+            */
+
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Position eksempel</title>
+
+    <style>
+        body{
+            background-color: black;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        main{
+            background-color: tomato;
+            margin: 50px auto;
+            height: 200px;
+            width: 800px;
+        }
+
+        main div{ /* Alle div elementer inn i main */
+            width: 100px;
+            height: 100px;
+            background-color: lightblue;
+            padding: 5px;
+            border: solid 1px black;
+        }
+
+        #absolute{
+            position: absolute; /* i forhold til elementet det er i */
+            left: 50px;
+            top: 5px;
+        }
+
+        #relative{
+            position: relative; /* i forhold til sin opprinnelige posisjon */
+            top: -20px;
+        }
+
+        #fixed{
+            position: fixed; /* i forhold til nettleservinduet */
+            left: 0px;
+            top: 200px;
+        }
+
+    </style>
+
+</head>
+<body>
+    <main>
+        <div id="absolute">
+            absolute
+        </div>
+        <div id="fixed">
+            fixed
+        </div>
+        <div id="relative">
+            relative
+        </div>
+    </main>
+</body>
+</html>
