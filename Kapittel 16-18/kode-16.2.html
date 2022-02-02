@@ -40,8 +40,16 @@
             console.log(firkantEl.style.left);
             console.log(event.key, event.keyCode); // event.keyCode SKALL ikke brukes den er på vei ut!
 
+            if(event.key === "ArrowLeft"){
+                venstre -= fart;
+            }else if(event.key === "ArrowRight"){
+                venstre += fart;
+            }
+
             /* Lag kode her for å flytte diven
             */
+
+            firkantEl.style.left = venstre + "px";
 
         }
     </script>

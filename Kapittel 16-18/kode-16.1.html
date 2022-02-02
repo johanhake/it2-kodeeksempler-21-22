@@ -13,13 +13,14 @@
 
         body{
             background-color: #323232;
-            cursor: none; /* Skjuler muspekeren */
+            /*cursor: none; /* Skjuler muspekeren */
             overflow: hidden; /* hindrer scrolbar */
         }
 
         div{
             width: 50px;
             height: 50px;
+            border-radius: 50%;
             position: absolute;
             left: 100px;
             top: 100px;
@@ -37,6 +38,9 @@
 
         function flyttSirkel(event){
             /* Lag kode her for flytte sirkelen basert på x og y koordinaten til musen. */
+            console.log(event.clientX, event.clientY)
+            sirkelEl.style.left = (event.clientX-25) + "px";
+            sirkelEl.style.top = (event.clientY-25) + "px";
 
         }
 

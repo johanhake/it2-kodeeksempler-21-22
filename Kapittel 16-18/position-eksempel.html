@@ -12,9 +12,10 @@
         }
 
         main{
+            position: relative;
             background-color: tomato;
             margin: 50px auto;
-            height: 200px;
+            height: 2000px;
             width: 800px;
         }
 
@@ -29,18 +30,18 @@
         #absolute{
             position: absolute; /* i forhold til elementet det er i */
             left: 50px;
-            top: 5px;
+            top: 500px;
         }
 
         #relative{
             position: relative; /* i forhold til sin opprinnelige posisjon */
-            top: -20px;
+            top: 50px;
         }
 
         #fixed{
             position: fixed; /* i forhold til nettleservinduet */
-            left: 0px;
-            top: 200px;
+            left: calc(50vw - 50px) ;
+            top: 00px;
         }
 
     </style>
@@ -51,6 +52,7 @@
         <div id="absolute">
             absolute
         </div>
+        <div></div>
         <div id="fixed">
             fixed
         </div>
