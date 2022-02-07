@@ -35,12 +35,46 @@
 
         // DOM
         let sirkelEl = document.querySelector("div");
+        let body = document.body;
 
         function flyttSirkel(event){
             /* Lag kode her for flytte sirkelen basert på x og y koordinaten til musen. */
             console.log(event.clientX, event.clientY)
-            sirkelEl.style.left = (event.clientX-25) + "px";
-            sirkelEl.style.top = (event.clientY-25) + "px";
+
+            // Finner radius på sirkel fra x og y koordinat til muspeker
+            let r = radius(event.clientX, event.clientY);
+            console.log("radius", Math.round(r))
+
+            // Endrer på
+            sirkelEl.style.left = (event.clientX - r) + "px";
+            sirkelEl.style.top = (event.clientY - r) + "px";
+            sirkelEl.style.width = 2*r + "px";
+            sirkelEl.style.height = 2*r + "px";
+        }
+
+        function radius(x,y){
+
+            // Parametrer som bestemmer radius i senter og periferi
+            let senterR = 25;
+            let periferiR = 100;
+
+            // Finner bredde og høyde på HELE body.
+            let bcr = body.getBoundingClientRect();
+            let halvBredde = bcr.width/2;
+            let halvHøyde = bcr.height/2;
+
+            // Maks avstanden fra sentrum er:
+            let maksAvstand = Math.sqrt(halvBredde*halvBredde + halvHøyde*halvHøyde);
+
+            // Finner stigningstall til lineær funksjon som bestemmer radien fra
+            // avstanden fra sentrum
+            let a = (periferiR - senterR)/(maksAvstand);
+
+            // Avstand fra sentrum
+            let avstand = Math.sqrt((x-halvBredde)*(x-halvBredde)+(y-halvHøyde)*(y-halvHøyde));
+
+            // Regner ut radien fra avstanden fra sentrum
+            return a*avstand + senterR;
 
         }
 
