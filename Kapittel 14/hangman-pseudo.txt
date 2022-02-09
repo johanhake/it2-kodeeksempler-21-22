@@ -1,0 +1,35 @@
+VARIABLER: 
+    korrektOrd: Ordet som vi skal finne ut av eller en liste med korrekte ord
+    gjettetBokstav: Holder verdien på den gjettede bokstaven
+    antallFeil: Holder på hvor mange feil man har gjort
+    hvilkeBokstaverErBrukt: Liste med bokstaver som er brukt
+
+FUNKSJON Start
+    FOR bokstav i korrekt Ord:
+        lager en div for hver bokstav og med en "-" som viser ukjent bokstav
+        Putter bokstav inn i elementet i dataset. 
+    listeMedBokstavElementer = querSelectorAll(".bokstavDiv")
+    antalFeil = 0
+
+HENDELSE gjetterBokstav:
+    gjettetBokstav = finner den gjettede bokstaven
+    IF gjettetBokstav er i hvilkeBokstaverErBrukt:
+        beskjed til bruker
+    ELSE
+        hvilkeBokstaverErBrukt.push(gjettetBokstav)
+        Viser gjettetbokstav i App. 
+
+        IF gjettetBokstav er i korrektOrd:
+            FOR div in listeMedBokstavElementer:
+                 IF div.dataset.bokstav === gjettetBokstav:
+                     div.innerHTML = gjettetBokstav
+        ELSE
+            antalFeil++
+            IF antallFeil === 1
+                tegnHode()
+            ELSE IF antallFeil === 2
+                ....
+            ELSE
+                beskjed til bruker om tap.
+          
+

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HighCharts fruits</title>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+</head>
+<body>
+    <div id="container" style="width: 800px; height: 300px"></div>
+    <script>
+
+    // Sortert data om ukedager
+    let data = [
+        {
+            name: "Mandag",
+            data: [5,]
+        },{
+          name: "Tirsdag",
+          data: [3,]
+        },{
+          name: "Onsdag",
+          data: [1,]
+        },{
+          name: "Torsdag",
+          data: [2,]
+        },{
+          name: "Fredag",
+          data: [6,]
+        },{
+          name: "Lørdag",
+          data: [4,]
+        },{
+          name: "Søndag",
+          data: [5,]
+        },
+    ];
+  
+
+  Highcharts.chart('container', {
+    chart: {
+      type: 'column'
+    },
+    title: {
+      text: 'Treningstimer'
+    },
+    xAxis: {
+            categories: ['trening', 'tv', 'skole'],
+    },
+    yAxis: {
+      title: {
+        text: 'timer i uken',
+      },
+      max: 6
+    },
+    series: data,
+  });        
+    </script>
+</body>
+</html>

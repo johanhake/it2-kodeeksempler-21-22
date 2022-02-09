@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grønnsaker</title>
+    <link rel="stylesheet" href="brukerinput.css">
+    <style>
+        main {
+            position: relative;
+        }
+
+        main img {
+            position: absolute;
+        }
+
+        #tomat{
+            left: 50px;
+            top: 50px;
+            opacity:0;
+        }
+
+        #gulerot{
+            left: 200px;
+            top: 200px;
+            opacity:0;
+        }
+
+        #agurk{
+            left: 400px;
+            top: 300px;
+            opacity:0;
+        }
+    </style>
+</head>
+
+<body>
+    <button onclick="visSkjul('tomat')">Tomat</button>
+    <button onclick="visSkjul('gulerot')">Gulerot</button>
+    <button onclick="visSkjul('agurk')">Agurk</button>
+    <main>
+        <img src="bilder/gronnsaker_bakgrunn.jpg" alt="">
+        <img id="tomat" src="bilder/tomat_liten.png" alt="">
+        <img id="gulerot" src="bilder/gulerot_liten.png" alt="">
+        <img id="agurk" src="bilder/agurk_liten.png" alt="">
+    </main>
+    <script>
+
+        // Viser og skjuler en grønsak
+        function visSkjul(grønnsak) {
+            let grønnsakEl = document.querySelector("#" + grønnsak);
+            grønnsakEl.style.opacity = Math.abs(Number(grønnsakEl.style.opacity)-1);
+        }
+
+    </script>
+</body>
+
+</html>
