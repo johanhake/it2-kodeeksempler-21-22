@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Boksanimasjon</title>
+    <style>
+        div{
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background-color: lightcoral;
+            border: 1px solid black;
+        }
+
+        @keyframes frem-og-tilbake {
+            0% { left: 0px; background-color: lightcoral;}
+            50% {left: calc(100vw - 150px); background-color: lightgreen;}
+            100% {left: 0px; background-color: limegreen;}
+        }
+
+        .animasjon{
+            animation-name: frem-og-tilbake;
+            animation-duration: 2s;
+            animation-iteration-count: 1;
+        }
+
+    </style>
+</head>
+<body>
+    <button onclick="toggleAnimasjon(event)">Start animasjon</button>
+    <div></div>
+    <script>
+
+        // DOM
+        let boks = document.querySelector("div");
+
+        // Fjerner og legger til klassenavnet animasjon til boksen
+        function toggleAnimasjon(event){
+            boks.classList.toggle("animasjon");
+            if(boks.classList.contains("animasjon")){
+                event.target.innerHTML = "Stopp animasjon"
+            }else{
+                event.target.innerHTML = "Start animasjon"
+            }
+
+        }
+
+    </script>
+
+</body>
+</html>

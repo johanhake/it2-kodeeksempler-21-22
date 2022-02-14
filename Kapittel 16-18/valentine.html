@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Hjerte</title>
+	<style>
+		body {
+			background-color: #0e0e0e;
+			position: relative;
+			height: 100vh;
+		}
+
+		#rose{
+			position: absolute;
+			left: calc(50vw - 100px);
+			top: 150px;
+			animation: rotere 2s infinite linear;
+		}
+
+		#hjerte {
+			position: absolute;
+			width: 300px;
+			height: 300px;
+			left: calc(50vw - 150px);
+			top: calc(50vh - 150px);
+			animation: pulsere 1s infinite;
+		}
+
+		#kiss{
+			position: absolute;
+			width: 300px;
+			top: 100px;
+			animation: frem-og-tilbake 3s infinite alternate ;
+		}
+
+		@keyframes frem-og-tilbake{
+			0%{transform: scale(1,1) rotate(0deg); left: 0px;}
+			50%{transform: scale(0.7, 1.3) rotate(11.25deg); left: calc(50vw - 150px);}
+			100%{transform: rotate(22.5deg); left: calc(100vw - 300px);}
+		}
+
+		@keyframes pulsere {
+			0% {
+				transform: scale(1) rotate(0deg) ;
+			}
+
+			10% {
+				transform: scale(0.8) rotate(-2deg);
+			}
+
+			75% {
+				transform: scale(1.1) rotate(2deg);
+			}
+
+			100% {
+				transform: scale(1.0) rotate(0deg);
+			}
+		}
+
+		@keyframes rotere{
+			0%{transform: rotate(0turn)}
+			100%{transform: rotate(1turn)}
+		}
+
+	</style>
+</head>
+
+<body>
+	<img id="kiss" src="bilder/kiss.png" alt="">
+	<img id="rose" src="bilder/rose.png" alt="">
+	<img id="hjerte" src="bilder/hjerte.png" alt="">
+</body>
+
+</html>
