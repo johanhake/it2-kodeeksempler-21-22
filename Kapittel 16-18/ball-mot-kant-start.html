@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ball mot kant</title>
+    <style>
+        body {
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        #innpakning {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background-color: black;
+        }
+
+        .ball {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background-color: #7CFC00;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="innpakning" onclick="lagBall(event)"></div>
+    <script>
+
+        // DOM
+        let innpakning = document.querySelector("#innpakning");
+        let hue = 0;
+
+        // Registrerer lytter funksjon på mouse move når knappen holdes nede
+        innpakning.onmousedown = function () {
+            innpakning.onmousemove = lagBall;
+        }
+
+        // Av-registrerer lytterfunksjon på mousemove når knappen er oppe
+        innpakning.onmouseup = function () {
+            innpakning.onmousemove = function () { };
+        }
+
+        // Lytterfunksjon som lager en ball der hvor musen klikkes
+        function lagBall(event) {
+
+            // Leser av størrelsen på innpakningen
+            let innpakningRamme = innpakning.getBoundingClientRect();
+
+            let xStart = event.clientX - 12.5;
+            let yStart = event.clientY - 12.5;
+
+            // Lag en ball!
+            let ball = document.createElement("div");
+            ball.className = "ball";
+
+            // Endre disse verdiene!
+            let xStop = 100;
+            let yStop = 100;
+
+            // Animerer ballen
+            let spiller = ball.animate([
+                {
+                    left: xStart + "px",
+                    top: yStart + "px"
+                },
+                {
+                    left: xStop + "px",
+                    top: yStop + "px"
+                }
+            ], { duration: 500, easing: "linear" });
+
+            innpakning.appendChild(ball);
+
+        }
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Snake</title>
+	<style>
+		main {
+			display: grid;
+			gap: 2px;
+		}
+
+		main div {
+			background-color: #131313;
+		}
+	</style>
+</head>
+
+<body onkeydown="oppdaterRetning(event)">
+	<h1>Snake</h1>
+	<p>Poeng: <span id="poeng">0</span></p>
+	<main>
+
+	</main>
+	<script>
+		// DOM
+		let main = document.querySelector("main");
+		let poengEl = document.querySelector("#poeng")
+
+		// Parameterer
+		let xSize = 20;
+		let ySize = 15;
+		let skip = 15;
+		let frame = 0
+		let animasjonId;
+		let gameOver = false;
+
+		// Setter griddet
+		main.style.gridTemplateColumns = `repeat(${xSize}, 20px)`;
+		main.style.gridTemplateRows = `repeat(${ySize}, 20px)`;
+
+		// Snake objekt
+		let snake = {
+			coords: [[0, 0], [1, 0]],
+			retning: [1, 0],
+			eple: [Math.trunc(xSize / 2) - 1, Math.trunc(ySize / 2) - 1],
+		};
+
+		// Brettet
+		let brett = []
+		let brettDiv = [];
+		for (let i = 0; i < ySize; i++) {
+			brett.push([]);
+			for (let j = 0; j < xSize; j++) {
+				brett[i].push(0)
+			}
+		}
+
+		console.log(brett)
+		for (let i = 0; i < xSize * ySize; i++) {
+			let div = document.createElement("div");
+			main.appendChild(div);
+			brettDiv.push(div);
+		}
+
+		// Oppdaterer slangen og sjekker om slangen treffer eplet
+		function oppdater() {
+
+			// Legger til et nytt hode
+			const head = snake.coords[snake.coords.length - 1];
+			const newHead = [head[0] + snake.retning[0], head[1] + snake.retning[1]];
+
+			// Kollisjonssjekk
+			if (newHead[0] < 0 || newHead[0] > xSize - 1 || newHead[1] < 0 || newHead[1] > ySize - 1) {
+				gameOver = true;
+				console.log("Kræsj med vegg")
+			}
+
+			// Sjekker om nye hode er i kroppen
+			for (let coord of snake.coords){
+				if(newHead[0] === coord[0] && newHead[1] === coord[1]){
+					gameOver = true;
+					console.log("Kræsj med seg selv")
+					break;
+				}
+			}
+
+			// Legger til hodet når vi veit den ikke kræsjer med noe
+			snake.coords.push(newHead)
+
+			// Treffer hodet eplet?
+			if (newHead[0] === snake.eple[0] && newHead[1] === snake.eple[1]) {
+				console.log("EPLE");
+				snake.eple = nyttEple();
+				poengEl.innerHTML = snake.coords.length - 2;
+				skip = Math.max(skip-1, 5);
+			} else {
+				// Fjerne første elementet (halen!)
+				snake.coords.shift()
+			}
+		}
+
+		// Returnerer et nytt eple
+		function nyttEple() {
+			// Finner et tilfeldig nytt eple
+			let eple = [Math.trunc(Math.random() * xSize), Math.trunc(Math.random() * ySize)];
+
+			// Så lenge eplet er i slangen trekk et nytt tilfeldig epl
+			while (snake.coords.indexOf(eple) !== -1) {
+				eple = [Math.trunc(Math.random() * xSize), Math.trunc(Math.random() * ySize)];
+			}
+			return eple;
+		}
+
+		// Tegner brettet på nytt
+		function tegn() {
+
+			// Sletter alle tidligere tegn
+			for (let i = 0; i < xSize * ySize; i++) {
+				brettDiv[i].style.backgroundColor = "black";
+			}
+
+			// Tegner slangen
+			let i = 0;
+			for (let coord of snake.coords) {
+				brettDiv[coord[0] + coord[1] * xSize].style.backgroundColor = (i++ === snake.coords.length - 1 ? "yellow" : "green");
+			}
+
+			// Tegner eplet
+			brettDiv[snake.eple[0] + snake.eple[1] * xSize].style.backgroundColor = "red";
+		}
+
+		// Lytterfunksjon for å registrere taster
+		function oppdaterRetning(event) {
+			// Oppdaterer retning
+			if (event.key === "ArrowLeft" && !(snake.retning[0]===1 && snake.retning[1]===0)) {
+				snake.retning = [-1, 0];
+			} else if (event.key === "ArrowRight" && !(snake.retning[0]===-1 && snake.retning[1]===0)) {
+				snake.retning = [1, 0];
+			} else if (event.key === "ArrowDown" && !(snake.retning[0]===0 && snake.retning[1]===-1)) {
+				snake.retning = [0, 1];
+			} else if (event.key === "ArrowUp" && !(snake.retning[0]===0 && snake.retning[1]===1)) {
+				snake.retning = [0, -1];
+			}
+			console.log("retning", snake.retning);
+		}
+
+		// Animasjons funksjon
+		function animer() {
+
+			if (frame++ % skip === 0) {
+				oppdater();
+				if (!gameOver) {
+					tegn();
+				}
+			}
+
+			// Neste animasjonsframe
+			if (!gameOver) {
+				animasjonId = requestAnimationFrame(animer)
+			} else {
+				cancelAnimationFrame(animasjonId);
+			}
+		}
+
+		// Starter animasjonen
+		animer();
+
+	</script>
+</body>
+
+</html>

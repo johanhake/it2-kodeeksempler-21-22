@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="nb">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Animasjon Vinterdans</title>
+
+    <style>
+        #bakgrunn {
+            position: relative;
+            background-image: url("bilder/vinter.png");
+            border: 6px solid darkred;
+            overflow: hidden;
+            width: 1200px;
+            height: 784px;
+        }
+
+        #reinsdyr {
+            position: absolute;
+            width: 1200px;
+            height: 784px;
+        }
+
+        #kropp {
+            position: absolute;
+            background-image: url("bilder/rein-kropp.png");
+            width: 674px;
+            height: 652px;
+        }
+
+        #hode {
+            position: absolute;
+            background-image: url("bilder/rein-hode.png");
+            width: 446px;
+            height: 430px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Vinterdans</h1>
+
+    <h3 id="tekst">Reindyr i solnedgang!</h3>
+    <div id="bakgrunn">
+        <div id="reinsdyr">
+            <div id="kropp"></div>
+            <div id="hode"></div>
+        </div>
+    </div>
+    <audio id="rudolf" src="lyd/rudolf.mp3"></audio>
+    <script type="text/javascript">
+
+        // DOM
+        let rudolf = document.querySelector("#rudolf");
+
+        // Sangen starter litt inn på ;)
+        rudolf.currentTime = 30;
+
+    </script>
+</body>
+
+</html
