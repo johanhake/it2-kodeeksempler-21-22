@@ -1,43 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Waapi test</title>
     <style>
-        div{
-            position: relative;
+        div {
             font-family: Arial, Helvetica, sans-serif;
             font-size: large;
+            font-weight: bolder;
         }
     </style>
 </head>
+
 <body>
-    <button onclick="animer(event)">Start</button>
     <div>Hallo verden!</div>
     <script>
 
         // DOM
         let hilsen = document.querySelector("div");
 
-        // Global animasjons variabel
-        let animasjon = { playState: "idle" };
-
-        function animer(event){
-
-            if (animasjon.playState === "idle"){
-                event.target.innerHTML = "Stop";
-                animasjon = hilsen.animate([
-                    {opacity:0, color: "green", top: "0px", offset: 0},
-                    {opacity: 0.8, color: "black", top: (window.innerHeight/2-50) + "px", offset: .5},
-                    {opacity: 1, color: "red", top: (window.innerHeight-100) + "px", offset: 1.0}],
-                    {duration: 2000});
-            }else{
-                event.target.innerHTML = "Start";
-                animasjon.cancel();
-            }
-        }
+        let animasjon = hilsen.animate([
+            { opacity: 0, color: "lightgreen", offset: 0 },
+            { opacity: 0.8, color: "black", offset: .5 },
+            { opacity: 1, color: "yellow", offset: 1.0 }],
+            { duration: 1000 });
     </script>
 </body>
+
 </html>
