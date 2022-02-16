@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Waapi test</title>
     <style>
-        div{
+        div {
             position: relative;
             font-family: Arial, Helvetica, sans-serif;
             font-size: large;
         }
     </style>
 </head>
+
 <body>
     <button onclick="animer(event)">Start</button>
     <div>Hallo verden!</div>
@@ -22,22 +24,34 @@
         let hilsen = document.querySelector("div");
 
         // Global animasjons variabel
-        let animasjon = { playState: "idle" };
+        let animasjon = hilsen.animate([
+            { opacity: 0, color: "green", offset: 0 },
+            { opacity: 0.8, color: "black", offset: .5 },
+            { opacity: 1, color: "red", offset: 1.0 }],
+            { duration: 2000, direction: "alternate", iterations: Infinity });
 
-        function animer(event){
+        let animasjon2 = hilsen.animate([
+            { top: "0px", offset: 0 },
+            { top: (window.innerHeight - 100) + "px", offset: 1.0 }],
+            { duration: 2000, direction: "alternate", iterations: Infinity });
 
-            if (animasjon.playState === "idle"){
+        animasjon.pause();
+        animasjon2.pause();
+
+        function animer(event) {
+
+            if (animasjon.playState === "paused") {
                 event.target.innerHTML = "Stop";
-                animasjon = hilsen.animate([
-                    {opacity:0, color: "green", top: "0px", offset: 0},
-                    {opacity: 0.8, color: "black", top: (window.innerHeight/2-50) + "px", offset: .5},
-                    {opacity: 1, color: "red", top: (window.innerHeight-100) + "px", offset: 1.0}],
-                    {duration: 2000});
-            }else{
+                animasjon.play();
+                animasjon2.play();
+
+            } else {
                 event.target.innerHTML = "Start";
-                animasjon.cancel();
+                animasjon.pause();
+                animasjon2.pause();
             }
         }
     </script>
 </body>
+
 </html>
