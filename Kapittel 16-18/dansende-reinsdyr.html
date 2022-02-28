@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="nb">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Animasjon Vinterdans</title>
+    <link rel="stylesheet" type="text/css" href="../Kapittel 5 og 13 Bilder lyd og video/fa/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="brukerinput.css">
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        #bakgrunn {
+            position: relative;
+            background-image: url("bilder/vinter.png");
+            background-size: cover;
+            border: 6px solid darkred;
+            width: 100vw;
+            height: 85vh;
+        }
+
+        #reinsdyr {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        #kropp {
+            position: absolute;
+            background-image: url("bilder/rein-kropp.png");
+            left: 190px;
+            bottom: -50px;
+            width: 674px;
+            height: 652px;
+            transform: scale(0.8);
+        }
+
+        #hode {
+            position: absolute;
+            background-image: url("bilder/rein-hode.png");
+            left: 250px;
+            bottom: 240px;
+            width: 446px;
+            height: 430px;
+            transform: scale(0.8);
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Vinterdans</h1>
+
+    <h3 id="tekst">Reindyr i solnedgang!</h3>
+    <button onclick="play()" class="">&#9658;</button>
+    <button onclick="pause()" class="">&#9612;&#9612;</button>
+    <div id="bakgrunn">
+        <div id="reinsdyr">
+            <div id="kropp"></div>
+            <div id="hode"></div>
+        </div>
+    </div>
+    <audio id="rudolf" src="lyd/rudolf.mp3"></audio>
+    <script type="text/javascript">
+
+        // DOM
+        let rudolf = document.querySelector("#rudolf");
+        let reinsdyrEl = document.querySelector("#reinsdyr");
+        let kroppEl = document.querySelector("#kropp");
+        let hodeEl = document.querySelector("#hode");
+
+        // Lyden starter litt inn i klippet
+        rudolf.currentTime = 35;
+
+        // Hode animasjon
+        let hodeKeyframes = [
+            { transform: "translate(0px, 0px)  rotate(0deg) scale(0.8)" },
+            { transform: "translate(-2px, 2px) rotate(4deg) scale(0.8)" },
+            { transform: "translate(2px, -2px) rotate(0deg) scale(0.8)" },
+            { transform: "translate(0px, -2px) rotate(4deg) scale(0.8)" },
+            { transform: "translate(0px, 0px)  rotate(0deg) scale(0.8)" },
+        ];
+
+        let hodeTimings = {
+            duration: 4000,
+            iterations: Infinity,
+        };
+
+        // Kropp animasjon
+        let kroppKeyframes = [
+            { transform: "translate(0px, 0px) rotate(0deg) scale(0.8)" },
+            { transform: "translate(4px, 4px) rotate(-4deg) scale(0.8)" },
+            { transform: "translate(-4px, 4px) rotate(4deg) scale(0.8)" },
+            { transform: "translate(-4px, -4px) rotate(-4deg) scale(0.8)" },
+            { transform: "translate(0px, 0px) rotate(0deg) scale(0.8)" },
+        ];
+
+        let kroppTimings = {
+            duration: 8000,
+            iterations: Infinity,
+        };
+
+        // Fremogtilbake animasjon
+        let fremogtilbakeKeyframes = [
+            { transform: "translateX(-300px)" },
+            { transform: "translateX(300px)" },
+        ];
+
+        let fremogtilbakeTimings = {
+            duration: 12000,
+            iterations: Infinity,
+            direction: "alternate",
+            easing: "linear",
+        };
+
+        // Sett igang animasjonene og tar lete på referanser til 
+        // animasjonsobjektene
+        let spillbare = [rudolf];
+        spillbare.push(kroppEl.animate(kroppKeyframes, kroppTimings));
+        spillbare.push(hodeEl.animate(hodeKeyframes, hodeTimings));
+        spillbare.push(reinsdyrEl.animate(fremogtilbakeKeyframes, fremogtilbakeTimings));
+
+        // Setter fremogtilbake animasjonen til midten av 
+        // kjøringen slik at den starter i midten.
+        spillbare[3].currentTime = 6000;
+
+        // Laher pause og play funksjoner
+        function pause() {
+            for (let spiller of spillbare) {
+                spiller.pause();
+            }
+        }
+
+        function play() {
+            for (let i = 0; i < spillbare.length; i++) {
+                spillbare[i].play();
+            }
+        }
+
+        // Starter med alle pausede
+        pause();
+    </script>
+</body>
+
+</html

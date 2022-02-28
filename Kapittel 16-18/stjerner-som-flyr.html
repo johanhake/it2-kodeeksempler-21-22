@@ -1,0 +1,79 @@
+<!DOCTYPE   html>   
+<html   lang="no">  
+<head>  
+    <meta   charset="UTF-8">    
+    <meta   name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sirkler</title>  
+    <style>
+    *{
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+    
+    body, html {
+        height: 100vh;
+    }
+
+     /* CSS Style for bakgrunnen for stjernene */
+    #bakgrunn {
+        position: relative;
+        background-color: black;
+        border: 5px solid #7CFC00;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    } 
+    /* CSS style for alle stjerner */
+    .stjerne {
+        border-radius: 50%;
+        background-color: white;
+        position: absolute;
+    }
+
+</style>
+</head>
+<body>
+<div id="bakgrunn">   
+</div>
+<script>
+    // DOM
+    let bakgrunn = document.querySelector("#bakgrunn");
+
+    // keyframe
+    let keyframe = [
+        {left: 0},
+        {left: window.innerWidth + "px"}
+    ];
+
+    function lagOgAnimerStjerne(sluttTid, størrelse, opacity){
+        let stjerne = document.createElement("div");
+        stjerne.className = "stjerne";
+        stjerne.style.top = Math.random()*window.innerHeight + "px";
+        stjerne.style.width = størrelse + "px";
+        stjerne.style.height = størrelse + "px";
+        stjerne.style.opacity = opacity;
+        bakgrunn.appendChild(stjerne);
+
+        let spiller = stjerne.animate(keyframe, {duration: sluttTid, iterations: Infinity});
+        spiller.currentTime = sluttTid*Math.random();
+    }
+
+    // De svakeste stjernene
+    for (let i=0; i<200; i++){
+        lagOgAnimerStjerne(15000, 2, 0.6);
+    }
+    for (let i=0; i<120; i++){
+        lagOgAnimerStjerne(10000, 3, 0.8);
+    }
+    for (let i=0; i<60; i++){
+        lagOgAnimerStjerne(7500, 4, 0.9);
+    }
+    for (let i=0; i<20; i++){
+        lagOgAnimerStjerne(5000, 5, 1);
+    }
+
+</script>   
+</body> 
+</html> 
+    

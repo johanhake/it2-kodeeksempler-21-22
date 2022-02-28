@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ball mot kant</title>
+    <style>
+        body {
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        #innpakning {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background-color: black;
+        }
+
+        .ball {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background-color: #7CFC00;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="innpakning" onclick="lagMangeBaller(event)"></div>
+    <script>
+
+        // DOM
+        let innpakning = document.querySelector("#innpakning");
+        let hue = 0;
+
+        // Registrerer lytter funksjon på mouse move når knappen holdes nede
+        innpakning.onmousedown = function () {
+            innpakning.onmousemove = lagMangeBaller;
+        }
+
+        // Av-registrerer lytterfunksjon på mousemove når knappen er oppe
+        innpakning.onmouseup = function () {
+            innpakning.onmousemove = function () { };
+        }
+
+        function lagMangeBaller(event){
+            for (let i=0; i<20; i++){
+                lagBall(event);
+            }
+        }
+
+        // Lytterfunksjon som lager en ball der hvor musen klikkes
+        function lagBall(event) {
+
+            // Leser av størrelsen på innpakningen
+            let innpakningRamme = innpakning.getBoundingClientRect();
+
+            // Lager en div som skal bli en ball
+            let ball = document.createElement("div");
+            ball.className = "ball";
+
+            ball.style.backgroundColor = `hsl(${hue += 10}, 100%, 50%)`;
+
+            let retning = Math.floor(Math.random() * 4);
+            let xStart = event.clientX - 12.5;
+            let yStart = event.clientY - 12.5;
+
+            // Deklarerer variabler først
+            let xStop, yStop;
+            if (retning === 0) {
+                xStop = innpakningRamme.width;
+                yStop = innpakningRamme.height * Math.random();
+            }else if (retning === 1){
+                xStop = innpakningRamme.width * Math.random();
+                yStop = innpakningRamme.height;
+            }else if(retning === 2) {
+                xStop = 0;
+                yStop = innpakningRamme.height * Math.random();
+            }else{
+                xStop = innpakningRamme.width * Math.random();
+                yStop = 0;
+            }
+
+
+            let dx = xStop - xStart;
+            let dy = yStop - yStart;
+            let vei = Math.sqrt(dx * dx + dy * dy);
+            let fart = 0.5; // px/s
+
+            let spiller = ball.animate([
+                {
+                    left: xStart + "px",
+                    top: yStart + "px",
+                    transform: "scale(1)",
+                    opacity: 1
+                },
+                {
+                    left: xStop + "px",
+                    top: yStop + "px",
+                    transform: "scale(2)",
+                    opacity: 0.5
+                }
+            ], { duration: vei / fart, easing: "linear" });
+
+            innpakning.appendChild(ball);
+
+            spiller.onfinish = function () {
+                innpakning.removeChild(ball);
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>
