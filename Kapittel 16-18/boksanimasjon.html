@@ -16,14 +16,17 @@
 
         @keyframes frem-og-tilbake {
             0% { left: 0px; background-color: lightcoral;}
-            50% {left: calc(100vw - 150px); background-color: lightgreen;}
-            100% {left: 0px; background-color: limegreen;}
+            67% {left: calc(100vw - 150px); background-color: lightgreen;}
+            100% {left: calc(50vw - 75px); background-color: limegreen;}
         }
 
         .animasjon{
             animation-name: frem-og-tilbake;
             animation-duration: 2s;
             animation-iteration-count: 1;
+            animation-timing-function: linear;
+            animation-direction: alternate;
+            animation-fill-mode: forwards;
         }
 
     </style>
