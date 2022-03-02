@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Fade inn ut</title>
+	<style>
+		#innpakning {
+			position: relative;
+			border: 5px solid brown;
+			width: 400px;
+			height: 300px;
+		}
+
+		#innpakning img {
+			position: absolute;
+			width: 400px;
+			transition: 1000ms;
+		}
+
+		.usynlig{
+			opacity: 0;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Dompap</h1>
+	<div id="innpakning">
+		<img data-fugl="Dompap" src="bilder/dompap.jpg">
+		<img data-fugl="Gråspurv" class="usynlig" src="bilder/graspurv.jpg">
+		<img data-fugl="Kjøttmeis" class="usynlig" src="bilder/kjottmeis.jpg">
+		<img data-fugl="Svartmeis" class="usynlig" src="bilder/svartmeis.jpg">
+		<img data-fugl="Blåmeis" class="usynlig" src="bilder/blameis.jpg">
+	</div>
+
+	<script>
+		// DOM
+		let fugleNavn = document.querySelector("h1");
+		let bildeListe = document.querySelectorAll("#innpakning img");
+
+		// Variabler
+		let bildeIndeks = 0;
+
+		function byttBilde() {
+			bildeListe[bildeIndeks].classList.toggle("usynlig");
+
+			let animasjon = fugleNavn.animate([{opacity:1}, {opacity:0}], {duration: 500});
+			animasjon.onfinish = function(){
+				fugleNavn.innerHTML = bildeListe[bildeIndeks].dataset.fugl;
+				fugleNavn.animate([{opacity:0}, {opacity:1}], {duration: 500});
+			}
+  			bildeIndeks = (bildeIndeks + 1) % bildeListe.length;
+			bildeListe[bildeIndeks].classList.toggle("usynlig");
+			setTimeout(byttBilde, 2000);
+		}
+
+		byttBilde();
+	</script>
+</body>
+
+</html>
