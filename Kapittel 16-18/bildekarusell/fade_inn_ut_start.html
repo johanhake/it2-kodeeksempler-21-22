@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Fade inn ut</title>
+	<style>
+		#innpakning {
+			/* Fortsett her */
+		}
+
+		#innpakning img {
+			/* Fortsett her */
+		}
+
+		.usynlig{
+			opacity: 0;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Dompap</h1>
+	<div id="innpakning">
+		<img data-fugl="Dompap" src="bilder/dompap.jpg">
+		<img data-fugl="Gråspurv" class="usynlig" src="bilder/graspurv.jpg">
+		<img data-fugl="Kjøttmeis" class="usynlig" src="bilder/kjottmeis.jpg">
+		<img data-fugl="Svartmeis" class="usynlig" src="bilder/svartmeis.jpg">
+		<img data-fugl="Blåmeis" class="usynlig" src="bilder/blameis.jpg">
+	</div>
+
+	<script>
+		// DOM
+		let fugleNavn = document.querySelector("h1");
+		let bildeListe = document.querySelectorAll("#innpakning img");
+
+		// Variabler
+		let bildeIndeks = 0;
+
+		function byttBilde() {
+			/* Fortsett her */
+			setTimeout(byttBilde, 2000);
+		}
+
+	</script>
+</body>
+
+</html>
