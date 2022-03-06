@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Skli inn skli ut</title>
+    <style>
+        #ramme{
+            border: 5px solid brown;
+            width: 400px;
+            overflow: visible;
+        }
+
+        #innpakning{
+            display: flex;
+            width: 2401px;
+            animation: skliInnSkliUt 12s infinite;
+        }
+
+        @keyframes skliInnSkliUt {
+            0%{transform: translateX(0px)}
+            15%{transform: translateX(0px)}
+            20%{transform: translateX(-400px)}
+            35%{transform: translateX(-400px)}
+            40%{transform: translateX(-800px)}
+            55%{transform: translateX(-800px)}
+            60%{transform: translateX(-1200px)}
+            75%{transform: translateX(-1200px)}
+            80%{transform: translateX(-1600px)}
+            95%{transform: translateX(-1600px)}
+            100%{transform: translateX(-2000px)}
+        }
+
+    </style>
+</head>
+<body>
+<div id="ramme">
+    <div id="innpakning">
+        <img src="bilder/dompap.jpg">
+        <img src="bilder/graspurv.jpg">
+        <img src="bilder/kjottmeis.jpg">
+        <img src="bilder/svartmeis.jpg">
+        <img src="bilder/blameis.jpg">
+        <img src="bilder/dompap.jpg">
+    </div>
+</div>
+
+</body>
+</html>
