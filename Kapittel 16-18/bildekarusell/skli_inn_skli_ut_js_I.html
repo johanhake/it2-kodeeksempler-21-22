@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Skli inn skli ut</title>
+    <style>
+        body {
+            background-color: #e0e0e0;
+        }
+
+        #innpakning {
+            overflow: hidden;
+            width: 400px;
+            height: 300px;
+            border: darkred 8px solid;
+            margin: 150px auto;
+            position: relative;
+        }
+
+        #innpakning img {
+            position: absolute;
+            width: 400px;
+            height: 300px;
+            transform: translateX(-400px);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="innpakning">
+        <img src="bilder/dompap.jpg">
+        <img src="bilder/graspurv.jpg">
+        <img src="bilder/kjottmeis.jpg">
+        <img src="bilder/svartmeis.jpg">
+        <img src="bilder/blameis.jpg">
+    </div>
+
+    <script>
+
+        // DOM
+        let bildeListe = document.querySelectorAll("#innpakning img");
+        const bildeBredde = 400;
+        const tid = 3000;
+
+        const timing = {
+            duration: tid/3,
+            fill: "forwards"
+        };
+
+        // Keyframes for å skli inn fra høyre
+        let innFraHoyre = [
+            { transform: `translateX(${bildeBredde}px)` },
+            { transform: `translateX(0)` }
+        ];
+
+        // Keyframes for å skli ut til høyre
+        let utTilVenstre = [
+            { transform: `translateX(0)` },
+            { transform: `translateX(${-bildeBredde}px)` }
+        ];
+
+        // Hvilket bilde presenteres
+        let bildeIndeks = 0;
+
+        // Flytter bildene et hakke til venstre
+        function flytt() {
+            bildeListe[bildeIndeks].animate(utTilVenstre, timing);
+            bildeIndeks = (bildeIndeks + 1) % bildeListe.length;
+            bildeListe[bildeIndeks].animate(innFraHoyre, timing);
+            setTimeout(flytt, tid);
+        }
+
+        flytt();
+
+    </script>
+
+</body>
+
+</html>

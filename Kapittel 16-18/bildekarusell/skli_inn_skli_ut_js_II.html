@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+		integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: #e0e0e0;
+        }
+
+        #innpakning {
+            margin: 150px auto;
+            width: fit-content;
+        }
+
+        #nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #bildeInnpakning {
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            width: 400px;
+            height: 300px;
+            border: darkred 8px solid;
+        }
+
+        #innpakning img {
+            position: absolute;
+            width: 400px;
+            height: 300px;
+            left: -400px;
+        }
+
+        i {
+            font-size: 2rem;
+            margin: 0 2px;
+        }
+
+        i:hover{
+            cursor: pointer;
+        }
+
+        .fa-circle {
+            font-size: 1rem
+        }
+    </style>
+</head>
+
+<body>
+    <div id="innpakning">
+        <div id="bildeInnpakning">
+            <img src="bilder/dompap.jpg">
+            <img src="bilder/graspurv.jpg">
+            <img src="bilder/kjottmeis.jpg">
+            <img src="bilder/svartmeis.jpg">
+            <img src="bilder/blameis.jpg">
+        </div>
+        <div id="nav">
+            <i onclick="flyttHoyre()" class="fas fa-angle-left"></i>
+            <i onclick="flyttTilBilde(0)" class="far fa-circle"></i>
+            <i onclick="flyttTilBilde(1)" class="fas fa-circle"></i>
+            <i onclick="flyttTilBilde(2)" class="fas fa-circle"></i>
+            <i onclick="flyttTilBilde(3)" class="fas fa-circle"></i>
+            <i onclick="flyttTilBilde(4)" class="fas fa-circle"></i>
+            <i onclick="flyttVenstre()" class="fas fa-angle-right"></i>
+        </div>
+    </div>
+    <script>
+        let bildeListe = document.querySelectorAll("#bildeInnpakning img");
+        let sirkelListe = document.querySelectorAll(".fa-circle");
+        let bildeBredde = 400;
+        let bildeIndeks = 0;
+        let tid = 3000;
+        let timing = {
+            duration: tid / 3,
+            easing: "ease-in-out",
+            fill: "forwards"
+        };
+
+        // Deklarerer en variabel som holder på animasjons-objektet
+        let animasjon;
+
+        // Keyframes for å komme inn fra høyre
+        let innFraHoyre = [
+            { left: `${bildeBredde}px` },
+            { left: 0 }
+        ];
+
+        // Keyframes for å komme inn fra venstre
+        let innFraVenstre = [
+            { left: `${-bildeBredde}px` },
+            { left: 0 }
+        ];
+
+        // Keyframes for å gå ut til høyre
+        let utTilHoyre = [
+            { left: 0 },
+            { left: `${bildeBredde}px` }
+        ];
+
+        // Keyframes for å gå ut til venstre
+        let utTilVenstre = [
+            { left: 0 },
+            { left: `${-bildeBredde}px` }
+        ];
+
+        function flytt(gammelIndeks, nyIndeks, rettning) {
+            console.log(gammelIndeks, nyIndeks, rettning);
+
+            // Sjekker først om noen animasjon noen ganger er blitt satt i gang
+            // så sjekker den om en animasjon er i gang. Er den det så returner
+            // den.
+            if (typeof animasjon !== "undefined" &&
+                animasjon.playState === "running") {
+                return;
+            }
+
+            // Sjekker om retningen er venstre eller høyre
+            if (rettning === "venstre") {
+                animasjon = bildeListe[gammelIndeks].animate(utTilVenstre, timing);
+                bildeListe[nyIndeks].animate(innFraHoyre, timing);
+            } else {
+                animasjon = bildeListe[gammelIndeks].animate(utTilHoyre, timing);
+                bildeListe[nyIndeks].animate(innFraVenstre, timing);
+            }
+
+            // Oppdaterer sirklene
+            sirkelListe[gammelIndeks].className = "fas fa-circle";
+            sirkelListe[nyIndeks].className = "far fa-circle";
+
+            // Oppdaterer indeksene.
+            bildeIndeks = nyIndeks;
+        }
+
+        function flyttTilBilde(nyIndeks){
+            if(nyIndeks>bildeIndeks){
+                flytt(bildeIndeks, nyIndeks, "venstre");
+            }else{
+                flytt(bildeIndeks, nyIndeks, "høyre");
+            }
+        }
+
+        function flyttVenstre(){
+            let nyIndeks = (bildeIndeks + 1) % bildeListe.length;
+            flytt(bildeIndeks, nyIndeks, "venstre");
+        }
+
+        function flyttHoyre(){
+            let nyIndeks = (bildeListe.length + bildeIndeks - 1) % bildeListe.length;
+            flytt(bildeIndeks, nyIndeks, "venstre");
+        }
+
+        function flyttBilde(){
+            flyttVenstre();
+            setTimeout(flyttBilde, 3000);
+        }
+
+        flyttBilde();
+
+    </script>
+</body>
+
+</html>
