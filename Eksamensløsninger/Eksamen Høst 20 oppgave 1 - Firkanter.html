@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="brukerinput.css">
+	<title>Firkanter</title>
+	<style>
+		* {
+			font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+		}
+
+		#rektangel {
+			margin-top: 50px;
+			opacity: 0;
+			background-color: antiquewhite;
+			border: 2px solid darkgoldenrod;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Rektangler</h1>
+	<ul>
+		<li>Oppgi en heltalls-bredde på rektangelen mellom 1cm - 9cm</li>
+		<li>En rektangel med total omkrets på 20 cm vil så bli tegnet og arealet vil bli regnet ut.</li>
+	</ul>
+	<form onsubmit="tegn(event)">
+		<select id="bredde">
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+			<option value="8">8</option>
+			<option value="9">9</option>
+		</select>
+		<button>Vis rektangel</button>
+	</form>
+	<div id="rektangel">
+		Areal: <span>0</span>cm<sup>2</sup>
+	</div>
+
+	<script>
+		// DOM
+		let rektangel = document.querySelector("#rektangel");
+		let areal = document.querySelector("span");
+
+		// Lytterfunksjon for å registrere en bredde
+		function tegn(event){
+			event.preventDefault()
+			let skjema = event.target;
+
+			let bredde = Number(skjema.bredde.value);
+			let option = document.querySelector(`option[value="${bredde}"]`);
+			option.remove()
+
+			let høyde = 10-bredde;
+			rektangel.style.width = `${bredde*50}px`;
+			rektangel.style.height = `${høyde*50}px`;
+			areal.innerHTML = bredde*høyde
+			rektangel.style.opacity = 0;
+			rektangel.animate([{opacity:0}, {opacity:1}], {duration:2000, fill:"forwards"});
+
+		}
+	</script>
+</body>
+
+</html>

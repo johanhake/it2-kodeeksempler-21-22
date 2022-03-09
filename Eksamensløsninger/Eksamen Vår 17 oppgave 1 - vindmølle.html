@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vindstyrke</title>
+    <link rel="stylesheet" href="brukerinput.css">
+   <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            overflow: hidden;
+        }
+
+        #bakgrunn{
+            position: relative;
+            border: 3px black solid;
+            width: 1200px;
+            height: 600px;
+            background-image: url("bilder/bakgrunn.png");
+        }
+
+        #bakgrunn img{
+            position: absolute;
+        }
+
+        #rotor{
+            top: 50px;
+            right: 249px;
+            width: 250px;
+        }
+
+        #base{
+            top: 205px;
+            right: 250px;
+            width: 250px;
+        }
+
+        #bjørk{
+            left: 25px;
+            top: 25px;
+        }
+
+        #bjørk-1{
+            left: 280px;
+            top: 490px;
+            width: 50px;
+        }
+
+        #bjørk-2{
+            left: 350px;
+            top: 480px;
+            width: 50px;
+        }
+
+        select{
+            display: inline-block;
+            width: 200px;
+        }
+
+        #info{
+            display: inline-block;
+        }
+
+    </style>
+
+</head>
+<body>
+    <label for="velg-vind">Velg vindstyrke</label>
+    <select onchange="endreVind(event)">
+        <option value="">Velg vindstyrke</option>
+        <option value="stille">Stille</option>
+        <option value="lettBris">Lett bris</option>
+        <option value="stivKuling">Stiv kuling</option>
+    </select>
+    <div id="info"></div>
+    <div id="bakgrunn">
+        <img id="base" src="bilder/base.png" alt="">
+        <img id="rotor" src="bilder/rotorblad.png" alt="">
+        <img id="bjørk" src="bilder/bjoerk.png" alt="">
+        <img id="bjørk-1" src="bilder/bjoerk-1.png" alt="">
+        <img id="bjørk-2" src="bilder/bjoerk-2.png" alt="">
+    </div>
+    <audio src="lyd/sommervind-sterkere.mp3"></audio>
+    <script>
+
+        // DOM
+        let audio = document.querySelector("audio");
+        let rotor = document.querySelector("#rotor");
+        let bjørkImg = document.querySelector("#bjørk");
+        let bjørk1Img = document.querySelector("#bjørk-1");
+        let bjørk2Img = document.querySelector("#bjørk-2");
+        let infoTxt = document.querySelector("#info");
+
+
+        // Variabler
+        let animasjon = {currentTime:0.0}
+        let valg = {rotorTid: 1}
+        let vinder = {
+            stille: {
+                info: "Stille: 0-0,2 m/s",
+                lyd: false,
+                rotorTid: 50000,
+                bladKeyframes: [
+                    {transform: "translate(0, 0) rotate(0deg)"},
+                    {transform: "translate(0, 0) rotate(0deg)"}],
+                bladTimings: {duration: 0}
+            },
+
+            lettBris: {
+                info: "Lett bris: 3,4-5,4 m/s",
+                lyd: true,
+                volume: 0.2,
+                rotorTid: 6000,
+                bladKeyframes: [
+                    {transform: "translate(0, 0) rotate(-5deg)"},
+                    {transform: "translate(10px, 10px) rotate(5deg)"}],
+                bladTimings: {duration: 1000, iterations: Infinity, direction: "alternate"}
+            },
+
+            stivKuling: {
+                info: "Stiv kuling: 13,9-17,1 m/s",
+                lyd: true,
+                volume: 1.,
+                rotorTid: 1000,
+                bladKeyframes: [
+                    {transform: "translate(0, 0) rotate(-20deg) "},
+                    {transform: "translate(1000px, -1000px) rotate(20deg)"}],
+                bladTimings: {duration: 1000, fill: "forwards"}
+            }
+        };
+
+        // Lytterfunksjon
+        function endreVind(event){
+
+            // Beregner hvor i animasjonen vi er
+            let andelCurrentTime = animasjon.currentTime / valg.rotorTid;
+
+            // Henter ut valgt vind
+            valg = vinder[event.target.value];
+
+            // Lyd eller ikke?
+            console.log(valg.lyd);
+            if(valg.lyd){
+                audio.play();
+                audio.volume = valg.volume;
+            }else{
+                audio.pause();
+            }
+
+            // Endrer tekst
+            infoTxt.innerHTML = valg.info;
+
+            // Animerer de ulike objektene
+            console.log("1", rotor.style.transform)
+            animasjon = rotor.animate([
+            {transform: "rotate(0turn)"},
+            {transform: "rotate(1turn)"}
+            ], {duration: valg.rotorTid, iterations: Infinity});
+            console.log("2", rotor.style.transform)
+
+            // Setter currentTime til animasjonen
+            animasjon.currentTime = andelCurrentTime*valg.rotorTid;
+
+            bjørk1Img.animate(valg.bladKeyframes, valg.bladTimings);
+            bjørk2Img.animate(valg.bladKeyframes, valg.bladTimings);
+        }
+
+    </script>
+</body>
+</html>
