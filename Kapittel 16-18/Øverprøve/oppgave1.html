@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="nb">
+<head>
+    <meta charset="UTF-8">
+    <title>Bokser!</title>
+    <style>
+        #bakgrunn {
+            position: relative;
+            width: 600px;
+            height: 600px;
+            background-color: #e0e0e0;
+            overflow: hidden;
+        }
+
+        #bakgrunn div {
+            position: absolute;
+            border: 3px solid black;
+            width: 150px;
+            height: 150px;
+            left: 0;
+        }
+
+        #boks1 {
+            position: absolute;
+            top: 20px;
+            background-color: red;
+            transition: all 4s linear;
+        }
+
+        #boks2 {
+            position: absolute;
+            top: 220px;
+            background-color: green;
+        }
+
+        #boks3 {
+            position: absolute;
+            top: 420px;
+            background-color: blue;
+        }
+
+        @keyframes hoyreForsvinn {
+            0% {
+                left: 0;
+                opacity: 1;
+            }
+            100% {
+                left: 420px;
+                opacity: 0.5;
+            }
+        }
+    </style>
+
+</head>
+<body>
+
+<div id="bakgrunn">
+    <div id="boks1"></div>
+    <div id="boks2"></div>
+    <div id="boks3"></div>
+</div>
+
+<button id="start" onclick="startAnimasjon()">start</button>
+
+<script>
+    
+    // DOM
+    let boks1 = document.getElementById("boks1");
+    let boks2 = document.getElementById("boks2");
+    let boks3 = document.getElementById("boks3");
+
+    // Funksjonen som styrer hva som skjer når vi trykker på 
+    function startAnimasjon(){
+        
+         // Setter igang CSS-transisjonen
+        boks1.style.left = "420px";
+        boks1.style.opacity = 0.5;
+
+        // Setter igang CSS-animasjonen
+        boks2.style.animation = "hoyreForsvinn 4s linear forwards";
+
+        // Setter igang WAAPI animasjonen
+        boks3.animate([
+                {left:"0", opacity:1},
+                {left:"420px", opacity:0.5}],
+                {duration: 4000, fill: "forwards", easing: "linear"})
+    }
+
+</script>
+</body>
+</html
