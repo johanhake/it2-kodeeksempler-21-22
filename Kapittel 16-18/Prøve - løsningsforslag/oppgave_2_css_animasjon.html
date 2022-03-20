@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="nb">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Oppgave 2</title>
+    <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: sans-serif;
+        }
+
+        @keyframes bildeSliding {
+            0% {top: 0px;}
+            20% {top: 0px;}
+            33% {top: -200px;}
+            53% {top: -200px;}
+            67% {top: -400px;}
+            87% {top: -400px;}
+            100% {top: -600px;}
+        }
+
+        @keyframes tekstSliding {
+            0% {left: 0px;}
+            20% {left: 0px;}
+            33% {left: -600px;}
+            53% {left: -600px;}
+            67% {left: -1200px;}
+            87% {left: -1200px;}
+            100% {left: -1800px;}
+        }
+
+        #bakgrunn {
+            position: relative;
+            width: 600px;
+            height: 400px;
+            border: 3px solid;
+            overflow: hidden;
+        }
+
+        #bildeRamme {
+            position: absolute;
+            background-image: url("bilder/bakgrunn_topp.jpg");
+            width: 600px;
+            height: 200px;
+        }
+
+        #bilder {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            width: 600px;
+            height: 800px;
+            animation-name: bildeSliding;
+            animation-duration: 10s;
+            animation-iteration-count: infinite;
+        }
+
+        #tekstRamme {
+            position: absolute;
+            top: 200px;
+            width: 600px;
+            height: 200px;
+            background-image: url("bilder/bakgrunn_bunn.jpg");
+        }
+
+        #allTekst {
+            position: absolute;
+            display: flex;
+            flex-direction: row;
+            width: 2400px;
+            height: 200px;
+            animation-name: tekstSliding;
+            animation-duration: 10s;
+            animation-iteration-count: infinite;
+        }
+
+        .tekst {
+            color: white;
+            font-size: 1.3em;
+            width: 600px;
+            height: 200px;
+        }
+
+        .tekst p, .tekst h3 {
+            margin: 15px;
+        }
+
+        #bilder img {
+            width: 600px;
+            height: 200px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h2>Helsport telt</h2>
+    <div id="bakgrunn">
+        <div id="bildeRamme">
+            <div id="bilder">
+                <img src="bilder/nordmarka.png">
+                <img src="bilder/rondane.png">
+                <img src="bilder/svea.png">
+                <img src="bilder/nordmarka.png">
+            </div>
+        </div>
+        <div id="tekstRamme">
+            <div id="allTekst">
+                <div class="tekst">
+                    <h3>Nordmarka 3 camp, 3 manns telt</h3>
+                    <p>
+                        Nordmarka 3 Camp er et tunneltelt for bruk i vår, sommer og høst-sesongen. Dette er et godt og
+                        solid telt med løsninger og som egner til både korte og lange turer.
+                    </p>
+                    <p>
+                        Pris: 2 499,-
+                    </p>
+                </div>
+                <div class="tekst">
+                    <h3>Rondane 3 camp, 3 manns telt</h3>
+                    <p>
+                        Kompakt og solid tremannstelt, godt tilpasset et nordisk klima. Lav, aerodynamisk form som gjør
+                        teltet veldig stabilt i all slags vær. Rask å sette opp.
+                    </p>
+                    <p>
+                        Pris: 4 999,-
+                    </p>
+                </div>
+                <div class="tekst">
+                    <h3>Svea 3 camp, 3 manns telt</h3>
+                    <p>
+                        Stort og romslig 3 manns telt. Tunneltelt for helårsbruk med 2 innganger og 2 camp-rom. God
+                        takhøyde gir følesen av mer luft i teltet og gir derfor økt komfort. AirFlow ventilasjonssystem.
+                    </p>
+                    <p>
+                        Pris: 7 999,-
+                    </p>
+                </div>
+                <div class="tekst">
+                    <h3>Nordmarka 3 camp, 3 manns telt</h3>
+                    <p>
+                        Nordmarka 3 Camp er et tunneltelt for bruk i vår, sommer og høst-sesongen. Dette er et godt og
+                        solid telt med løsninger og som egner til både korte og lange turer.
+                    </p>
+                    <p>
+                        Pris: 2 499,-
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

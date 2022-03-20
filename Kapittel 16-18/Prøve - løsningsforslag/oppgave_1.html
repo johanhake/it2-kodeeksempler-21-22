@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="nb">
+<head>
+    <meta charset="UTF-8">
+    <title>Oppgave 1</title>
+    <style>
+
+        #bakgrunn {
+            position: relative;
+            width: 600px;
+            height: 600px;
+            overflow: hidden;
+            border: 3px solid;
+            background-color: lightgray;
+        }
+
+        #bakgrunn div {
+            position: absolute;
+            border: 3px solid;
+            width: 100px;
+            height: 100px;
+        }
+
+        #boks1 {
+            top: 10px;
+            left: 20px;
+            background-color: red;
+            transition: all 2s linear;
+        }
+
+        #boks2 {
+            left: 250px;
+            bottom: 10px;
+            background-color: green;
+        }
+
+        #boks3 {
+            top: 10px;
+            left: 480px;
+            background-color: blue;
+        }
+
+        @keyframes nedUtvid {
+            0% {
+                bottom: 10px;
+                height: 100px;
+                width: 100px;
+                left: 250px;
+            }
+            100% {
+                bottom: 560px;
+                height: 20px;
+                width: 560px;
+                left: 20px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div id="bakgrunn">
+        <div id="boks1"></div>
+        <div id="boks2"></div>
+        <div id="boks3"></div>
+    </div>
+
+    <button onclick="startAnimasjon()">start</button>
+
+<script type="text/javascript">
+    
+    // DOM
+
+    let boks1 = document.querySelector("#boks1");
+    let boks2 = document.querySelector("#boks2");
+    let boks3 = document.querySelector("#boks3");
+
+    // Hva skjer når vi trykker på knappen?
+    function startAnimasjon(){
+
+        // Setter igang CSS-overgangen (transition)
+        boks1.style.top = 480 + "px";
+        boks1.style.transform = "rotate(360deg)";
+
+        // Setter igang CSS animasjonen (animation)
+        boks2.style.animation = "nedUtvid linear 2s forwards";
+
+        // Setter igang WAAPI animasjonen (WAAPI)
+        boks3.animate([{left:"480px", top: "10px", opacity:1.},
+                       {left:"480px", top: "10px", opacity:0},
+                       {left:"580px", top: "480px", opacity:0},
+                       {left:"480px", top: "480px", opacity:1},
+                       ],
+                       {duration: 2000, 
+                        fill: "forwards"});
+    }
+
+</script>
+</body>
+</html>

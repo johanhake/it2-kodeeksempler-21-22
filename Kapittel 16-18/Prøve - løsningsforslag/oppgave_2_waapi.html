@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="nb">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Oppgave 2</title>
+    <style type="text/css">
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        #innpakning {
+            overflow: hidden;
+            width: 600px;
+            height: 400px;
+            border: darkred 8px solid;
+            margin: 150px auto;
+            position: relative;
+            background-image: url("bilder/bakgrunn.jpg");
+        }
+
+        #tekstinnpakning{
+            position: absolute;
+            overflow: hidden;
+            top: 200px;
+            left: 0px;
+            width: 600px;
+            height: 200px;
+            background-image: url("bilder/bakgrunn_bunn.jpg");
+        }
+
+        .tekst {
+            position: absolute;
+            font-size: 1.3em;
+            padding: 5px;
+            width: 600px;
+            height: 200px;
+            left: -600px;
+        }
+
+        img {
+            position: absolute;
+            top: -200px;
+        }
+
+        h3 {
+            color: white;
+        }
+
+        p {
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Hellsport telt</h2>
+    <div id="innpakning">
+        <img src="bilder/nordmarka.png" width=600 height=200>
+        <img src="bilder/rondane.png" width=600 height=200>
+        <img src="bilder/svea.png" width=600 height=200>
+        <div id="tekstinnpakning">
+            <div class="tekst">
+                <h3>Nordmarka 3 camp, 3 manns telt</h3>
+                <p>
+                    Nordmarka 3 Camp er et tunneltelt for bruk i vår, sommer og høst-sesongen. Dette er et godt og solid
+                    telt med løsninger og som egner til både korte og lange turer.
+                </p>
+                <p>
+                    Pris: 2 499,-
+                </p>
+            </div>
+            <div class="tekst">
+                <h3>Rondane 3 camp, 3 manns telt</h3>
+                <p>
+                    Kompakt og solid tremannstelt, godt tilpasset et nordisk klima. Lav, aerodynamisk form som gjør
+                    teltet
+                    veldig stabilt i all slags vær. Rask å sette opp.
+                </p>
+                <p>
+                    Pris: 4 999,-
+                </p>
+            </div>
+            <div class="tekst">
+                <h3>Svea 3 camp, 3 manns telt</h3>
+                <p>
+                    Stort og romslig 3 manns telt. Tunneltelt for helårsbruk med 2 innganger og 2 camp-rom. God takhøyde
+                    gir
+                    følesen av mer luft i teltet og gir derfor økt komfort. AirFlow ventilasjonssystem.
+                </p>
+                <p>
+                    Pris: 7 999,-
+                </p>
+            </div>
+        </div>
+    </div>
+    <audio id="fugl" src="lyd/fugl.mp3"></audio>
+    <h2>Trykk hvor som helst for fuglelyder!</h2>
+
+    <script>
+
+        let fugl = document.querySelector("#fugl");
+        let tid = 3000;
+        let tekstListe = document.querySelectorAll(".tekst");
+        let tekstBredde = 600;
+        let tekstIndeks = 0;
+        let timing = {
+            duration: tid / 3,
+            easing: "ease-in-out",
+            fill: "forwards"
+        };
+
+        let innFraHoyre = [
+            { left: `${tekstBredde}px` },
+            { left: 0 }
+        ];
+
+        let utTilVenstre = [
+            { left: 0 },
+            { left: `${-tekstBredde}px` }
+        ];
+
+        function flytt() {
+            tekstListe[tekstIndeks].animate(utTilVenstre, timing);
+            tekstIndeks = (tekstIndeks + 1) % tekstListe.length;
+            tekstListe[tekstIndeks].animate(innFraHoyre, timing);
+            setTimeout(flytt, tid);
+            fugl.play();
+        }
+
+        flytt();
+
+        let bildeListe = document.querySelectorAll("img");
+        let bildeHoyde = 600;
+        let bildeIndeks = 0;
+
+        let innFraBunn = [
+            { top: `${bildeHoyde}px` },
+            { top: 0 }
+        ];
+
+        let utTiltopp = [
+            { top: 0 },
+            { top: `${-bildeHoyde}px` }
+        ];
+
+        function flytt2() {
+            bildeListe[bildeIndeks].animate(utTiltopp, timing);
+            bildeIndeks = (bildeIndeks + 1) % bildeListe.length;
+            bildeListe[bildeIndeks].animate(innFraBunn, timing);
+            setTimeout(flytt2, tid);
+        }
+
+        flytt2();
+
+
+
+
+    </script>
+</body>
+
+</html>
