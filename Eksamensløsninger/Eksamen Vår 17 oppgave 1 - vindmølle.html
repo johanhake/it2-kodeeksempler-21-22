@@ -1,23 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vindstyrke</title>
     <link rel="stylesheet" href="brukerinput.css">
-   <style>
-        *{
+    <style>
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body{
+        body {
             font-family: Arial, Helvetica, sans-serif;
             overflow: hidden;
         }
 
-        #bakgrunn{
+        #bakgrunn {
             position: relative;
             border: 3px black solid;
             width: 1200px;
@@ -25,51 +26,51 @@
             background-image: url("bilder/bakgrunn.png");
         }
 
-        #bakgrunn img{
+        #bakgrunn img {
             position: absolute;
         }
 
-        #rotor{
+        #rotor {
             top: 50px;
             right: 249px;
             width: 250px;
         }
 
-        #base{
+        #base {
             top: 205px;
             right: 250px;
             width: 250px;
         }
 
-        #bjørk{
+        #bjørk {
             left: 25px;
             top: 25px;
         }
 
-        #bjørk-1{
+        #bjørk-1 {
             left: 280px;
             top: 490px;
             width: 50px;
         }
 
-        #bjørk-2{
+        #bjørk-2 {
             left: 350px;
             top: 480px;
             width: 50px;
         }
 
-        select{
+        select {
             display: inline-block;
             width: 200px;
         }
 
-        #info{
+        #info {
             display: inline-block;
         }
-
     </style>
 
 </head>
+
 <body>
     <label for="velg-vind">Velg vindstyrke</label>
     <select onchange="endreVind(event)">
@@ -99,17 +100,17 @@
 
 
         // Variabler
-        let animasjon = {currentTime:0.0}
-        let valg = {rotorTid: 1}
+        let animasjon = { currentTime: 0.0 }
+        let valg = { rotorTid: 1 }
         let vinder = {
             stille: {
                 info: "Stille: 0-0,2 m/s",
                 lyd: false,
                 rotorTid: 50000,
                 bladKeyframes: [
-                    {transform: "translate(0, 0) rotate(0deg)"},
-                    {transform: "translate(0, 0) rotate(0deg)"}],
-                bladTimings: {duration: 0}
+                    { transform: "translate(0, 0) rotate(0deg)" },
+                    { transform: "translate(0, 0) rotate(0deg)" }],
+                bladTimings: { duration: 0 }
             },
 
             lettBris: {
@@ -118,9 +119,9 @@
                 volume: 0.2,
                 rotorTid: 6000,
                 bladKeyframes: [
-                    {transform: "translate(0, 0) rotate(-5deg)"},
-                    {transform: "translate(10px, 10px) rotate(5deg)"}],
-                bladTimings: {duration: 1000, iterations: Infinity, direction: "alternate"}
+                    { transform: "translate(0, 0) rotate(-5deg)" },
+                    { transform: "translate(10px, 10px) rotate(5deg)" }],
+                bladTimings: { duration: 1000, iterations: Infinity, direction: "alternate" }
             },
 
             stivKuling: {
@@ -129,14 +130,14 @@
                 volume: 1.,
                 rotorTid: 1000,
                 bladKeyframes: [
-                    {transform: "translate(0, 0) rotate(-20deg) "},
-                    {transform: "translate(1000px, -1000px) rotate(20deg)"}],
-                bladTimings: {duration: 1000, fill: "forwards"}
+                    { transform: "translate(0, 0) rotate(-20deg) " },
+                    { transform: "translate(1000px, -1000px) rotate(20deg)" }],
+                bladTimings: { duration: 1000, fill: "forwards" }
             }
         };
 
         // Lytterfunksjon
-        function endreVind(event){
+        function endreVind(event) {
 
             // Beregner hvor i animasjonen vi er
             let andelCurrentTime = animasjon.currentTime / valg.rotorTid;
@@ -146,10 +147,10 @@
 
             // Lyd eller ikke?
             console.log(valg.lyd);
-            if(valg.lyd){
+            if (valg.lyd) {
                 audio.play();
                 audio.volume = valg.volume;
-            }else{
+            } else {
                 audio.pause();
             }
 
@@ -159,18 +160,20 @@
             // Animerer de ulike objektene
             console.log("1", rotor.style.transform)
             animasjon = rotor.animate([
-            {transform: "rotate(0turn)"},
-            {transform: "rotate(1turn)"}
-            ], {duration: valg.rotorTid, iterations: Infinity});
+                { transform: "rotate(0turn)" },
+                { transform: "rotate(1turn)" }
+            ], { duration: valg.rotorTid, iterations: Infinity });
             console.log("2", rotor.style.transform)
 
             // Setter currentTime til animasjonen
-            animasjon.currentTime = andelCurrentTime*valg.rotorTid;
+            animasjon.currentTime = andelCurrentTime * valg.rotorTid;
 
+            // Fikse duration = 0! Animasjonen stopper IKKE!
             bjørk1Img.animate(valg.bladKeyframes, valg.bladTimings);
             bjørk2Img.animate(valg.bladKeyframes, valg.bladTimings);
         }
 
     </script>
 </body>
+
 </html>
