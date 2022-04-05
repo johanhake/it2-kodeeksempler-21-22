@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="widtd=device-widtd, initial-scale=1.0">
+	<title>Oppgave 2b</title>
+	<style>
+		* {
+			font-family: Arial, Helvetica, sans-serif;
+		}
+
+		form {
+			display: flex;
+			flex-direction: column;
+		}
+
+		main {
+			display: flex;
+			align-items: start;
+			width: 75%;
+			margin: 0 auto;
+			gap: 20px;
+		}
+
+		main table {
+			width: 100%;
+		}
+
+		thead th {
+			background-color: dodgerblue;
+			color: white;
+		}
+
+		tbody tr:nth-child(odd) {
+			background-color: skyblue;
+		}
+	</style>
+</head>
+
+<body>
+	<main>
+
+		<!-- Oppgave 2 Resultatregistrering -->
+		<form onsubmit="registrerKamp(event)">
+			<h2>Registrer en kamp</h2>
+			<label>
+				Hjemme:
+				<select id="hjemme">
+					<option value="FC Inter">FC Inter</option>
+					<option value="AS Roma">AS Roma</option>
+					<option value="AC Milan">AC Milan</option>
+				</select>
+			</label>
+			<label>Mål:
+				<input id="hjemmeMål" type="number" placeholder="Mål" min="0" required>
+			</label>
+			<label>
+				Borte:
+				<select id="borte">
+					<option value="FC Inter">FC Inter</option>
+					<option value="AS Roma">AS Roma</option>
+					<option value="AC Milan">AC Milan</option>
+				</select>
+			</label>
+			<label>Mål:
+				<input id="borteMål" type="number" placeholder="Mål" min="0" required>
+			</label>
+			<button>Registrer</button>
+			<p id="beskjed"></p>
+		</form>
+
+		<!-- Oppgave 3 Resultattabell -->
+		<div>
+			<h2>Resultattabell</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>Nr</th>
+						<th>Lag</th>
+						<th>Antall kamper</th>
+						<th>Antall kamper vunnet</th>
+						<th>Antall kamper uavgjort</th>
+						<th>Antall kamper tapt</th>
+						<th>Egne mål</th>
+						<th>Mål mot</th>
+						<th>Målforskjell</th>
+						<th>Poengsum</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+
+	</main>
+	<script>
+
+		// DOM
+		let beskjedTxt = document.querySelector("#beskjed")
+		let tbody = document.querySelector("tbody");
+
+		// Liste med registrerte kamper.
+		let registrerteKamper = [];
+
+		let lagListe = ["AS Roma", "AC Milan", "FC Inter"];
+
+		// Lagdata
+		let lagdata = {};
+		let tabellData = []
+
+
+		// Lager lagdata og tabellData.
+		// Objektene for hvert lag legges i lagdata og så hentes en referanse til hvert lag
+		// og legges i en liste. Slik kan vi "enkelt" skrive til lagene gjennom lagdata og
+		// så kan vi sortere lagene gjennom å sortere tabellData.
+
+		for (let lag of lagListe) {
+
+			// Lager og registrerer et lag-objekt.
+			lagdata[lag] = {
+				navn: lag,
+				antallKamper: 0,
+				antallVunnet: 0,
+				antallUavgjort: 0,
+				antallTapt: 0,
+				egneMål: 0,
+				motMål: 0,
+				målforskjell: 0,
+				poengsum: 0
+			};
+
+			// Legger inn en lenke til det nye objektet i listen tabellData
+			tabellData.push(lagdata[lag]);
+		}
+
+		// Registrerer en kamp
+		function registrerKamp(event) {
+			event.preventDefault();
+
+			// Nuller ut tidligere beskjed
+			beskjed.innerHTML = "";
+
+			// Henter ut skjemaet
+			let skjema = event.target;
+
+			if (skjema.hjemme.value === skjema.borte.value) {
+				beskjed.innerHTML = "Velge ulike lag";
+				return;
+			}
+
+			// lager en liste med lagnavnene
+			let kamp = [skjema.hjemme.value, skjema.borte.value];
+
+			// Sorterer den slik at hjemme og borte ikke har noe å si.
+			kamp.sort()
+
+			// Sjekker om kampen er spilt allerede
+			if (registrerteKamper.includes(kamp.join(", "))) {
+				beskjed.innerHTML = "Lagene har allerede spillt mot hverandre."
+				return;
+			}
+
+			// Registrer at kampen er spilt
+			registrerteKamper.push(kamp.join(", "));
+
+			// Lager resultat-objekter for hjemme og borte
+			let hjemme = {
+				navn: skjema.hjemme.value,
+				mål: Number(skjema.hjemmeMål.value),
+				resultat: "Uavgjort",
+				poeng: 1,
+				målForskjell: Number(skjema.hjemmeMål.value) - Number(skjema.borteMål.value)
+			};
+
+			let borte = {
+				navn: skjema.borte.value,
+				mål: Number(skjema.borteMål.value),
+				resultat: "Uavgjort",
+				poeng: 1,
+				målForskjell: Number(skjema.borteMål.value) - Number(skjema.hjemmeMål.value)
+			};
+
+			// Sjekker resultatet
+			if (hjemme.mål > borte.mål) {
+				hjemme.resultat = "Seier";
+				borte.resultat = "Tap";
+				hjemme.poeng = 3;
+				borte.poeng = 0;
+
+				lagdata[hjemme.navn].antallVunnet += 1;
+				lagdata[borte.navn].antallTapt += 1;
+
+			} else if (Number(skjema.hjemmeMål.value) < Number(skjema.borteMål.value)) {
+				hjemme.resultat = "Tap";
+				borte.resultat = "Seier";
+				hjemme.poeng = 0;
+				borte.poeng = 3;
+
+				lagdata[hjemme.navn].antallTapt += 1;
+				lagdata[borte.navn].antallVunnet += 1;
+			} else {
+				lagdata[hjemme.navn].antallUavgjort += 1;
+				lagdata[borte.navn].antallUavgjort += 1;
+			}
+
+			// Printer ut beskjed om kampen
+			beskjed.innerHTML = enkeltResultat(hjemme) + enkeltResultat(borte);
+
+
+			// Registrerer lagdata
+			lagdata[hjemme.navn].antallKamper += 1;
+			lagdata[borte.navn].antallKamper += 1;
+
+			lagdata[hjemme.navn].poengsum += hjemme.poeng;
+			lagdata[borte.navn].poengsum += borte.poeng;
+
+			lagdata[hjemme.navn].egneMål += hjemme.mål;
+			lagdata[borte.navn].egneMål += borte.mål;
+
+			lagdata[hjemme.navn].motMål += borte.mål;
+			lagdata[borte.navn].motMål += hjemme.mål;
+
+			lagdata[hjemme.navn].målForskjell += borte.målForskjell;
+			lagdata[borte.navn].målForskjell += hjemme.målForskjell;
+
+			// Nullstiller skjema
+			skjema.reset();
+
+			// Tegner tabbellen på nytt
+			tegnTabell();
+
+		}
+
+		function enkeltResultat(resultat) {
+			return `<h3>${resultat.navn}</h3>
+		- Resultat: ${resultat.resultat}<br>
+		- Målforskjell: ${resultat.målForskjell}<br>
+		- Poeng: ${resultat.poeng}
+			`;
+		}
+
+		// Funksjon som tegner tabellen
+		function tegnTabell() {
+			// Sorterer listen med lag før den skrives ut
+			tabellData.sort(sammenlignLag);
+
+			// Raderer tabellen
+			tbody.innerHTML = "";
+			let nr = 1;
+			for (let lag of tabellData) {
+				tbody.innerHTML += `
+				<tr>
+					<td>${nr}</td>
+					<td>${lag.navn}</td>
+					<td>${lag.antallKamper}</td>
+					<td>${lag.antallVunnet}</td>
+					<td>${lag.antallUavgjort}</td>
+					<td>${lag.antallTapt}</td>
+					<td>${lag.egneMål}</td>
+					<td>${lag.motMål}</td>
+					<td>${lag.målforskjell}</td>
+					<td>${lag.poengsum}</td>
+				</tr>
+				`;
+				nr += 1;
+			}
+		}
+
+		// Sammenligner lag i en liste
+		function sammenlignLag(b, a) {
+			if (a.poengsum > b.poengsum) {
+				return 1;
+			} else if (a.poengsum < b.poengsum) {
+				return -1;
+			} else if (a.målforskjell > b.målforskjell) {
+				return 1;
+			} else if (a.målforskjell < b.målforskjell) {
+				return -1;
+			} else if (a.egneMål > b.egneMål) {
+				return 1;
+			} else if (a.egneMål < b.egneMål) {
+				return -1;
+			}
+			return 0;
+		}
+
+		// Tegner tabellen når siden lastes
+		window.onload = tegnTabell;
+	</script>
+
+</body>
+
+</html>

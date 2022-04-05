@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Oppgave 2</title>
+	<style>
+		* {
+			font-family: Arial, Helvetica, sans-serif;
+		}
+
+		body {
+			width: 80%;
+			margin: 0 auto;
+		}
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+		}
+
+		td,
+		th {
+			padding: 5px;
+		}
+
+		thead th {
+			background-color: dodgerblue;
+			color: white;
+		}
+
+		tr td {
+			text-align: center;
+			border: 1px dodgerblue solid;
+		}
+
+		.firkant-type {
+			text-align: left;
+			font-weight: bold;
+		}
+
+		tbody tr:hover {
+			cursor: pointer;
+			box-shadow: inset 2px 2px 1px dodgerblue,
+				inset -2px 2px 1px dodgerblue,
+				inset 2px -2px 1px dodgerblue,
+				inset -2px -2px 1px dodgerblue;
+		}
+
+		.aktivRad {
+			border-color: seagreen;
+			box-shadow: inset 3px 3px 1px seagreen,
+				inset -3px 3px 1px seagreen,
+				inset 3px -3px 1px seagreen,
+				inset -3px -3px 1px seagreen;
+		}
+
+		tbody tr:nth-child(odd) {
+			background-color: skyblue;
+		}
+
+		canvas {
+			border: 2px solid dodgerblue;
+			position: absolute;
+		}
+
+		#lerret {
+			position: absolute;
+			background-color: dodgerblue;
+			border: 2px solid dodgerblue;
+			width: 800px;
+			height: 500px;
+			opacity: 0;
+		}
+
+		#tegnebrett {
+			position: relative;
+			margin: 50px 0;
+			width: 800px;
+			height: 500px;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Firkanter</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>Type firkant</th>
+				<th>Bunnlinje</th>
+				<th>Topplinje</th>
+				<th>Høyde</th>
+				<th>Forskyvning</th>
+				<th>Areal</th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+	<h2 id="info-tekst">Endre eller legg til firkant</h2>
+	<form onsubmit="registrerFirkant(event)">
+		<label>Bunnlinje<input id="inpBunnlinje" type="number" min="0" max="25" value=10></label>
+		<label>Topplinje<input id="inpTopplinje" type="number" min="0" max="25" value=10></label>
+		<label>Høyde<input id="inpHøyde" type="number" min="0" max="25" value=10></label>
+		<label>Forskyvning<input id="inpForskyvning" type="number" min="0" max="25" value=0></label>
+		<label><input type="checkbox" id="leggTil">Legg til ny firkant</label>
+		<button>Registrer</button>
+	</form>
+	<div id="tegnebrett">
+		<canvas width="800" height="500"></canvas>
+		<div id="lerret"></div>
+	</div>
+	<script>
+
+		// DOM
+		let tbody = document.querySelector("tbody");
+		let canvas = document.querySelector("canvas");
+		let ctx = canvas.getContext("2d");
+		let lerret = document.querySelector("#lerret");
+		let skjema = document.querySelector("form");
+		let valgtRad;
+
+		// Liste med firkanter
+		let firkantListe = [
+			{
+				navn: "Kvadrat",
+				bunnlinje: 10,
+				topplinje: 10,
+				høyde: 10,
+				forkyvning: 0,
+				areal: 100
+			}, {
+				navn: "Rektangel",
+				bunnlinje: 20,
+				topplinje: 20,
+				høyde: 5,
+				forkyvning: 0,
+				areal: 100
+			}, {
+				navn: "Parallellogram",
+				bunnlinje: 20,
+				topplinje: 20,
+				høyde: 10,
+				forkyvning: 2,
+				areal: 200
+			}, {
+				navn: "Trapes",
+				bunnlinje: 20,
+				topplinje: 10,
+				høyde: 5,
+				forkyvning: 2,
+				areal: 75
+			}, {
+				navn: "Trapes",
+				bunnlinje: 5,
+				topplinje: 3,
+				høyde: 10,
+				forkyvning: 0,
+				areal: 40
+			}
+		];
+
+		// Lager tabellen på bakgrun av listen med firkanter
+		function lagTabell() {
+
+			// Sletter tabellen
+			tbody.innerHTML = "";
+
+			for (let i in firkantListe) {
+				let firkant = firkantListe[i];
+				tbody.innerHTML += `
+					<tr onclick="endreFirkant(event)"" data-rad-id="${i}">
+						<td class="firkant-type">${firkant.navn}</td>
+						<td>${firkant.bunnlinje}</td>
+						<td>${firkant.topplinje}</td>
+						<td>${firkant.høyde}</td>
+						<td>${firkant.forkyvning}</td>
+						<td>${firkant.areal}</td>
+					</tr>
+				`;
+			}
+
+			// Nullstiller skjema
+			skjema.inpBunnlinje.value = 10;
+			skjema.inpTopplinje.value = 10;
+			skjema.inpHøyde.value = 10;
+			skjema.inpForskyvning.value = 0;
+			skjema.leggTil.checked = true;
+
+		}
+
+		// Endrer en valgte firkant
+		function endreFirkant(event) {
+			if (firkantErValgt()) {
+				aktivRad.classList.toggle("aktivRad");
+			}
+
+			// Oppdaterer den aktive raden
+			aktivRad = event.target.parentNode;
+			aktivRad.classList.toggle("aktivRad")
+			let radId = Number(aktivRad.dataset.radId);
+
+			// Tegner aktiv firkant
+			let firkant = firkantListe[radId];
+			tegnFirkant(firkant);
+
+			// Oppdaterer inputfelter
+			skjema.inpBunnlinje.value = firkant.bunnlinje;
+			skjema.inpTopplinje.value = firkant.topplinje;
+			skjema.inpHøyde.value = firkant.høyde;
+			skjema.inpForskyvning.value = firkant.forkyvning;
+			skjema.leggTil.checked = false;
+		}
+
+		// Registrerer en firkant
+		function registrerFirkant(event) {
+			event.preventDefault();
+
+			let firkant = {};
+
+			// Har vi valgte en firkant of vi skal IKKE legge til ny?
+			if (firkantErValgt() && !skjema.leggTil.checked) {
+
+				// Henter ut gammel firkant
+				let radId = Number(aktivRad.dataset.radId);
+				firkant = firkantListe[radId];
+			}
+
+			// Henter tall fra inputfelt
+			firkant.bunnlinje = Number(skjema.inpBunnlinje.value);
+			firkant.topplinje = Number(skjema.inpTopplinje.value);
+			firkant.høyde = Number(skjema.inpHøyde.value);
+			firkant.forkyvning = Number(skjema.inpForskyvning.value);
+			firkant.areal = (firkant.bunnlinje+firkant.topplinje)/2*firkant.høyde;
+			firkant.navn = typeFirkant(firkant);
+
+			// Hvis vi legger til må den nye firkanten legges til listen
+			if (skjema.leggTil.checked){
+				firkantListe.push(firkant);
+			}
+
+			// Lager tabellen på nytt
+			lagTabell()
+
+			// Sletter canvas
+			let skjul = lerret.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 500, fill: "forwards" });
+			skjul.onfinish = function () {
+				ctx.clearRect(0, 0, canvas.width, canvas.height);
+				lerret.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 500, fill: "forwards" });
+			}
+		}
+
+		// Tegner en firkant på canvas
+		function tegnFirkant(firkant) {
+
+			// Sletter canvas
+			let skjul = lerret.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 500, fill: "forwards" });
+			skjul.onfinish = function () {
+				ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+				let pikselPerCm = 30;
+
+				let x0 = pikselPerCm;
+				let y0 = pikselPerCm;
+
+				ctx.beginPath();
+				ctx.moveTo(x0 + firkant.forkyvning * pikselPerCm, y0);
+				ctx.lineTo(x0 + (firkant.forkyvning + firkant.topplinje) * pikselPerCm, y0);
+				ctx.lineTo(x0 + firkant.bunnlinje * pikselPerCm, y0 + firkant.høyde * pikselPerCm);
+				ctx.lineTo(x0, y0 + firkant.høyde * pikselPerCm);
+				ctx.closePath()
+				ctx.lineWidth = 5;
+				ctx.strokeStyle = "dodgerblue";
+				ctx.fillStyle = "skyblue";
+				ctx.fill();
+				ctx.stroke();
+				lerret.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 500, fill: "forwards" });
+			}
+		}
+
+		// Finner typefirkant
+		function typeFirkant(firkant) {
+			if (firkant.bunnlinje !== firkant.topplinje) {
+				return "Trapes";
+			} else if (firkant.forkyvning > 0) {
+				return "Parallellogram";
+			} else if (firkant.høyde !== firkant.bunnlinje) {
+				return "Rektangel";
+			} else {
+				return "Kvadrat";
+			}
+		}
+
+		// Hjelpe funksjon som returnerer om en firkant er valgt
+		function firkantErValgt() {
+			return typeof aktivRad !== "undefined";
+		}
+
+		window.onload = lagTabell;
+	</script>
+</body>
+
+</html>
