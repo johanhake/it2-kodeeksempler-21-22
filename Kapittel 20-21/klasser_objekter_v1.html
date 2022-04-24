@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Klasser og objekter</title>
+</head>
+
+<body>
+	<script>
+		// Definisjon av enda en klasse
+		class Figur2D_v1 {
+			constructor(areal, omkrets) {
+				this._areal = areal
+				this._omkrets = omkrets
+				this._desimaler = 2
+			}
+
+			_format(verdi) {
+				let potens = Math.pow(10, this._desimaler);
+				return String(Math.round(verdi * potens) / potens);
+			}
+
+			formatAreal() {
+				return this._format(this._areal);
+			}
+
+			formatOmkrets() {
+				return this._format(this._omkrets);
+			}
+
+			get areal() {
+				return this._areal;
+			}
+
+			get omkrets() {
+				return this._omkrets;
+			}
+
+			set areal(verdi) {
+				if (verdi < 0) {
+					verdi = 0
+				}
+				this._areal = verdi;
+			}
+
+			set omkrets(verdi) {
+				if (verdi < 0) {
+					verdi = 0
+				}
+				this._omkrets = verdi;
+			}
+		}
+
+		let kvadrat = new Figur2D_v1(2 * 2, 4 * 2);
+		let rektangel = new Figur2D_v1(4 * 5, 2 * (4 + 5));
+		let sirkel = new Figur2D_v1(Math.PI * 3 * 3, 2 * Math.PI * 3);
+
+		console.log("Areal og omkrets av kvadrat:", kvadrat.areal, kvadrat.omkrets)
+		console.log("Areal og omkrets av rektangel:", rektangel.areal, rektangel.omkrets)
+		console.log("Areal og omkrets av sirkel:", sirkel.formatAreal(), sirkel.formatOmkrets())
+
+		kvadrat.areal = -34;
+		console.log("Areal og omkrets etter endring av kvadrat:", kvadrat.areal, kvadrat.omkrets)
+
+		let figurer = [];
+		for (let s = 1; s <= 5; s++) {
+			figurer.push(new Figur2D_v1(s * s, 4 * s));
+		}
+		for (let r = 1; r <= 5; r++) {
+			figurer.push(new Figur2D_v1(Math.PI * r * r, 2 * Math.PI * r));
+		}
+		for (let figur of figurer) {
+			console.log("Areal:", figur.formatAreal(),
+				"Omkrets:", figur.formatOmkrets());
+		}
+	</script>
+</body>
+
+</html>

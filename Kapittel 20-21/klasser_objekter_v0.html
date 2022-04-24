@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Klasser og objekter</title>
+</head>
+
+<body>
+
+	<script>
+
+		// Definisjon av en klasse
+		class Figur2D_v0 {
+			constructor(areal, omkrets) {
+				this.areal = areal
+				this.omkrets = omkrets
+				this.desimaler = 2
+			}
+
+			format(verdi) {
+				let potens = Math.pow(10, this.desimaler);
+				return String(Math.round(verdi * potens) / potens);
+			}
+
+			formatAreal() {
+				return this.format(this.areal);
+			}
+
+			formatOmkrets() {
+				return this.format(this.omkrets);
+			}
+		}
+
+
+		let kvadrat = new Figur2D_v0(2 * 2, 4 * 2);
+		let rektangel = new Figur2D_v0(4 * 5, 2 * (4 + 5));
+		let sirkel = new Figur2D_v0(Math.PI * 3 * 3, 2 * Math.PI * 3);
+
+		console.log("Areal og omkrets av kvadrat:", kvadrat.areal, kvadrat.omkrets)
+		console.log("Areal og omkrets av rektangel:", rektangel.areal, rektangel.omkrets)
+		console.log("Areal og omkrets av sirkel:", sirkel.areal, sirkel.omkrets)
+		console.log("Areal og omkrets av sirkel:", sirkel.formatAreal(), sirkel.formatOmkrets())
+
+		kvadrat.areal = -34;
+		console.log("Areal og omkrets etter endring av kvadrat:", kvadrat.areal, kvadrat.omkrets)
+
+	</script>
+</body>
+
+</html>
