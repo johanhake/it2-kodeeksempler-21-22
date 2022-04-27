@@ -12,7 +12,8 @@
 	<script>
 
 		// Definisjon av en base klasse
-		class Figur2D{
+		class Figur2D {
+
 			constructor(areal, omkrets) {
 				this._areal = areal
 				this._omkrets = omkrets
@@ -32,100 +33,86 @@
 				return this._format(this._omkrets);
 			}
 
-			get areal(){
+			get areal() {
 				return this._areal;
 			}
 
-			get omkrets(){
+			get omkrets() {
 				return this._omkrets;
 			}
 		}
 
-		class Kvadrat extends Figur2D{
-			constructor(side){
-				super(side*side, 4*side);
+		class Kvadrat extends Figur2D {
+			constructor(side) {
+				super(side * side, 4 * side);
 				this._side = side;
 			}
 
-			get side(){
+			get side() {
 				return this._side;
 			}
 
-			set side(verdi){
-				if (verdi < 0){
+			set side(verdi) {
+				if (verdi < 0) {
 					return;
 				}
 				this._side = verdi;
-				this._areal = this._side*this._side
-				this._omkrets = 4*this._side;
+				this._areal = this._side * this._side
+				this._omkrets = 4 * this._side;
 			}
 		}
 
-		class Sirkel extends Figur2D{
-			constructor(radius){
-				super(radius*radius*Math.PI, 2*side*Math.PI);
-				this._radius = radius;
-			}
-
-			get radius(){
-				return this._radius;
-			}
-
-			set side(verdi){
-				if (verdi < 0){
-					return;
-				}
-				this._radius = verdi;
-				this._areal = this._radius*this._radius*Math.PI
-				this._omkrets = 2*this._radius*Math.PI;
-			}
-		}
-
-		class Rektangel extends Figur2D{
-			constructor(lengde, bredde){
-				super(lengde*bredde, 2*(lengde+bredde));
+		class Rektangel extends Figur2D {
+			constructor(lengde, bredde) {
+				super(lengde * bredde, 2 * (lengde + bredde));
 				this._lengde = lengde;
 				this._bredde = bredde;
 			}
 
-			get lengde(){
+			get lengde() {
 				return this._lengde;
 			}
 
-			set lengde(verdi){
-				if (verdi < 0){
+			set lengde(verdi) {
+				if (verdi < 0) {
 					return;
 				}
 				this._lengde = verdi;
-				this._areal = this._lengde*this._bredde
-				this._omkrets = 2*(this._lengde+this._bredde);
+				this._areal = this._lengde * this._bredde
+				this._omkrets = 2 * (this._lengde + this._bredde);
 			}
 
-			get bredde(){
+			get bredde() {
 				return this._bredde;
 			}
 
-			set bredde(verdi){
-				if (verdi < 0){
+			set bredde(verdi) {
+				if (verdi < 0) {
 					return;
 				}
 				this._bredde = verdi;
-				this._areal = this._lengde*this._bredde
-				this._omkrets = 2*(this._lengde+this._bredde);
+				this._areal = this._lengde * this._bredde
+				this._omkrets = 2 * (this._lengde + this._bredde);
 			}
+		}
+
+		class Sirkel {
+			// Fortsett her!
 		}
 
 		let kvadrat = new Kvadrat(2);
 		let rektangel = new Rektangel(4, 5);
-		// let sirkel = new Sirkel(3);
 
+		// let sirkel = new Sirkel(3);
 		console.log("Areal og omkrets av kvadrat:", kvadrat.areal, kvadrat.omkrets)
 		console.log("Areal og omkrets av rektangel:", rektangel.areal, rektangel.omkrets)
-		//console.log("Areal og omkrets av sirkel:", sirkel.formatAreal(), sirkel.formatOmkrets())
 
+		//console.log("Areal og omkrets av sirkel:", sirkel.formatAreal(), sirkel.formatOmkrets())
 		// Endrer siden til kvadratet
+
 		kvadrat.side = 5;
 		console.log("Areal og omkrets etter endring av kvadrat:", kvadrat.areal, kvadrat.omkrets)
 	</script>
 </body>
+
 </html>
