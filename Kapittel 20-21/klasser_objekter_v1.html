@@ -65,16 +65,7 @@
 		kvadrat.areal = -34;
 		console.log("Areal og omkrets etter endring av kvadrat:", kvadrat.areal, kvadrat.omkrets)
 
-		let figurer = [];
-		for (let s = 1; s <= 5; s++) {
-			figurer.push(new Figur2D_v1(s * s, 4 * s));
-		}
-		for (let r = 1; r <= 5; r++) {
-			figurer.push(new Figur2D_v1(Math.PI * r * r, 2 * Math.PI * r));
-		}
-		for (let figur of figurer) {
-			console.log("Areal:", figur.formatAreal(),
-				"Omkrets:", figur.formatOmkrets());
+
 		}
 	</script>
 </body>
