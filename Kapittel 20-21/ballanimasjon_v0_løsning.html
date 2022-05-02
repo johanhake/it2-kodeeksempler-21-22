@@ -46,13 +46,17 @@
 		const radius = 10;
 		const tau = 2 * Math.PI
 		let x = canvas.width / 2;
-		let y = radius;
-		let x_fart = 0;
-		let y_fart = 2;
+		let y = canvas.height / 2;
+		let phi = Math.random()*tau;
+		let fart = 10;
+		let x_fart = fart*Math.cos(phi);
+		let y_fart = fart*Math.sin(phi);
 		let n = 0;
 
 		// Tegner ballen
 		function tegnBall() {
+
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 			ctx.beginPath();
 			ctx.arc(x, y, radius, 0, tau)
@@ -69,33 +73,38 @@
 		function flyttBall() {
 			y += y_fart;
 			x += x_fart;
+			if (x < radius || x > canvas.width - radius) {
+				x_fart *= -1;
+			}
+			if (y < radius || y > canvas.height - radius) {
+				y_fart *= -1;
+			}
 		}
 
 		// Funksjon som flytter og tegner ballen
 		function animer() {
 			// Printer ut n/60 med en desimal for hver 10 dels sekund
 			if (n % 6 === 0) {
-				const t = n/60;
+				const t = n / 60;
 				info.innerHTML = `t = ${avrund(t)} (${avrund(x)}, ${avrund(y)})`;
 			}
 			n += 1;
 			flyttBall();
 			tegnBall();
+
+			// Tegner en ny skjerm
+			requestAnimationFrame(animer);
 		}
 
 		// Avrunder en verdi til en desimal
-		function avrund(verdi){
-			return Math.round(verdi*10)/10;
+		function avrund(verdi) {
+			return Math.round(verdi * 10) / 10;
 		}
 
-		// Tegner ballen første gang
-		tegnBall();
+		// Setter igang animasjonene
+		requestAnimationFrame(animer);
 
-		// Flytter og tegner ballen på nytt for hver gang
-		// operativsystemet registrere et tastetrykk.
-		window.addEventListener("keydown", animer);
-
-</script>
+	</script>
 </body>
 
 </html>
