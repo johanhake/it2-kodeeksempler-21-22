@@ -63,7 +63,7 @@
 
 		class Sirkel extends Figur2D{
 			constructor(radius){
-				super(radius*radius*Math.PI, 2*side*Math.PI);
+				super(radius*radius*Math.PI, 2*radius*Math.PI);
 				this._radius = radius;
 			}
 
@@ -71,7 +71,7 @@
 				return this._radius;
 			}
 
-			set side(verdi){
+			set radius(verdi){
 				if (verdi < 0){
 					return;
 				}
@@ -117,7 +117,7 @@
 
 		let kvadrat = new Kvadrat(2);
 		let rektangel = new Rektangel(4, 5);
-		// let sirkel = new Sirkel(3);
+		let sirkel = new Sirkel(3);
 
 		console.log("Areal og omkrets av kvadrat:", kvadrat.areal, kvadrat.omkrets)
 		console.log("Areal og omkrets av rektangel:", rektangel.areal, rektangel.omkrets)

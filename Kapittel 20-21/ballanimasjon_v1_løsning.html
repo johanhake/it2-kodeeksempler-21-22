@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Ballanimasjon</title>
+	<style>
+		body {
+			background-color: #0e0e0e;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 100vh;
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			overflow: hidden;
+		}
+
+		div {
+			text-align: center;
+			color: #f0f0f0;
+		}
+
+		canvas {
+			border: #f0f0f0 4px solid;
+			background-color: gre;
+		}
+	</style>
+</head>
+
+<body>
+	<div>
+		<h1>Ballanimasjon med requestAnimationframe(): Spillere</h1>
+		<p id="info">t = 0</p>
+		<canvas width="800" height="600"></canvas>
+	</div>
+
+	<script>
+
+		// DOM
+		let canvas = document.querySelector("canvas");
+		let ctx = canvas.getContext("2d");
+		let info = document.querySelector("#info");
+
+		// Parameterer og variabler
+		const radius = 10;
+		const tau = 2 * Math.PI
+		let x = canvas.width / 2;
+		let y = radius;
+		let fart = 2;
+		let acc = 0.1;
+		let maksFart = 10;
+		let n = 0;
+
+		// Objekt med taster som er blitt trykket ned og løftet
+		let taster = {};
+
+		// Tegner ballen
+		function tegnBall() {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+			ctx.beginPath();
+			ctx.arc(x, y, radius, 0, tau)
+			ctx.closePath();
+
+			ctx.fillStyle = "greenyellow";
+			ctx.fill();
+
+			ctx.strokeStyle = "darkgreen";
+			ctx.stroke();
+		}
+
+		// Endrer på koordinatene til ballen
+		function flyttBall() {
+
+			// Øker farten
+			if(taster["w"]){
+				fart += acc;
+				if (fart > maksFart){
+					fart = maksFart;
+				}
+			}
+
+			// Minker farten
+			if(taster["s"]){
+				fart -= acc;
+				if (fart < 0){
+					fart = 0;
+				}
+			}
+
+			// Styre ballen
+			if (taster["ArrowDown"]) {
+				y += fart;
+				if (y > canvas.height - radius) {
+					y = canvas.height - radius
+				}
+			}
+			if (taster["ArrowUp"]) {
+				y -= fart;
+				if (y < radius) {
+					y = radius
+				}
+			}
+			// Styre ballen
+			if (taster["ArrowRight"]) {
+				x += fart;
+				if (x > canvas.width - radius) {
+					x = canvas.width - radius
+				}
+			}
+			if (taster["ArrowLeft"]) {
+				x -= fart;
+				if (x < radius) {
+					x = radius
+				}
+			}
+		}
+
+		// Funksjon som flytter og tegner ballen
+		function animer() {
+			// Printer ut n/60 med en desimal for hver 10e t
+			if (n % 10 === 0) {
+				const t = n / 60;
+				info.innerHTML = `t = ${avrund(t)} (${avrund(x)}, ${avrund(y)}, ${avrund(fart)})`;
+			}
+			n += 1;
+			flyttBall();
+			tegnBall();
+
+			requestAnimationFrame(animer);
+		}
+
+		// Lytterfunksjon for å trykke ned en tast
+		function tastNed(event) {
+			// event.key innholder en streng representasjon av tasten som
+			// ble trykket ned.
+			taster[event.key] = true;
+		}
+
+		// Lytterfunksjon for det å løfte en tast
+		function tastOpp(event) {
+			// event.key innholder en streng representasjon av tasten som
+			// ble løftet.
+			taster[event.key] = false;
+		}
+
+		// Setter igang animasjonen!
+		requestAnimationFrame(animer);
+
+		// Avrunder en verdi til en desimal
+		function avrund(verdi) {
+			return Math.round(verdi * 10) / 10;
+		}
+
+		// Registrerer lytterfunksjoner på det å trykker ned og løfte en tast
+		window.onkeydown = tastNed;
+		window.onkeyup = tastOpp;
+
+	</script>
+</body>
+
+</html>

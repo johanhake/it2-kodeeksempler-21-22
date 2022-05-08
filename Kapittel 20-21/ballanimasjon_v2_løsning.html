@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Ballanimasjon</title>
+	<style>
+		body {
+			background-color: #0e0e0e;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 100vh;
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			overflow: hidden;
+		}
+
+		div {
+			text-align: center;
+			color: #f0f0f0;
+		}
+
+		canvas {
+			border: #f0f0f0 4px solid;
+			background-color: gre;
+		}
+	</style>
+</head>
+
+<body>
+	<div>
+		<h1>Ballanimasjon med requestAnimationframe(): Spillere</h1>
+		<p id="info">t = 0</p>
+		<canvas width="800" height="600"></canvas>
+	</div>
+
+	<script>
+
+		// DOM
+		let canvas = document.querySelector("canvas");
+		let ctx = canvas.getContext("2d");
+		let info = document.querySelector("#info");
+
+		// Objekt med taster som er blitt trykket ned og løftet
+		let taster = {};
+
+		// Liste med baller som skal brukes til å oppdattere alle ballene :D
+		let baller = [];
+
+		// Parametrer
+		let antallHinder = 5;
+		const tau = 2 * Math.PI
+		let n = 0;
+		let avsluttSpill = false;
+
+		// Baseklasse for alle ulike ball objekter
+		class Ball {
+			constructor(x, y, radius, fillFarge, linjeFarge) {
+				this._x = x;
+				this._y = y;
+				this._radius = radius;
+				this._fillFarge = fillFarge;
+				this._linjeFarge = linjeFarge
+			}
+
+			// Metode som tegner ballen
+			tegn() {
+
+				//console.log(this._x, this._y, this._radius, 0, tau)
+				ctx.beginPath();
+				ctx.arc(this._x, this._y, this._radius, 0, tau)
+				ctx.closePath();
+
+				ctx.fillStyle = this._fillFarge;
+				ctx.fill();
+
+				ctx.strokeStyle = this._linjeFarge;
+				ctx.stroke();
+			}
+		}
+
+		// Klasse som implementerer ett hinder en spiller må unngå å treffe
+		class Hinder extends Ball {
+			constructor(x, y) {
+				super(x, y, 10, "red", "darkred");
+				let fart = Math.random() * 2 + 3;
+				let phi = Math.random() * tau;
+				this._x_fart = fart * Math.cos(phi);
+				this._y_fart = fart * Math.sin(phi);
+			}
+
+			// Metode som flytter ballen for hver vindu
+			flytt() {
+				this._y += this._y_fart;
+				this._x += this._x_fart;
+
+				if (this._x < this._radius || this._x > canvas.width - this._radius) {
+					this._x_fart *= -1;
+				}
+				if (this._y < this._radius || this._y > canvas.height - this._radius) {
+					this._y_fart *= -1;
+				}
+			}
+
+			// Sjekker om en balle kolliderer med en annen ball
+			kollider(ball) {
+
+				// Fra:https://stackoverflow.com/questions/345838/ball-to-ball-collision-detection-and-handling
+
+				// Finner kollisjons vektoren
+				let kollisjon_x = this._x - ball._x;
+				let kollisjon_y = this._y - ball._y;
+
+				// Finner avstanden
+				let avstand = Math.sqrt(kollisjon_x * kollisjon_x + kollisjon_y * kollisjon_y);
+
+				// Er avstanden større en de to radiene?
+				if (avstand > (this._radius + ball._radius)) {
+					return ;
+				}
+
+				console.log(avstand)
+
+				// Skalerer kollisjonsvektorn med avstanden, slik får vi kollisjonsretningen
+				// Vi skal finne bytte komponenten til fartsvektoren som står parallellt med
+				// kollisjonsvektoren.
+				kollisjon_x /= avstand;
+				kollisjon_y /= avstand;
+
+				// Finner prikk-produktet mellom kollisjonen og farts-vektoren til de to ballene
+				let this_i = this._x_fart * kollisjon_x + this._y_fart * kollisjon_y;
+				let ball_i = ball._x_fart * kollisjon_x + ball._y_fart * kollisjon_y;
+
+				// Oppdatere farts vektorene til ballene
+				this._x_fart += (ball_i - this_i) * kollisjon_x;
+				this._y_fart += (ball_i - this_i) * kollisjon_y;
+				ball._x_fart += (this_i - ball_i) * kollisjon_x;
+				ball._y_fart += (this_i - ball_i) * kollisjon_y;
+
+			}
+		}
+
+		// Klasse som implementerer en ball en spiller kan styre
+		class Spiller extends Ball {
+			constructor(x, y) {
+				super(x, y, 10, "greenyellow", "darkgreen");
+
+				this._fart = 2;
+				this._acc = 0.1;
+				this._maksFart = 10;
+				this._døindeks = 0;
+			}
+
+			// Metode som flytter ballen for hver vindu
+			flytt() {
+
+				if(this._døindeks > 0){
+					this._radius += 1;
+					this._døindeks += 1;
+
+					if (this._døindeks > 10){
+						avsluttSpill = true;
+					}
+				}
+
+				// Øker farten
+				if (taster["w"]) {
+					this._fart += this._acc;
+					if (this._fart > this._maksFart) {
+						this._fart = this._maksFart;
+					}
+				}
+
+				// Minker farten
+				if (taster["s"]) {
+					this._fart -= this._acc;
+					if (this._fart < 0) {
+						this._fart = 0;
+					}
+				}
+
+				// Styre ballen
+				if (taster["ArrowDown"]) {
+					this._y += this._fart;
+					if (this._y > canvas.height - this._radius) {
+						this._y = canvas.height - this._radius
+					}
+				}
+				if (taster["ArrowUp"]) {
+					this._y -= this._fart;
+					if (this._y < this._radius) {
+						this._y = this._radius
+					}
+				}
+				// Styre ballen
+				if (taster["ArrowRight"]) {
+					this._x += this._fart;
+					if (this._x > canvas.width - this._radius) {
+						this._y = canvas.width - this._radius
+					}
+				}
+				if (taster["ArrowLeft"]) {
+					this._x -= this._fart;
+					if (this._x < this._radius) {
+						this._x = this._radius
+					}
+				}
+			}
+
+			// Sjekker om spilleren kolliderer med en ball
+			kollider(ball){
+
+				// Fra:https://stackoverflow.com/questions/345838/ball-to-ball-collision-detection-and-handling
+
+				// Finner kollisjons vektoren
+				let kollisjon_x = this._x - ball._x;
+				let kollisjon_y = this._y - ball._y;
+
+				// Finner avstanden
+				let avstand = Math.sqrt(kollisjon_x * kollisjon_x + kollisjon_y * kollisjon_y);
+
+				// Er avstanden større en de to radiene?
+				if (avstand > (this._radius + ball._radius)) {
+					return ;
+				}
+
+				// Øker et døindeks som gjør at radien begynner å vokse
+				this._døindeks = 1;
+
+				// Skalerer kollisjonsvektorn med avstanden, slik får vi kollisjonsretningen
+				// Vi skal finne bytte komponenten til fartsvektoren som står parallellt med
+				// kollisjonsvektoren.
+				kollisjon_x /= avstand;
+				kollisjon_y /= avstand;
+
+				// Finner prikk-produktet mellom kollisjonen og farts-vektoren til de to ballene
+				// Antar her at spiller er stasjonær
+				let ball_i = ball._x_fart * kollisjon_x + ball._y_fart * kollisjon_y;
+
+				// Oppdatere farts vektorene til den andre ballen
+				ball._x_fart += - ball_i * kollisjon_x;
+				ball._y_fart += - ball_i * kollisjon_y;
+
+			}
+		}
+
+		// Lager Spiller og Hinder ballene
+		baller.push(new Spiller(canvas.width / 2., canvas.height / 2));
+		for (let i = 0; i < antallHinder; i++) {
+			baller.push(new Hinder(canvas.width * Math.random(), canvas.height * Math.random()))
+		}
+
+		// Funksjon som flytter og tegner alle ballene
+		function animer() {
+			// Printer ut n/60 med en desimal for hver 10e t
+			if (n % 10 === 0) {
+				const t = n / 60;
+				info.innerHTML = `t = ${avrund(t)}`;
+			}
+			n += 1;
+
+			// Oppdaterer x og y koordinatene til ballene
+			for (let ball of baller) {
+				ball.flytt();
+			}
+
+			// Sjekker for kollisjoner
+			for (let i = 0; i<baller.length; i++) {
+				for (let j = i+1; j<baller.length; j++) {
+					baller[i].kollider(baller[j]);
+				}
+			}
+
+			// Sletter canvas
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+			// Tegner alle ballene
+			for (let ball of baller) {
+				ball.tegn();
+			}
+
+			// Tegn neste vindu
+			if (avsluttSpill){
+				cancelAnimationFrame(animasjonId);
+			}else{
+				animasjonId = requestAnimationFrame(animer);
+			}
+
+		}
+
+		// Lytterfunksjon for å trykke ned en tast
+		function tastNed(event) {
+			// event.key innholder en streng representasjon av tasten som ble trykket ned.
+			taster[event.key] = true;
+		}
+
+		// Lytterfunksjon for det å løfte en tast
+		function tastOpp(event) {
+			// event.key innholder en streng representasjon av tasten som ble løftet.
+			taster[event.key] = false;
+		}
+
+		// Setter igang animasjonen!
+		let animasjonId = requestAnimationFrame(animer);
+
+		// Avrunder en verdi til en desimal
+		function avrund(verdi) {
+			return Math.round(verdi * 10) / 10;
+		}
+
+		// Registrerer lytterfunksjoner på det å trykker ned og løfte en tast
+		window.onkeydown = tastNed;
+		window.onkeyup = tastOpp;
+
+	</script>
+</body>
+
+</html>
