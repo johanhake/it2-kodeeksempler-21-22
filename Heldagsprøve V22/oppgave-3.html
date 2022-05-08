@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="brukerinput.css">
+	<title>Document</title>
+	<style>
+		body {
+			font-family: Verdana, Geneva, Tahoma, sans-serif;
+			width: 800px;
+			margin: 0 auto;
+		}
+
+		main {
+			width: 100%;
+			display: none;
+		}
+
+		#dyr-ramme {
+			width: 100%;
+		}
+
+		#dyr-ramme img {
+			width: 150px;
+		}
+
+		.dyr:hover {
+			transform: scale(1.05);
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Finn dyret</h1>
+	<form onsubmit="velgSpørsmål(event)">
+		<h3>Hvilke type spørsmål vil du få?</h3>
+		<select id="type">
+			<option value="navn">Navn</option>
+			<option value="beskrivelse">Beskrivelse</option>
+			<option value="lyd">Lyd</option>
+		</select>
+		<button>Velg spørsmålstype</button>
+	</form>
+	<main>
+		<p>Beste resultat: <span id="beste-resultat">10</span> feil</p>
+		<p>Antall forsøk: <span id="antall-forsøk"></span></p>
+		<div id="dyr-ramme"></div>
+		<button id="nytt-dyr" onclick='nyttDyr()'>Nytt dyr</button>
+		<h3 id="dyr-info"></h3>
+
+	</main>
+	<audio src=""></audio>
+
+	<script>
+
+		// DOM
+		let main = document.querySelector("main");
+		let skjema = document.querySelector("form");
+		let dyrRammeDiv = document.querySelector("#dyr-ramme");
+		let dyrInfoTxt = document.querySelector("#dyr-info");
+		let nyttDyrBtn = document.querySelector("#nytt-dyr");
+		let antallForsøkTxt = document.querySelector("#antall-forsøk");
+		let besteResultatTxt = document.querySelector("#beste-resultat")
+		let audio = document.querySelector("audio");
+
+		// Info og posisjon
+		let dyrInfo = {
+			hund: {
+				navn: "Hund",
+				beskrivelse: "Dyret bruker sin bjeffing til å lure angripere og er derfor en meget god forsvarer. Det er litt for fredfull til å angripe effektivt."
+			},
+			hest: {
+				navn: "Hest",
+				beskrivelse: "Dyrets høyde og harde hover gjør den til en meget potent angriper. Dens høyde gjør den desverre sårbar og er derfor en dårlig forsvarer."
+			},
+			lam: {
+				navn: "Lam",
+				beskrivelse: "Dette dyret har overlevd påsken og er derfor både god på angrep og forsvar. Bruk dyret hvis du trenger en allrounder!"
+			},
+			ku: {
+				navn: "Ku",
+				beskrivelse: "Dyret bruker sine horn til å forsvare seg når den blir angripen. Hvis bare dyret kunne brukt hornen til angrep også."
+			},
+			katt: {
+				navn: "Katt",
+				beskrivelse: "Dyret er en sleip rakker. Det bruker sine klor til å rive sin motstander i stykker, men den er litt sløv til å unngå angrep."
+			}
+		}
+
+		// Global variabel for spørsmålstyper
+		let spørsmålsType = "";
+		let tilfeldigDyr;
+		let dyrIgjen = [];
+		let antallForsøk;
+		let antallFeil;
+		let besteResultat = 10;
+
+		// Velger visningsmåter på nytt
+		function velgVisningsMåtePåNytt(){
+			skjema.style.display = "block";
+			main.style.display = "none";
+			dyrInfoTxt.innerHTML = "";
+			nyttDyrBtn.style.display = "block";
+
+		}
+
+		// Lytterfunksjon for velge type spørsmål
+		function velgSpørsmål(event) {
+			event.preventDefault();
+
+			// Henter ut spørsmålstypen
+			spørsmålsType = event.target.type.value;
+
+			// Skjuler skjemaet
+			skjema.style.display = "none";
+			main.style.display = "block";
+
+			// Lager et nytt spill
+			nyttSpill();
+
+		}
+
+		// Lager ett nytt spill
+		function nyttSpill() {
+
+			// Sletter alt i main
+			dyrRammeDiv.innerHTML = "";
+			dyrIgjen = [];
+
+			antallForsøk = 0;
+			antallFeil = 0;
+
+			// Lager bildene og lager en ny liste for dyr igjen
+			console.log(dyrInfo)
+			for (let dyr in dyrInfo) {
+				console.log(dyr)
+				dyrIgjen.push(dyr);
+				dyrRammeDiv.innerHTML += `<img src="bilder/${dyr}.png" class="dyr" data-dyr="${dyr}" onclick="velgDyr(event)" >`;
+			}
+			antallForsøkTxt.innerHTML = 0;
+		}
+
+		// Klikk for nytt dyr
+		function nyttDyr() {
+
+			// Trekker tilfeldig dyr
+			tilfeldigDyr = dyrIgjen[Math.trunc(Math.random() * dyrIgjen.length)];
+
+			if (spørsmålsType === "lyd") {
+				audio.src = `lyd/${tilfeldigDyr}.mp3`;
+				audio.play();
+			} else {
+				dyrInfoTxt.innerHTML = dyrInfo[tilfeldigDyr][spørsmålsType];
+			}
+
+			// Skjuler nyttdyr knappen
+			nyttDyrBtn.style.display = "none";
+		}
+
+		// Brukeren velger et dyr
+		function velgDyr(event) {
+
+			let img = event.target;
+			antallForsøk += 1;
+			antallForsøkTxt.innerHTML = antallForsøk;
+
+
+			// Har brukeren valgt riktig?
+			if (img.dataset.dyr === tilfeldigDyr) {
+				img.remove();
+				audio.src = `lyd/riktig.mp3`;
+				audio.play();
+
+				dyrInfoTxt.innerHTML = "";
+
+				dyrIgjen.splice(dyrIgjen.indexOf(img.dataset.dyr), 1);
+
+				// Hvis vi har gjettet alle dyrene
+				if (dyrIgjen.length === 0) {
+					if (besteResultat === antallFeil){
+						dyrInfoTxt.innerHTML = "Bra jobbet! Du tangerte beste resultat!"
+					}else if(besteResultat > antallFeil){
+						dyrInfoTxt.innerHTML = "Gratullerer! Du har nå beste resultat!"
+						besteResultatTxt.innerHTML = antallFeil;
+						besteResultat = antallFeil;
+						dyrRammeDiv.innerHTML = "<button onclick='velgVisningsMåtePåNytt()'>Nytt Spill?</button>"
+					}
+
+				}else{
+					// Viser nyttdyr knappen
+					nyttDyrBtn.style.display = "block";
+				}
+
+			} else {
+				antallFeil += 1;
+				audio.src = `lyd/feil.mp3`;
+				audio.play();
+			}
+
+		}
+
+	</script>
+</body>
+
+</html>

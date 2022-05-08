@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		body{
+			font-family: Verdana, Geneva, Tahoma, sans-serif;
+		}
+
+		main {
+			position: relative;
+		}
+
+		.dyr {
+			width: 180px;
+			position: absolute;
+			cursor: pointer;
+			transition: 0.125s;
+		}
+
+		.dyr:hover {
+			transform: scale(1.05);
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Presentasjon av dyren</h1>
+	<main>
+		<img src="bilder/bakgrunn.png" alt="">
+	</main>
+	<h2></h2>
+	<p></p>
+	<audio src=""></audio>
+
+	<script>
+
+		// DOM
+		let main = document.querySelector("main");
+		let dyrNavnTxt = document.querySelector("h2");
+		let dyrBeskrivelseTxt = document.querySelector("p");
+		let audio = document.querySelector("audio");
+
+		// Info og posisjon
+		let dyrInfo = {
+			hund:{
+				left: "0px",
+				navn: "Hund",
+				beskrivelse: "Dyret bruker sin bjeffing til å lure angripere og er derfor en meget god forsvarer. Det er litt for fredfull til å angripe effektivt."
+			},
+			hest:{
+				left: "175px",
+				navn: "Hest",
+				beskrivelse: "Dyrets høyde og harde hover gjør den til en meget potent angriper. Dens høyde gjør den desverre sårbar og er derfor en dårlig forsvarer."
+			},
+			lam:{
+				left: "350px",
+				navn: "Lam",
+				beskrivelse: "Dette dyret har overlevd påsken og er derfor både god på angrep og forsvar. Bruk dyret hvis du trenger en allrounder!"
+			},
+			ku:{
+				left: "525px",
+				navn: "Ku",
+				beskrivelse: "Dyret bruker sine horn til å forsvare seg når den blir angripen. Hvis bare dyret kunne brukt hornen til angrep også."
+			},
+			katt:{
+				left: "700px",
+				navn: "Katt",
+				beskrivelse: "Dyret er en sleip rakker. Det bruker sine klor til å rive sin motstander i stykker, men den er litt sløv til å unngå angrep."
+			}
+		}
+
+		// Vairabel for z-index
+		zIndex = 10;
+
+		// Går igjennom dyrene og legger til de i DOMen
+		for (let dyr in dyrInfo){
+			main.innerHTML += `
+			<img onclick="velgDyr(event)"
+				 class="dyr"
+				 id="${dyr}"
+				 src="bilder/${dyr}.png"
+				 style="left:${dyrInfo[dyr].left};bottom:10px;">`;
+		}
+
+		// Velger et dyr
+		function velgDyr(event) {
+
+			let bilde = event.target;
+
+			// Henter ut dyret og dyreinfo
+			let dyr = bilde.id;
+			event.target.style.zIndex = zIndex++;
+			dyrNavnTxt.innerHTML = dyrInfo[dyr].navn;
+			dyrBeskrivelseTxt.innerHTML = dyrInfo[dyr].beskrivelse;
+
+			// Setter igang en animasjon
+			let animasjon = bilde.animate([
+			{left: dyrInfo[dyr].left, bottom: "10px", transform:"scale(1)", offset: 0},
+			{left: "550px", bottom: "370px", transform:"scale(2)", offset: 0.1},
+			{left: "550px", bottom: "370px", transform:"scale(2)", offset: 0.9},
+			{left: dyrInfo[dyr].left, bottom: "10px", transform:"scale(1)", offset: 1}
+			], {duration: 5000});
+
+			// Sletter teksten når animasjonen er over
+			animasjon.onfinish = function(){
+				dyrNavnTxt.innerHTML = "";
+				dyrBeskrivelseTxt.innerHTML = "";
+			}
+
+			// Spiller av en lyd
+			audio.src = `lyd/${dyr}.mp3`
+			audio.play();
+
+		}
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="brukerinput.css">
+	<title>Document</title>
+	<style>
+		body{
+			font-family: Verdana, Geneva, Tahoma, sans-serif;
+			width: 600px;
+			margin: 0 auto;
+		}
+		img{
+			width: 100%;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Sett sammen et lag av tre fine dyr</h1>
+	<ul>
+		<li>Velg navn på lag</li>
+		<li>Navn og dyrtype til tre dyr</li>
+		<li>Dyrene har ulike angreps og forsvars verdier, se tabell under</li>
+	</ul>
+	<img src="bilder/dyrtabell.png" alt="">
+	<form onsubmit="registrerLag(event)">
+		<label for="lagnavn">Lagnavn</label><input type="text" placeholder="lagnavn" id="lagnavn" required>
+		<label for="dyrnavn1">Dyr 1</label><input type="text" placeholder="dyrnavn" id="dyrnavn1" required>
+		<select id="dyrtype1" required>
+			<option value="">Velg dyr</option>
+			<option value="hund">Hund</option>
+			<option value="hest">Hest</option>
+			<option value="lam">Lam</option>
+			<option value="ku">Ku</option>
+			<option value="katt">Katt</option>
+		</select>
+		<label for="dyrnavn2">Dyr 2</label><input type="text" placeholder="dyrnavn" id="dyrnavn2" required>
+		<select id="dyrtype2" required>
+			<option value="">Velg dyr</option>
+			<option value="hund">Hund</option>
+			<option value="hest">Hest</option>
+			<option value="lam">Lam</option>
+			<option value="ku">Ku</option>
+			<option value="katt">Katt</option>
+		</select>
+		<label for="dyrnavn3">Dyr 3</label><input type="text" placeholder="dyrnavn" id="dyrnavn3" required>
+		<select id="dyrtype3" required>
+			<option value="">Velg dyr</option>
+			<option value="hund">Hund</option>
+			<option value="hest">Hest</option>
+			<option value="lam">Lam</option>
+			<option value="ku">Ku</option>
+			<option value="katt">Katt</option>
+		</select>
+		<button>Registrer lag</button>
+	</form>
+
+	<div id="info"></div>
+
+	<script>
+
+		// DOM
+		let infoTxt = document.querySelector("#info");
+
+		// Info og posisjon
+		let dyrInfo = {
+			katt:{
+				dyr: "Katt",
+				angrep: 6,
+				forsvar: 4
+			},
+			ku:{
+				dyr: "Ku",
+				angrep: 4,
+				forsvar: 6
+			},
+			hund:{
+				dyr: "Hund",
+				angrep: 3,
+				forsvar: 7
+			},
+			hest:{
+				dyr: "Hest",
+				angrep: 7,
+				forsvar: 3
+			},
+			lam:{
+				dyr: "Lam",
+				angrep: 5,
+				forsvar: 5
+			}
+		}
+
+		// Velger et dyr
+		function registrerLag(event) {
+			event.preventDefault();
+
+			// Skjemaet
+			let skjema = event.target;
+			let dyrForsvar1 = dyrInfo[skjema.dyrtype1.value].forsvar;
+			let dyrForsvar2 = dyrInfo[skjema.dyrtype2.value].forsvar;
+			let dyrForsvar3 = dyrInfo[skjema.dyrtype3.value].forsvar;
+
+			let dyrAngrep1 = dyrInfo[skjema.dyrtype1.value].angrep;
+			let dyrAngrep2 = dyrInfo[skjema.dyrtype2.value].angrep;
+			let dyrAngrep3 = dyrInfo[skjema.dyrtype3.value].angrep;
+
+			// Totalt angrep og forsvar
+			let forsvarsVerdi = dyrForsvar1 + dyrForsvar2 + dyrForsvar3;
+			let angrepsVerdi = dyrAngrep1 + dyrAngrep2 + dyrAngrep3
+
+			let sluttBeskjed;
+			if (forsvarsVerdi > angrepsVerdi){
+				sluttBeskjed = skjema.lagnavn.value + " er best på forsvar";
+			} else if (forsvarsVerdi < angrepsVerdi){
+				sluttBeskjed = skjema.lagnavn.value + " er best på angrep";
+			} else{
+				sluttBeskjed = skjema.lagnavn.value + " er like gode på angrep som forsvar";
+			}
+
+			infoTxt.innerHTML = `
+			<b>Lagnavn: </b> ${skjema.lagnavn.value}<br>
+			<b>Dyr: </b> <br>
+			${dyrInfo[skjema.dyrtype1.value].dyr} ${skjema.dyrnavn1.value}<br>
+			${dyrInfo[skjema.dyrtype2.value].dyr} ${skjema.dyrnavn2.value}<br>
+			${dyrInfo[skjema.dyrtype3.value].dyr} ${skjema.dyrnavn3.value}<br>
+			Samlet forsvarsverdi: ${forsvarsVerdi}<br>
+			Samlet angrepsverdi: ${angrepsVerdi}<br>
+			${sluttBeskjed}
+			`;
+		}
+	</script>
+</body>
+
+</html>
