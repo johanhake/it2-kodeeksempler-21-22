@@ -1,0 +1,7 @@
+Testplan:
+* Sjekker at det ikke er lov å sende inn tomme navnefelt
+* Sjekker at det ikke er lov å sende inn tomme dyreefelt
+* Skriver inn navnene Knada, Bada, Snada, og Lada og sjekker at jeg får de navnene i utskriften
+* Velger dyrene katt, ku, hund og sjekker at jeg får 13 i angrep og 17 i forsvar og at laget er best i forsvar
+* Velger dyrene hund, hest, lam og sjekker at jeg får 15 i angrep og 15 i forsvar og at lagene er like gode i forsvar og angrep
+* Velger dyrene katt, katt, katt og sjekker at jeg får 18 i angrep og 12 i forsvar og at laget er best i angrep
