@@ -45,12 +45,14 @@
         <img onclick="velgBilde(event, 11)" src="bilder/sporsmal.jpg" title="Er gevinsten her?">
     </main>
 
+    <audio src="lyd/Galt.mp3"></audio>
     <script>
 
         // DOM
         let beskjedTxt = document.querySelector("p");
         let valgIgjenSpan = document.querySelector("p span");
         let alleBildene = document.querySelectorAll("main img");
+        let audio = document.querySelector("audio");
 
         // Finner et tilfeldig tall som velger hvilken bilde som har gevinsten
         let gevinstTall = Math.floor(Math.random()*12);
@@ -78,6 +80,8 @@
                 }
                 beskjedTxt.innerHTML = `Grattis du vant ${gevinst}!`;
                 imgEl.title = "Gevinsten var her ja!";
+                audio.src = "lyd/Riktig.mp3";
+                audio.play();
 
                 // Avregistrerer lytterfunksjonene
                 for (let bilde of alleBildene){
@@ -91,6 +95,8 @@
                 imgEl.src = "bilder/sadface.jpg";
                 imgEl.onclick = "";
                 imgEl.title = "Gevinsten var ikke her nei...";
+                audio.src = "lyd/Galt.mp3";
+                audio.play();
 
                 // Hvis det ikke er noen valg igjen
                 if (valgIgjen === 0){
